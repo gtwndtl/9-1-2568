@@ -3,7 +3,7 @@ package entity
 import "gorm.io/gorm"
 
 
-type ReviewType struct {
+type Review_type struct {
 
    gorm.Model
 

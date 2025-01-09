@@ -1,0 +1,227 @@
+.promofoodcode-container {
+    width: 100% !important;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Roboto, Arial, sans-serif;
+}
+
+.normal-title,
+.expiring-title {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
+    letter-spacing: 2px;
+    /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+}
+
+
+.promofoodcode-title {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 600;
+    font-size: 24px;
+    color: #3f51b5;
+}
+
+.promofoodcode-list {
+    max-width: 1000px;
+    display: flex;
+    margin: 0 auto;
+    /* จัดให้อยู่ตรงกลาง */
+    flex-direction: column;
+    gap: 24px;
+    /* เพิ่มระยะห่างระหว่างการ์ด */
+}
+
+.promofoodcode-card {
+    display: flex;
+    flex-direction: row;
+    border-radius: 16px;
+    /* มุมโค้งที่ให้ความรู้สึกเป็นมิตร */
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* เงาที่ดูเบา */
+}
+
+.promofoodcode-card:hover {
+    transform: scale(1.02);
+    /* ขยายเล็กน้อยเมื่อ hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* เพิ่มเงาเมื่อ hover */
+}
+
+
+.promofoodcode-preview {
+    background: #3f51b5;
+    /* สีของส่วน Preview */
+    color: white;
+    width: 35%;
+    /* สัดส่วนส่วน preview */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.promofoodcode-list {
+    margin-top: 30px;
+}
+
+.normal-section {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.expiring-section {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+
+.normal-divider,
+.expiring-divider {
+    display: inline-block;
+    height: 2px;
+    background-color: rgb(134, 134, 134);
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+
+.promofoodcode-preview-expiring-soon {
+    background: #ff0000;
+    color: white;
+    width: 35%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+.promofoodcode-preview h6 {
+    font-size: 14px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
+
+.promofoodcode-preview h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.promofoodcode-preview a {
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.promofoodcode-preview a:hover {
+    text-decoration: underline;
+}
+
+.promofoodcode-details {
+    padding: 20px;
+    width: 65%;
+    /* กำหนดพื้นที่ส่วน Details */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.promofoodcode-details p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #333;
+}
+.promofoodcode-ant-btn-primary {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+    margin-top: 16px;
+}
+
+.promofoodcode-ant-btn-primary:hover {
+    background-color: #2c387e;
+    border-color: #2c387e;
+}
+
+.expiring-promofoodcode-ant-btn-primary{
+    background-color: #ff0000;
+    border-color: #ff0000;
+    margin-top: 16px;
+}
+
+button.expiring-promofoodcode-ant-btn-primary:hover {
+    background-color: #ffb4b4 !important;
+    border-color: #ff0000 !important;
+}
+
+
+/* Container for progress bar */
+.progress-bar-container {
+    position: relative;
+    width: 100%;
+    /* ใช้พื้นที่เต็ม */
+    height: 20px;
+    /* ความสูงของหลอด */
+    background-color: #f3f3f3;
+    /* สีพื้นหลัง */
+    border-radius: 10px;
+    /* มุมโค้ง */
+    overflow: hidden;
+    /* ซ่อนส่วนที่เกิน */
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Progress bar fill */
+.progress-bar {
+    height: 100%;
+    /* ความสูงเต็ม container */
+    background-color: #2c387e;
+    /* สีของหลอด */
+    transition: width 0.3s ease;
+    /* แอนิเมชันเมื่อขยาย */
+}
+
+.expiring-progress-bar {
+    height: 100%;
+    /* ความสูงเต็ม container */
+    background-color: #ff0000;
+    /* สีของหลอด */
+    transition: width 0.3s ease;
+    /* แอนิเมชันเมื่อขยาย */
+}
+
+/* Text on the right of the progress bar */
+.progress-text {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    /* ตำแหน่งห่างจากขอบขวา */
+    transform: translateY(-50%);
+    font-size: 14px;
+    /* ขนาดตัวอักษร */
+    color: #000;
+    /* สีตัวอักษร */
+}
+
+.promofoodcode-title{
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333333; /* สีที่เน้นและหรูหรา */
+    margin-bottom: 15px;
+    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
+    letter-spacing: 2px; /* ระยะห่างระหว่างตัวอักษร */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

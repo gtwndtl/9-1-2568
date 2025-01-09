@@ -36,6 +36,9 @@ func SetupDatabase() {
 
    SetupRouteDatabase()
    SetupCruiseTripDatabase()
+
+   SetupPromotionDatabase()
+   SetupReviewDatabase()
    
 
 	fmt.Println("Sample data has been added to the database.")

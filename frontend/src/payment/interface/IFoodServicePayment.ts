@@ -1,4 +1,5 @@
 import { OrderInterface } from "../../food_service/interface/IOrder";
+import { PromotionInterface } from "../../promotion/interface/Promotion";
 import { TripPaymentInterface } from "./ITripPayment";
 
 export interface FoodServicePaymentInterface {
@@ -14,4 +15,7 @@ export interface FoodServicePaymentInterface {
   
   TripPaymentID?: number;
   TripPayment?: TripPaymentInterface;
+
+  PromotionID: number;
+  Promotion?: PromotionInterface;
 }

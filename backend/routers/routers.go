@@ -9,6 +9,13 @@ import (
 	"team03/se67/controller/food_service"
 	"team03/se67/controller/genders"
 	"team03/se67/controller/payment"
+	"team03/se67/controller/promotion/discount_type"
+	"team03/se67/controller/promotion/promotion"
+	"team03/se67/controller/promotion/promotion_status"
+	"team03/se67/controller/promotion/promotion_type"
+	"team03/se67/controller/promotion/promotion_used"
+	"team03/se67/controller/review/review"
+	"team03/se67/controller/review/review_type"
 
 	"team03/se67/middlewares"
 
@@ -29,6 +36,8 @@ func SetupRouter() *gin.Engine {
 	private := r.Group("/")
 	private.Use(middlewares.Authorizes())
 	
+	setupPromotionRoutes(private)
+	setupReviewRoutes(private)
 	setupUserRoutes(private)
 	setupPaymentRoutes(private)
 	setupFoodServiceRoutes(private)
@@ -149,4 +158,50 @@ func setupCruiseTripRoutes(r *gin.RouterGroup) {
 	r.GET("/cruise-trip/:id", cruise_trip.GetCruiseTrip)
 	// r.POST("/cruise-trip", cruise_trip.CreateBookingTrip)
 	// r.PUT("/cruise-trip/:id", cruise_trip.UpdateBookingTripByID)
+}
+
+
+// Function to setup Promotion
+func setupPromotionRoutes(r *gin.RouterGroup) {
+	//Promotion
+	r.POST("/promotion", promotion.AddPromotion)
+	r.PUT("/promotion/:id", promotion.Update)
+	r.GET("/promotions", promotion.GetAll)
+	r.GET("/promotion/:id", promotion.Get)
+	r.DELETE("/promotion/:id", promotion.Delete)
+
+	//PromotionUsed
+	r.POST("/used", promotion_used.AddPromotionUsed)
+	r.PUT("/used/:id", promotion_used.Update)
+	r.GET("/useds", promotion_used.GetAll)
+	r.GET("/used/:id", promotion_used.Get)
+	r.DELETE("/used/:id", promotion_used.Delete)
+
+	//PromotionType
+	r.GET("/types", promotion_type.GetAll)
+	r.GET("/type/:id", promotion_type.Get)
+
+	//PromotionStatus
+	r.GET("/status", promotion_status.GetAll)
+
+	//DiscountType
+	r.GET("/discount_type", discount_type.GetAll)
+	r.GET("/discount_type/:id", discount_type.Get)
+
+}
+
+
+// Function to setup Booking Trip routes
+func setupReviewRoutes(r *gin.RouterGroup) {
+	//Review
+	r.POST("/review", review.AddReview)
+	r.PUT("/review/:id", review.Update)
+	r.GET("/reviews", review.GetAll)
+	r.GET("/review/:id", review.Get)
+	r.DELETE("/review/:id", review.Delete)
+
+
+	//ReviewType
+	r.GET("/reviewtypes", review_type.GetAll)
+	r.GET("/reviewtype/:id", review_type.Get)
 }

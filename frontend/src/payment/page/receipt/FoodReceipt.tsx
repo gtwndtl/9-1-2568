@@ -24,6 +24,10 @@ export default function FoodReceipt() {
   const [orderDetail, setOrderDetail] = useState<OrderDetailInterface[]>([]);
   // const [, setIsLoaded] = useState(false); // Track if data is loaded
 
+  const promoData = JSON.parse(localStorage.getItem('promoData') || '{}');
+  const discountAmount = promoData.discountAmount || 0;
+
+
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
@@ -225,7 +229,7 @@ const handleDownload = async () => {
         <tbody>
           <tr>
             <th>Promotion code</th>
-            <td>- 0.00</td>
+            <td>-{discountAmount}</td>
           </tr>
           <tr>
             <th>VAT 7%</th>

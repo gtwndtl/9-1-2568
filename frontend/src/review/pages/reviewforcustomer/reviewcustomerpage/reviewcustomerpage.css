@@ -1,0 +1,38 @@
+.reviewforcustomercontent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .left-content {
+    display: flex;
+    gap: 20px; /* ระยะห่างระหว่าง UserInfo และ Content */
+    padding: 20px;
+  }
+  
+  .right-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* ระยะห่างระหว่าง NavBarReview และ ReviewedPage */
+  }
+  
+  .navbar-review {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reviewed-page {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  

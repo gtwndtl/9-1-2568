@@ -9,6 +9,13 @@ import Loadable from "./components/third-party/Loadable";
 // import LDSRing from "./components/third-party/LDSRing";
 import SignInPages from "./authentication/Login";
 import DotLoader from "./components/third-party/DotLoader";
+import ReviewForCustomerPage from "./review/pages/reviewforcustomer/reviewcustomerpage/reviewcustomerpage";
+import PromotionTripPage from "./promotion/pages/promotion/promotripcodepage/promotripcode";
+import PromotionFoodPage from "./promotion/pages/promotion/promofoodcodepage/promofoodcode";
+import Reviews from "./review/pages/reviews/reviews";
+import Promotion from "./promotion/pages/promotionadmin";
+import PromotionCreate from "./promotion/pages/promotionadmin/create";
+import PromotionEdit from "./promotion/pages/promotionadmin/edit";
 
 // import TripCompletePage from "./payment/page/trip_stripe/TripCompletePage";
 // import TripSummary from "./payment/page/trip_summary/TripSummary";
@@ -37,7 +44,8 @@ const RouterComponent: React.FC = () => {
       element: (
         <>
           <Link to={"/food-service/login"}>to food service</Link><br />
-          <Link to={"/trip-summary"}>trip</Link>
+          <Link to={"/trip-summary"}>trip</Link><br />
+          <Link to={"/promotionadmin"}>Admin</Link>
         </>
       ),
     },
@@ -100,6 +108,75 @@ const RouterComponent: React.FC = () => {
           </Elements>
         </OrderProvider>
       ),
+    },
+    {
+      path: "/reviewforcustomer/fullcontent",
+      element: <ReviewForCustomerPage />,
+    },
+    {
+      path: "/promotion/promotiontrippage",
+      element: <PromotionTripPage />,
+    },
+    {
+      path: "/promotion",
+      element: <OrderProvider><NavbarFoodService /></OrderProvider>,
+      children: [
+
+        {
+
+          path: "/promotion/promotionfoodpage",
+
+          element: <PromotionFoodPage />,
+
+        },
+      ]
+    },
+    {
+      path: "/reviews",
+      element: <OrderProvider><NavbarFoodService /></OrderProvider>,
+      children: [
+
+        {
+
+          path: "/reviews",
+
+          element: <Reviews />,
+
+        },
+      ]
+    },
+    {
+
+      path: "/promotionadmin",
+      // element: <Navbar />,
+      children: [
+
+        {
+
+          path: "/promotionadmin",
+
+          element: <Promotion />,
+
+        },
+
+        {
+
+          path: "/promotionadmin/create",
+
+          element: <PromotionCreate />,
+
+        },
+
+        {
+
+          path: "/promotionadmin/edit/:id",
+
+          element: <PromotionEdit />,
+
+        },
+
+      ],
+
     },
   ]);
 

@@ -1,0 +1,74 @@
+/* From Uiverse.io by Creatlydev */ 
+.button {
+    cursor: pointer;
+    border: none;
+    background: #4790ff;
+    color: #fff;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: grid;
+    place-content: center;
+    transition:
+      background 300ms,
+      transform 200ms;
+    font-weight: 600;
+  }
+  
+  .button__text {
+    position: absolute;
+    inset: 0;
+    animation: text-rotation 8s linear infinite;
+  
+    > span {
+      position: absolute;
+      transform: rotate(calc(18deg * var(--index)));
+      inset: 7px;
+    }
+  }
+  
+  .button__circle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background: #fff;
+    color: #4c00ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button__icon--copy {
+    position: absolute;
+    transform: translate(-150%, 150%);
+  }
+  
+  .button:hover {
+    background: #0066ff;
+    transform: scale(1.05);
+  }
+  
+  .button:hover .button__icon {
+    color: #00ff00;
+  }
+  
+  .button:hover .button__icon:first-child {
+    transition: transform 0.3s ease-in-out;
+    transform: translate(150%, -150%);
+  }
+  
+  .button:hover .button__icon--copy {
+    transition: transform 0.3s ease-in-out 0.1s;
+    transform: translate(0);
+  }
+  
+  @keyframes text-rotation {
+    to {
+      rotate: 360deg;
+    }
+  }
+  

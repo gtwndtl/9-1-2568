@@ -1,0 +1,21 @@
+@keyframes typing {
+    0% {
+      width: 0;
+    }
+    50% {
+      width: 100%; /* Fully typed out */
+    }
+    100% {
+      width: 0; /* Reset to invisible for looping */
+    }
+  }
+  
+  @keyframes blink {
+    from {
+      border-color: transparent;
+    }
+    to {
+      border-color: #007aff;
+    }
+  }
+  
