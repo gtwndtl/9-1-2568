@@ -66,6 +66,7 @@ const Reviews: React.FC = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0); // เลื่อนหน้าไปยังตำแหน่งบนสุด
     fetchData();
   }, []);
 
