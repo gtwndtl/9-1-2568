@@ -31,7 +31,7 @@ const NavbarAdmin: React.FC = () => {
 
         {/* Menu Section */}
         <nav className="navbaradmin-menu">
-          <Link to="/promotionadmin">
+          <Link to="/admin/promotion">
             <button
               className={`navbaradmin-button ${
                 active === "Promotion" ? "active" : ""

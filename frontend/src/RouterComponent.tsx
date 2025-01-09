@@ -152,13 +152,13 @@ const RouterComponent: React.FC = () => {
     },
     {
 
-      path: "/promotionadmin",
+      path: "/admin/promotion",
       // element: <Navbar />,
       children: [
 
         {
 
-          path: "/promotionadmin",
+          path: "/admin/promotion",
 
           element: <Promotion />,
 
@@ -166,7 +166,7 @@ const RouterComponent: React.FC = () => {
 
         {
 
-          path: "/promotionadmin/create",
+          path: "/admin/promotion/create",
 
           element: <PromotionCreate />,
 
@@ -174,7 +174,7 @@ const RouterComponent: React.FC = () => {
 
         {
 
-          path: "/promotionadmin/edit/:id",
+          path: "/admin/promotion/edit/:id",
 
           element: <PromotionEdit />,
 
