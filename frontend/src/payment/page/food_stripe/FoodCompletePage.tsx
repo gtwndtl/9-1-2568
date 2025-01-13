@@ -182,9 +182,9 @@ export default function CompletePage() {
     }
 
     const formattedValues: PromotionUsedInterface = {
-      PromotionID: Number(promotionId),
-      CustomerID: Number(customerID),
-      FoodServicePaymentID: Number(foodServicePaymentID),
+      promotion_id: promotionId,
+      customer_id: customerID,
+      food_service_payment_id: foodServicePaymentID,
     };
     const resPromotionUsed = await CreatePromotionUsed(formattedValues);
     if (resPromotionUsed.status !== 201) {

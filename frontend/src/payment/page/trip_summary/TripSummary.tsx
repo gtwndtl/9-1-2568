@@ -13,6 +13,7 @@ import { GetCruiseTripById } from "../../../booking_cabin/service/https/CruiseTr
 import { CruiseTripInterface } from "../../../booking_cabin/interface/ICruiseTrip";
 import { GetUsersById } from "../../../services/https";
 import { CustomerInterface } from "../../../interfaces/ICustomer";
+import { GetPromotions, GetPromotionUsed } from "../../../promotion/service/htpps/PromotionAPI";
 
 // function getTextColor(backgroundColor: string): string {
 //   const rgb = backgroundColor.match(/\d+/g)?.map(Number);
@@ -30,7 +31,20 @@ export default function TripSummary() {
   const [VAT, setVAT] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
 
+
   const [messageApi, contextHolder] = message.useMessage();
+
+  //////////////Promotion//////////////
+
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [promoTripCode, setPromoTripCode] = useState(""); // State to handle promo code input
+  const [discountedTripTotal, setDiscountedTripTotal] = useState<number | null>(null); // State to handle discounted total
+  const [promotionsTrip, setPromotionsTrip] = useState<any[]>([]); // State to store fetched promotions
+  const [promoTripError, setPromoTripError] = useState<string>(""); // State to handle error messages
+  const [promotionTripId, setPromotionTripId] = useState<number | null>(null); // State to store selected promotion ID
+  const customerID = localStorage.getItem("id");
+
+  //////////////Promotion//////////////
 
   // console.log("bookingCabin", bookingCabin);
   // console.log("cabinType", cabinType);
@@ -42,6 +56,7 @@ export default function TripSummary() {
     const vat = subtotal * 0.07;
     const totalPrice = subtotal + vat;
 
+    setSubtotal(subtotal)
     setVAT(vat);
     setTotal(totalPrice);
   };
@@ -62,13 +77,13 @@ export default function TripSummary() {
       minimumFractionDigits: 2,
     }).format(Number(price ?? 0));
   };
-  
+
 
   const getBookingCabin = async () => {
     const res = await GetBookingCabinById(1);
     if (res.status === 200) {
       setBookingCabin(res.data);
-      
+
       getCruiseTrip(res.data.BookingTrip.CruiseTripID);
       getCabinType(res.data.Cabin.CabinTypeID);
       getCustomer(res.data.BookingTrip.CustomerID);
@@ -125,6 +140,127 @@ export default function TripSummary() {
       calculateVATAndTotal();
     }
   }, [bookingCabin]);
+
+  //////////////Promotion//////////////
+
+  const handlePromoTripCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uppercaseCode = e.target.value.toUpperCase(); // Convert to uppercase
+    setPromoTripCode(uppercaseCode);
+    setPromoTripError(""); // Clear any error messages
+    const totalPrice = subtotal + VAT;
+    // Reset discount data when code changes
+    setDiscountedTripTotal(null);
+    setPromotionTripId(null);
+    setTotal(totalPrice);
+    localStorage.removeItem("promoTripData");
+    localStorage.removeItem("promotionTripId");
+    localStorage.removeItem("discountTripAmount");
+    // Update promotion ID if code matches a valid promotion
+    const matchedPromotion = promotionsTrip.find((p) => p.code === uppercaseCode);
+    if (matchedPromotion) {
+      setPromotionTripId(matchedPromotion.ID);
+    }
+  };
+  const handleApplyPromoTripCode = async () => {
+    resetPromoTripData();
+    if (!promoTripCode) {
+      setPromoTripError("Please enter a promo code.");
+      resetPromoTripData();
+      return;
+    }
+    const promotionTrip = promotionsTrip.find((p) => p.code === promoTripCode);
+    if (!promotionTrip) {
+      setPromoTripError("Invalid promo code.");
+      resetPromoTripData();
+      return;
+    }
+    // ตรวจสอบว่าโปรโมชั่นใช้งานได้หรือไม่
+    if (promotionTrip.type_id !== 1) {
+      setPromoTripError("This promotion is not applicable.");
+      resetPromoTripData();
+      return;
+    }
+    if (promotionTrip.status_id !== 1) {
+      setPromoTripError("This promotion is no longer active.");
+      resetPromoTripData();
+      return;
+    }
+    if (subtotal + VAT < promotionTrip.minimum_price) {
+      setPromoTripError(`Minimum trip amount is ฿ ${promotionTrip.minimum_price}`);
+      resetPromoTripData();
+      return;
+    }
+    const res = await GetPromotionUsed();
+    if (res.status === 200) {
+      const usedPromotionTrip = res.data.find(
+        (promo: any) =>
+          promo.promotion_id === Number(promotionTripId) && promo.customer_id === Number(customerID)
+      );
+      if (usedPromotionTrip) {
+        setPromoTripError("Promotion code can only be used once.");
+        resetPromoTripData();
+        return;
+      }
+    } else {
+      setPromoTripError("Failed to load used promotions.");
+      resetPromoTripData();
+      return;
+    }
+    // คำนวณส่วนลดและอัปเดต total ทันที
+    setPromotionTripId(promotionTrip.ID);
+    localStorage.setItem("promoTripData", JSON.stringify({ promotionTripId: promotionTrip.ID }));
+    // Save both discountAmount and promotionId to localStorage
+    const newDiscountedTotal = subtotal + VAT - calculateDiscount(promotionTrip);
+    setDiscountedTripTotal(newDiscountedTotal);
+    setTotal(newDiscountedTotal); // อัปเดต total ทันที
+    const discountTripAmount = subtotal + VAT - newDiscountedTotal
+    localStorage.setItem("promoTripData", JSON.stringify({ discountTripAmount: discountTripAmount.toFixed(2), promotionTripId: promotionTrip.ID })
+    );
+    setPromoTripError(""); // ล้างข้อผิดพลาด
+  };
+  // ฟังก์ชันคำนวณส่วนลด
+  const calculateDiscount = (promotion: any): number => {
+    let discount = 0;
+
+    if (promotion.discount_id === 1) {
+      // Percentage discount
+      discount = (promotion.discount / 100) * (subtotal + VAT);
+      if (promotion.limit_discount) {
+        discount = Math.min(discount, promotion.limit_discount);
+      }
+    } else if (promotion.discount_id === 2) {
+      // Fixed discount
+      discount = promotion.discount;
+    }
+
+    // Ensure discount does not exceed the total price (subtotal + VAT)
+    discount = Math.min(discount, subtotal + VAT);
+
+    return discount;
+  };
+
+  // ฟังก์ชันที่จะรีเซ็ทข้อมูล promotion
+  const resetPromoTripData = () => {
+    localStorage.removeItem('promoTripData');
+    localStorage.removeItem('promotionTripId');
+    localStorage.removeItem('discountTripAmount');
+    setPromoTripCode(""); // Clear the promo code input
+    setDiscountedTripTotal(null); // Reset discounted total
+  };
+  // Refetch promotions whenever filteredOrderDetails or promoCode changes
+  useEffect(() => {
+    const fetchPromotionsTrip = async () => {
+      const res = await GetPromotions();
+      if (res.status === 200) {
+        setPromotionsTrip(res.data);
+      } else {
+        setPromoTripError("Failed to load promotions.");
+      }
+    };
+    fetchPromotionsTrip();
+  }, [promoTripCode]); // Add both dependencies
+
+  //////////////Promotion//////////////
 
   return (
     <>
@@ -208,7 +344,7 @@ export default function TripSummary() {
             </div>
           </div>
         </div>
-        
+
         <aside className="trip-summary">
           <div className="inside">
             <header>
@@ -219,12 +355,13 @@ export default function TripSummary() {
               <div className="promotion-content">
                 <input
                   type="text"
-                  // value={2}
-                  // onChange={handlePromoCodeChange}
+                  value={promoTripCode}
+                  onChange={handlePromoTripCodeChange}
                   placeholder="Enter promo code"
                 />
-                <button>Apply</button>
+                <button onClick={handleApplyPromoTripCode}>Apply</button>
               </div>
+              {promoTripError && <p className="error-message">{promoTripError}</p>}
             </div>
             <hr />
             <header>
@@ -250,7 +387,7 @@ export default function TripSummary() {
               </span>
               <span>
                 <p>Promotion</p>
-                <p>- ฿ 0</p>
+                <p>฿ - {discountedTripTotal !== null ? formatPriceWithTwoDecimals((subtotal + VAT - discountedTripTotal).toFixed(2)) : "0.00"}</p>
               </span>
               <span className="total">
                 <h1>Total</h1>

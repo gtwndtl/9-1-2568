@@ -1,4 +1,5 @@
 import { BookingCabinInterface } from "../../booking_cabin/interface/IBookingCabin";
+import { PromotionInterface } from "../../promotion/interface/Promotion";
 
 export interface TripPaymentInterface {
     ID?: number;
@@ -11,4 +12,7 @@ export interface TripPaymentInterface {
 
     BookingCabinID?: number;
     BookingCabin?: BookingCabinInterface;
+
+    PromotionID: number;
+    Promotion?: PromotionInterface;
 }

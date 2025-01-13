@@ -28,7 +28,15 @@ async function GetCruiseTripById(id: number) {
     .then((res) => res)
     .catch((e) => e.response);
 }
+
+async function GetAllCruiseTrip() {
+  return await axios
+    .get(`${apiUrl}/cruisetrips`, requestOptions)
+    .then((res) => res)
+    .catch((e) => e.response);
+}
 export {
     GetCruiseTrip,
     GetCruiseTripById,
+    GetAllCruiseTrip,
 };

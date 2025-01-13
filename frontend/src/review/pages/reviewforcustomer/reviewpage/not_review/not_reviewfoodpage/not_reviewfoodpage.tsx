@@ -13,8 +13,8 @@ import { GetOrder } from "../../../../../../food_service/service/https/OrderAPI"
 
 const customerID = Number(localStorage.getItem('id'));
 
-export default function NotReviewedFoodPage() {
-    const [notReviewedItems, setNotReviewedItems] = useState<ReviewInterface[]>([]);
+export default function NotReviewedTripPage() {
+    const [notReviewedFoodItems, setNotReviewedFoodItems] = useState<ReviewInterface[]>([]);
     const [isNotReviewedLoaded, setIsNotReviewedLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [expandedOrder, setExpandedOrder] = useState<number | null>(null);
@@ -23,80 +23,66 @@ export default function NotReviewedFoodPage() {
     const [reviewTypes, setReviewTypes] = useState<Record<number, string>>({});
     const [base64CreateImages, setBase64CreateImages] = useState<string[]>([]);
     const [, setImageCount] = useState<number>(0); // เก็บจำนวนรูปที่อัปโหลด
-
-
+    const [dateFilter, setDateFilter] = useState<string | null>(null);
+    const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
 
     // Fetch Not Reviewed Items
     useEffect(() => {
         const fetchNotReviewedItems = async () => {
             if (!isNotReviewedLoaded) {
                 try {
-
                     const reviewResponse = await GetReviews();
                     if (reviewResponse.status !== 200) throw new Error('Failed to fetch reviews.');
                     const allReviews = reviewResponse.data;
-
+                    const allReviewsFood = allReviews.filter((review: { review_type_id: any }) => review.review_type_id === 2);
                     // ดึง ID ของ Order ที่มีการรีวิวแล้ว
-                    const reviewedOrderIds = allReviews.map((review: { order_id: any; }) => review.order_id);
-
+                    const reviewedOrderIds = allReviewsFood.map((review: { order_id: any; }) => review.order_id);
                     const ordersResponse = await GetOrder();
                     if (ordersResponse.status !== 200) throw new Error('Failed to fetch orders.');
                     const allOrders = ordersResponse.data;
-
                     // กรองเฉพาะ Orders ของ Customer ID ที่มีสถานะเป็น "paid"
                     const customerOrders = allOrders.filter(
-                        (orders: any) => orders.CustomerID === customerID && orders.Status === "Paid"
+                        (orders: any) => orders.CustomerID === customerID && orders.StatusID === 5
                     );
-
                     // กรองเฉพาะ Orders ที่ยังไม่มีการรีวิว
                     const notReviewedOrders = customerOrders.filter(
                         (order: any) => !reviewedOrderIds.includes(order.ID)
                     );
-
                     // ดึงรายละเอียดของ Order จาก API GetOrderDetail
                     const ordersDetailsResponse = await GetOrderDetail();
                     if (ordersDetailsResponse.status !== 200) throw new Error('Failed to fetch order details.');
                     const allOrderDetails = ordersDetailsResponse.data;
-
                     // ดึงรายละเอียดของ Menu ทั้งหมด
                     const menuResponse = await GetMenu(); // สมมติว่าฟังก์ชันนี้ดึงเมนูทั้งหมดได้
                     if (menuResponse.status !== 200) throw new Error('Failed to fetch menu details.');
                     const allMenus = menuResponse.data;
-
                     // ดึงรายละเอียดของ Food Service Paments ทั้งหมด
                     const foodpaymentResponse = await GetFoodServicePayment(); // สมมติว่าฟังก์ชันนี้ดึงเมนูทั้งหมดได้
                     if (foodpaymentResponse.status !== 200) throw new Error('Failed to fetch Food Service Payment.');
                     const allFoodPayment = foodpaymentResponse.data;
-
                     // สร้าง Map ระหว่าง MenuID และ MenuName
                     const menuMap = allMenus.reduce((acc: Record<number, string>, menu: MenuInterface) => {
                         acc[menu.ID] = menu.MenuName;
-
                         return acc;
                     }, {});
-
                     // สร้าง Map ระหว่าง MenuID และ MenuPrice
                     const menuPriceMap = allMenus.reduce((acc: Record<number, number>, menu: MenuInterface) => {
                         acc[menu.ID] = menu.Price;
                         return acc;
                     }, {});
-
                     // สร้าง Map ระหว่าง MenuID และ MenuImage
                     const menuImage = allMenus.reduce((acc: Record<number, string>, menu: MenuInterface) => {
                         acc[menu.ID] = menu.ImageMenu;
                         return acc;
                     }, {});
-
                     // สร้าง enrichedOrders พร้อมข้อมูลทั้งหมด
                     const enrichedOrders = notReviewedOrders.map((order: any) => {
                         const relatedDetails = allOrderDetails.filter((detail: any) => detail.OrderID === order.ID);
                         const payment = allFoodPayment.find((p: FoodServicePaymentInterface) => p.OrderID === order.ID);
-
                         return {
                             id: order.ID,
                             review_type_id: 2,
                             title: `Order #${order.ID}`,
-                            status: order.Status,
                             menuDetails: relatedDetails.map((detail: any) => ({
                                 menuName: menuMap[detail.MenuID] || 'Unknown',
                                 quantity: detail.Quantity || 0,
@@ -110,22 +96,15 @@ export default function NotReviewedFoodPage() {
                             paymentMethod: payment ? payment.PaymentMethod : 'Unknown', // ดึง paymentID จาก payment
                         };
                     });
-
-                    setNotReviewedItems(enrichedOrders);
+                    setNotReviewedFoodItems(enrichedOrders);
                     setIsNotReviewedLoaded(true);
                 } catch (error) {
                     console.error('Error fetching not reviewed items:', error);
                 }
             }
         };
-
         fetchNotReviewedItems();
-
     }, [isNotReviewedLoaded]);
-
-
-
-
     useEffect(() => {
         const getReviewTypes = async () => {
             const res = await GetReviewTypes();
@@ -147,18 +126,14 @@ export default function NotReviewedFoodPage() {
         };
         getReviewTypes();
     }, [customerID]);
-
-
     const handleAddReview = (order: ReviewInterface) => {
         // Extract menu names from order.menuDetails and update the state
         const menuNames = order.menuDetails?.map((detail: { menuName: any; }) => detail.menuName) || [];
-
         // Set the current review state with menuNames
         setCurrentReview({
             ...order,
             menuNames: menuNames, // Set menuNames in the state
         });
-
         // Set the form fields, including recommended dish dropdown
         form.setFieldsValue({
             reviewtype: order.review_type_id !== undefined ? reviewTypes[order.review_type_id] : '',
@@ -169,29 +144,24 @@ export default function NotReviewedFoodPage() {
 
         setIsModalOpen(true); // Open the modal
     };
-
-
-
-
     const onFinish = async (values: any) => {
         if (currentReview) {
             const overallRating = (Number(values.service_rating) + Number(values.price_rating) + Number(values.taste_rating)) / 3;
-
-            const newReview: ReviewInterface = {
-                Review_date: new Date(),
-                Review_text: values.review_text,
-                Service_rating: values.service_rating,
-                Price_rating: values.price_rating,
-                Taste_rating: values.taste_rating,
-                Overall_rating: overallRating, // Dynamically calculate the overall rating
-                Recommended_dishes: values.recommended_dishes,
+            const newReview = {
+                ...values,
+                review_date: new Date(),
+                review_text: values.review_text,
+                service_rating: values.service_rating,
+                value_for_money_rating: values.value_for_money_rating,
+                taste_rating: values.taste_rating,
+                overall_rating: overallRating, // Dynamically calculate the overall rating
+                recommended_dishes: values.recommended_dishes,
                 review_type_id: 2,
                 order_id: currentReview.id,
                 food_service_payment_id: currentReview.paymentID,
                 customer_id: Number(customerID),
                 pictures: base64CreateImages,
             };
-
             const res = await CreateReview(newReview);
             if (res.status === 201) {
                 message.open({
@@ -207,12 +177,10 @@ export default function NotReviewedFoodPage() {
                     content: res.data.error || "ไม่สามารถสร้างรีวิวได้!",
                 });
             }
-
-            setNotReviewedItems(notReviewedItems.filter((item) => item.ID !== currentReview.ID));
+            setNotReviewedFoodItems(notReviewedFoodItems.filter((item) => item.ID !== currentReview.ID));
             setIsModalOpen(false);
         }
     };
-
     const handleCreateImageUpload = (file: any) => {
         const readerCreate = new FileReader();
         readerCreate.onload = () => {
@@ -228,46 +196,99 @@ export default function NotReviewedFoodPage() {
         const validImages = pictures.filter((image: string) => image.startsWith('data:image'));
         return validImages.length;
     };
-
     useEffect(() => {
         // เช็คจำนวนรูปเริ่มต้นจากฟอร์ม (กรณีที่มีรูปเริ่มต้นอยู่)
         setImageCount(getTotalValidImages());
     }, []); // เมื่อคอมโพเนนต์โหลด, กำหนดค่าเริ่มต้น
 
+    // Update filtered reviews when filters change
+    useEffect(() => {
+        let filtered = [...notReviewedFoodItems];
+
+        if (dateFilter === "asc") {
+            filtered.sort((a, b) =>
+                new Date(a.paymentDate).getTime() - new Date(b.paymentDate).getTime()
+            );
+        } else if (dateFilter === "desc") {
+            filtered.sort((a, b) =>
+                new Date(b.paymentDate).getTime() - new Date(a.paymentDate).getTime()
+            );
+        }
+
+        setFilteredReviews(filtered);
+    }, [dateFilter, notReviewedFoodItems]);
+
+
+    // Handle filter clearing
+    const clearFilters = () => {
+        setDateFilter(null);
+        setFilteredReviews(notReviewedFoodItems);
+    };
 
     return (
         <section className="reviewed-page" id="reviewed-page">
-            {notReviewedItems.map((order) => (
+            {/* Filter Controls */}
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "16px 20px",
+                    backgroundColor: "#f9f9f9",
+                    borderRadius: "12px",
+                    marginBottom: "24px",
+                }}
+            >
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+                    <Select
+                        value={dateFilter}
+                        onChange={setDateFilter}
+                        style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                        placeholder="All"
+                    >
+                        <Select.Option value="asc">Oldest First</Select.Option>
+                        <Select.Option value="desc">Newest First</Select.Option>
+                    </Select>
+                </div>
+                <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+                    Clear Filters
+                </Button>
+            </div>
+            {notReviewedFoodItems.map((order) => (
                 <Card
                     key={order.id}
                     type="inner"
                     title={
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span>{`Order #${order.id}`}</span>
-                            <span style={{ fontSize: '14px', color: '#888' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
+                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
                                 {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
                                 })}`}
                             </span>
-
-                            <Button
-                                onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                                icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
-                                style={{ borderRadius: '8px' }}
-                            >
-                                {expandedOrder === order.id ? 'Show Less' : 'Show More'}
-                            </Button>
-
+                            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                <Button
+                                    onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                                    icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
+                                    style={{
+                                        borderRadius: '8px',
+                                        width: '120px', // กำหนดความกว้างเฉพาะ
+                                        height: '40px', // กำหนดความสูงของปุ่ม
+                                        padding: '0 16px', // ปรับ padding ภายในปุ่ม
+                                        fontSize: '14px', // ปรับขนาดข้อความ
+                                    }}
+                                >
+                                    {expandedOrder === order.id ? 'Show Less' : 'Show More'}
+                                </Button>
+                            </div>
                         </div>
                     }
                     style={{ marginBottom: '16px' }}
                 >
                     {expandedOrder === order.id ? (
                         <>
-                            <p><strong>Status:</strong> {order.status}</p>
-                            <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
                             <div>
                                 {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
                                     <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
@@ -300,7 +321,7 @@ export default function NotReviewedFoodPage() {
                         </>
                     ) : (
                         <>
-                            {(order.menuDetails ?? []).map((detail: { menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                            {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
                                 <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
                                     <img
                                         src={detail.menuImage}
@@ -362,9 +383,9 @@ export default function NotReviewedFoodPage() {
                         <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                     </Form.Item>
                     <Form.Item
-                        name="price_rating"
-                        label="💵 Price"
-                        rules={[{ required: true, message: 'Please provide a Price Rating!' }]}
+                        name="value_for_money_rating"
+                        label="💵 Value for Money"
+                        rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
                     >
                         <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                     </Form.Item>

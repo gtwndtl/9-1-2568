@@ -1,10 +1,6 @@
 export interface ReviewInterface {
   [x: string]: any;
 
-  review_type_id: number;
-
-  order_id: number;
-
   ID?: number;
 
   review_text?: string;
@@ -15,7 +11,7 @@ export interface ReviewInterface {
 
   service_rating?: number;
 
-  price_rating?: number;
+  value_for_money_rating?: number;
 
   taste_rating?: number;
 
@@ -26,6 +22,10 @@ export interface ReviewInterface {
   reviewTypeID?: number;
 
   FoodServicePaymentID?: number;
+
+  BookingTripID?: number,
+
+  TripPaymentID?: number;
 
   CustomerID?: number;
 

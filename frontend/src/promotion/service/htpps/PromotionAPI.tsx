@@ -150,7 +150,7 @@ async function GetPromotionUsed() {
 
   return await axios
 
-    .get(`${apiUrl}/useds`, requestOptions)
+    .get(`${apiUrl}/promotionuseds`, requestOptions)
 
     .then((res) => res)
 
@@ -163,7 +163,7 @@ async function GetPromotionUsedById(id: string) {
 
   return await axios
 
-    .get(`${apiUrl}/used/${id}`, requestOptions)
+    .get(`${apiUrl}/promotionused/${id}`, requestOptions)
 
     .then((res) => res)
 
@@ -176,7 +176,7 @@ async function UpdatePromotionUsedById(id: string, data: PromotionInterface) {
 
   return await axios
 
-    .put(`${apiUrl}/used/${id}`, data, requestOptions)
+    .put(`${apiUrl}/promotionused/${id}`, data, requestOptions)
 
     .then((res) => res)
 
@@ -189,7 +189,7 @@ async function DeletePromotionUsedById(id: string) {
 
   return await axios
 
-    .delete(`${apiUrl}/used/${id}`, requestOptions)
+    .delete(`${apiUrl}/promotionused/${id}`, requestOptions)
 
     .then((res) => res)
 
@@ -201,13 +201,14 @@ async function CreatePromotionUsed(data: PromotionUsedInterface) {
 
   return await axios
 
-    .post(`${apiUrl}/used`, data, requestOptions)
+    .post(`${apiUrl}/promotionused`, data, requestOptions)
 
     .then((res) => res)
 
     .catch((e) => e.response);
 
 }
+
 
 
 export {

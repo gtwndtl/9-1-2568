@@ -1,0 +1,29 @@
+/* From Uiverse.io by adamgiebl */ 
+.type-button {
+    height: 70px;
+    background: #4a6b9a!important;
+    font-family: inherit!important;
+    padding: 0.6em 1.3em!important;
+    font-weight: 900!important;
+    font-size: 18px!important;
+    border: 3px solid black!important;
+    border-radius: 0.4em!important;
+    box-shadow: 0.1em 0.1em!important;
+    cursor: pointer!important;
+  }
+  
+  .type-button:hover {
+    transform: translate(-0.05em, -0.05em)!important;
+    background: #133e87!important;
+    color: rgb(255, 255, 255)!important;
+    box-shadow: 0.15em 0.15em!important;
+  }
+  
+  .type-button:active {
+    transform: translate(0.05em, 0.05em)!important;
+    box-shadow: 0.05em 0.05em!important;
+  }
+
+
+  
+  

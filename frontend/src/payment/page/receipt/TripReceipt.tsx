@@ -31,11 +31,15 @@ function TripReceipt() {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
-    // console.log("tripPaymentID", tripPaymentID);
-    // console.log("tripPayment", tripPayment);
-    // console.log("bookingTrip", bookingTrip);
-    // console.log("bookingCabin", bookingCabin);
-    // console.log("cabinType", cabinType);
+  const promoTripData = JSON.parse(localStorage.getItem('promoTripData') || '{}');
+  const discountTripAmount = promoTripData.discountTripAmount || 0;
+  const promotionTripId = promoTripData.promotionTripId || 0;
+
+  // console.log("tripPaymentID", tripPaymentID);
+  // console.log("tripPayment", tripPayment);
+  // console.log("bookingTrip", bookingTrip);
+  // console.log("bookingCabin", bookingCabin);
+  // console.log("cabinType", cabinType);
   const formatPriceWithTwoDecimals = (price: number | string): string => {
     return new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
@@ -129,29 +133,29 @@ function TripReceipt() {
       });
     }
   };
-  
+
   const handleDownload = async () => {
     if (contentRef.current) {
       const icons = document.querySelectorAll(".icon-container");
-  
+
       // ซ่อน icons
       icons.forEach((icon) => {
         (icon as HTMLElement).style.display = "none";
       });
-  
+
       try {
         // ใช้ html2canvas เพื่อจับภาพเนื้อหา
         const canvas = await html2canvas(contentRef.current, {
           scale: 3,
           useCORS: true,
         });
-  
+
         // แปลง canvas เป็น PDF
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-  
+
         pdf.addImage(imgData, "PNG", 10, 10, pdfWidth, pdfHeight);
         pdf.save("payment-receipt.pdf");
       } catch (error) {
@@ -166,7 +170,7 @@ function TripReceipt() {
       console.error("Content reference is not available.");
     }
   };
-  
+
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -288,7 +292,7 @@ function TripReceipt() {
         <tbody>
           <tr>
             <th>Promotion code</th>
-            <td>- 0.00</td>
+            <td>-{formatPriceWithTwoDecimals(discountTripAmount)}</td>
           </tr>
           <tr>
             <th>VAT 7%</th>
@@ -302,7 +306,7 @@ function TripReceipt() {
           </tr>
           <tr>
             <th>Total</th>
-            <td>{formatPriceWithTwoDecimals(tripPayment?.TotalPrice ?? 0)}</td>
+            <td>{formatPriceWithTwoDecimals((tripPayment?.TotalPrice ?? 0))}</td>
           </tr>
         </tbody>
       </table>

@@ -29,28 +29,34 @@ export default function ReviewShow() {
       }
 
       const menuMap = menus.data.reduce(
-        (acc: any, menu: { ID: any; MenuName: any; }) => ({ ...acc, [menu.ID]: menu.MenuName }),
+        (acc: any, menu: { ID: any; MenuName: any }) => ({ ...acc, [menu.ID]: menu.MenuName }),
         {}
       );
 
-      const enrichedReviews = (await Promise.all(
-        reviews.data.map(async (review: { customer_id: number; order_id: any; }) => {
-          const userResponse = await GetUsersById(review.customer_id);
-          if (userResponse.status !== 200) {
-            throw new Error("Failed to fetch user details.");
-          }
+      const enrichedReviews = (
+        await Promise.all(
+          reviews.data
+            .filter((review: { review_type_id: number }) => review.review_type_id === 2) // กรองเฉพาะ review_type_id === 2
+            .map(async (review: { customer_id: number; order_id: any }) => {
+              const userResponse = await GetUsersById(review.customer_id);
+              if (userResponse.status !== 200) {
+                throw new Error("Failed to fetch user details.");
+              }
 
-          const orderDetailsForReview = orderDetails.data.filter(
-            (detail: { OrderID: any; }) => detail.OrderID === review.order_id
-          );
+              const orderDetailsForReview = orderDetails.data.filter(
+                (detail: { OrderID: any }) => detail.OrderID === review.order_id
+              );
 
-          return {
-            ...review,
-            menuNames: orderDetailsForReview.map((detail: { MenuID: string | number; }) => menuMap[detail.MenuID] || "Unknown"),
-            user: userResponse.data,
-          };
-        })
-      )).slice(0, 10); // จำกัดการ fetch แค่ 10 รีวิว
+              return {
+                ...review,
+                menuNames: orderDetailsForReview.map(
+                  (detail: { MenuID: string | number }) => menuMap[detail.MenuID] || "Unknown"
+                ),
+                user: userResponse.data,
+              };
+            })
+        )
+      ).slice(0, 10); // จำกัดการ fetch แค่ 10 รีวิว
 
       setReviewedFoodItems(enrichedReviews);
     } catch (error) {

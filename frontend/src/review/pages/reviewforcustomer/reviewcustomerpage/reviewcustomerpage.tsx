@@ -1,5 +1,5 @@
 import UserInfo from "../userinfo/userinfo";
-import Navbar from '../../../../navbaradmin/navbar';
+import Navbar from '../../../../adminpage/navbar';
 import './reviewcustomerpage.css';
 import NavBarReview from "../navbarreview/navbarreview";
 

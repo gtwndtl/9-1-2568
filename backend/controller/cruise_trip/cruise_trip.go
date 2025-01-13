@@ -12,6 +12,22 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetAll(c *gin.Context) {
+
+
+    db := config.DB()
+ 
+ 
+    var cruisetrip []entity.CruiseTrip
+ 
+    db.Find(&cruisetrip)
+ 
+ 
+    c.JSON(http.StatusOK, &cruisetrip)
+ 
+ 
+ }
+
 // POST /cruisetrips
 func CreateCruiseTrip(c *gin.Context) {
     var cruisetrip entity.CruiseTrip

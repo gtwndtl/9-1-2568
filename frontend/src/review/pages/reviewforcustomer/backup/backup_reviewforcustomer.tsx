@@ -10,7 +10,7 @@ import { ReviewInterface } from '../../../interface/Review';
 import { MenuInterface } from '../../../../food_service/interface/IMenu';
 import { FoodServicePaymentInterface } from '../../../../payment/interface/IFoodServicePayment';
 import { DeleteOutlined, DownOutlined, EllipsisOutlined, UploadOutlined, UpOutlined } from '@ant-design/icons';
-import Navbar from '../../../../navbaradmin/navbar';
+import Navbar from '../../../../adminpage/navbar';
 import { RcFile } from 'antd/es/upload';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';

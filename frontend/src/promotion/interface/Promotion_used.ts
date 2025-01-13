@@ -1,11 +1,13 @@
 export interface PromotionUsedInterface {
 
-    ID?: number;
+  ID?: number;
 
-    PromotionID?: number;
+  PromotionID?: number;
 
-    CustomerID?: number;
+  CustomerID?: number;
 
-    FoodServicePaymentID?: number;
-  
-  }
+  FoodServicePaymentID?: number;
+
+  TripPaymentID?: number;
+
+}

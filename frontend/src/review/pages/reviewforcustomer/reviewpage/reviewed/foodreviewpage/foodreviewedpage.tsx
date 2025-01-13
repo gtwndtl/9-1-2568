@@ -80,9 +80,6 @@ export default function FoodReviewedPage() {
     };
     fetchReviewedItems();
   }, [isReviewedLoaded]);
-
-
-
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (customerID) {
@@ -96,7 +93,6 @@ export default function FoodReviewedPage() {
         }
       }
     };
-
     const getReviewTypes = async () => {
       const res = await GetReviewTypes();
       if (res.status === 200) {
@@ -119,23 +115,19 @@ export default function FoodReviewedPage() {
     getReviewTypes();
   }, [customerID]);
 
-
   // ฟังก์ชันสำหรับการอัปโหลดรูป
   const handleEditUpload = async (file: RcFile) => {
     const existingImages = form.getFieldValue('pictures') || []; // รูปในฟอร์ม
     const validImages = existingImages.filter((image: string) => image.startsWith('data:image'));
     const totalImages = validImages.length;
-
     if (totalImages >= maxImages) {
       message.error('คุณสามารถอัปโหลดรูปได้สูงสุด 3 รูป');
       return false;
     }
-
     const readerEdit = new FileReader();
     readerEdit.readAsDataURL(file);
     readerEdit.onloadend = () => {
       const base64EditImage = readerEdit.result as string;
-
       if (base64EditImage && base64EditImage.startsWith('data:image')) {
         const updatedImages = [...existingImages, base64EditImage];
         form.setFieldsValue({
@@ -149,7 +141,6 @@ export default function FoodReviewedPage() {
 
     return false; // ป้องกันการอัปโหลดปกติ
   };
-
   // ฟังก์ชันสำหรับลบรูป
   const handleImageDelete = (index: number) => {
     const currentPictures = form.getFieldValue('pictures') || [];
@@ -159,14 +150,12 @@ export default function FoodReviewedPage() {
     });
     setUploadedEditImages(updatedPictures); // อัปเดต state ของรูป
   };
-
   // ฟังก์ชันเพื่อคำนวณจำนวนรูปที่อัปโหลด
   const getTotalValidImages = () => {
     const pictures = form.getFieldValue('pictures') || [];
     const validImages = pictures.filter((image: string) => image.startsWith('data:image'));
     return validImages.length;
   };
-
   useEffect(() => {
     // อัปเดตจำนวนรูปเมื่อมีการเพิ่มหรือลบรูป
     setImageCount(getTotalValidImages());
@@ -176,8 +165,6 @@ export default function FoodReviewedPage() {
     // เช็คจำนวนรูปเริ่มต้นจากฟอร์ม (กรณีที่มีรูปเริ่มต้นอยู่)
     setImageCount(getTotalValidImages());
   }, []); // เมื่อคอมโพเนนต์โหลด, กำหนดค่าเริ่มต้น
-
-
   const handleEditClick = (review: any) => {
     setCurrentReview(review);
     form.setFieldsValue({
@@ -185,45 +172,39 @@ export default function FoodReviewedPage() {
       reviewType: reviewTypes[review.review_type_id] || 'Unknown',
       reviewText: review.review_text,
       serviceRating: review.service_rating,
-      priceRating: review.price_rating,
+      valueForMoneyRating: review.value_for_money_rating,
       tasteRating: review.taste_rating,
       pictures: review.pictures || [],  // Ensure pictures are included in form state
     });
     setIsEditModalVisible(true);
   };
-
   const handleCancelEdit = () => {
     setIsEditModalVisible(false);  // Close the modal
     setCurrentReview(null);  // Clear the current review data
     setUploadedEditImages([]);  // Reset uploaded images array to an empty array
     form.resetFields();  // Optionally, reset form fields (if needed)
   };
-
-
   const handleSubmitEdit = async () => {
     if (!currentReview) {
       message.error('No review selected.');
       return;
     }
-
     try {
       const values = await form.validateFields();
       const updatedReviewData = {
         ...currentReview,
         review_text: values.reviewText,
         service_rating: values.serviceRating,
-        price_rating: values.priceRating,
+        value_for_money_rating: values.value_for_money_rating,
         taste_rating: values.tasteRating,
         overall_rating: (
-          parseFloat(values.priceRating) +
+          parseFloat(values.value_for_money_rating) +
           parseFloat(values.tasteRating) +
           parseFloat(values.serviceRating)
         ) / 3,
         pictures: values.pictures,
       };
-
       const res = await UpdateReviewById(String(currentReview.ID), updatedReviewData);
-
       if (res.status === 200) {
         message.open({
           type: "success",
@@ -242,13 +223,10 @@ export default function FoodReviewedPage() {
       message.error('Failed to submit form.');
     }
   };
-
   const showDeleteReviewModal = (id: string | number) => {
     setDeleteReviewId(id);
     setIsDeleteModalVisible(true);
   };
-
-
   const handleDeleteReviewConfirm = async () => {
     try {
       const response = await DeleteReviewById(String(deleteReviewId));
@@ -486,15 +464,15 @@ export default function FoodReviewedPage() {
                       fontWeight: '600',
                       fontSize: '16px',
                       fontFamily: "'Roboto', sans-serif",
-                    }}>💵 Price</p>
-                    <Rate allowHalf disabled defaultValue={review.price_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
+                    }}>💵 Value for Money</p>
+                    <Rate allowHalf disabled defaultValue={review.value_for_money_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
                     <p style={{
                       margin: 0,
                       fontSize: '14px',
                       color: '#888',
                       fontFamily: "'Roboto', sans-serif",
                     }}>
-                      {review.price_rating} / 5
+                      {review.value_for_money_rating} / 5
                     </p>
                   </div>
 
@@ -591,7 +569,7 @@ export default function FoodReviewedPage() {
         visible={isEditModalVisible}
         title={
           <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>
-            ✏️ Edit Review
+            Edit Review
           </div>
         }
         onCancel={handleCancelEdit}
@@ -600,13 +578,6 @@ export default function FoodReviewedPage() {
         cancelText="Cancel"
         centered
         width={700}
-        bodyStyle={{
-          background: 'linear-gradient(135deg, #f0f8ff, #e6e6fa)',
-          borderRadius: '12px',
-          padding: '24px',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-          fontFamily: 'Arial, Helvetica, sans-serif',
-        }}
         okButtonProps={{
           style: {
             backgroundColor: '#4CAF50',
@@ -627,14 +598,7 @@ export default function FoodReviewedPage() {
         }}
       >
         <Form form={form} layout="vertical">
-          <div
-            style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-            }}
-          >
+          <div>
             <Form.Item
               label={
                 <span style={{ fontWeight: 'bold', color: '#555' }}>
@@ -704,10 +668,10 @@ export default function FoodReviewedPage() {
             <Form.Item
               label={
                 <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  💵 Price Rating
+                  💵 Value For Money Rating
                 </span>
               }
-              name="priceRating"
+              name="valueForMoneyRating"
               rules={[{ required: true, message: 'Please rate the price' }]}
             >
               <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} />

@@ -16,7 +16,7 @@ import Reviews from "./review/pages/reviews/reviews";
 import Promotion from "./promotion/pages/promotionadmin";
 import PromotionCreate from "./promotion/pages/promotionadmin/create";
 import PromotionEdit from "./promotion/pages/promotionadmin/edit";
-import NavbarAdmin from "./navbaradmin/navbar";
+import NavbarAdmin from "./adminpage/navbar";
 
 // import TripCompletePage from "./payment/page/trip_stripe/TripCompletePage";
 // import TripSummary from "./payment/page/trip_summary/TripSummary";

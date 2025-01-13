@@ -17,4 +17,8 @@ type TripPayment struct {
 	
 	BookingCabinID uint				`valid:"required~BookingCabinID is required"`
 	BookingCabin	*BookingCabin 	`gorm:"foreignKey:BookingCabinID;constraint:OnDelete:CASCADE;" valid:"-"`
+
+	// PromotionID ทำหน้าที่เป็น FK
+	PromotionID uint
+	Promotion   *Promotion `gorm:"foreignKey:PromotionID;constraint:OnDelete:CASCADE;"`
 }

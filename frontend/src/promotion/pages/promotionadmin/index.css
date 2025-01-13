@@ -1,13 +1,21 @@
-.page-layout-container {
-  margin-left: 20px;
-  margin-right: 20px;
-  display: flex;
-  justify-content: space-between; /* แยกให้อยู่ซ้ายและขวาสุด */
-  align-items: flex-start; /* จัดแนวแกน Y ให้อยู่ด้านบน */
-  gap: 20px; /* เพิ่มช่องว่างระหว่างสองคอนเทนเนอร์ */
-  padding: 10px; /* เพิ่ม padding ด้านในคอนเทนเนอร์ */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+   Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
 }
+ */
 
+.promotion-layout-container{
+  gap: 20px; /* Add space between the items */
+  font-size: 16px;
+  color: #333;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* Light background for the summary */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a floating effect */
+}
 .code-wrapper {
   padding: 10px;
   margin-top: 120px;
@@ -20,18 +28,12 @@
 
 .actions-container {
   display: flex;
-  flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-  align-items: flex-end; /* จัดให้อยู่ขวาสุด */
+  justify-content: space-between; /* จัดให้เนื้อหาทั้งหมดกระจายไปทางซ้ายและขวา */
+  align-items: center; /* จัดให้เนื้อหาอยู่ตรงกลางในแนวตั้ง */
   gap: 10px; /* เพิ่มช่องว่างระหว่างส่วนต่าง ๆ */
   margin-top: 20px; /* เพิ่มระยะห่างด้านบน */
-
 }
 
-.button-create {
-  display: flex;
-  justify-content: flex-end; /* จัดปุ่มให้อยู่ขวาสุด */
-  width: 100%;
-}
 
 .filter-search {
   display: flex;
@@ -123,10 +125,554 @@
   font-weight: 700;
 }
 
-.promotion-ant-table{
-  margin-top: 20px; /* เพิ่มระยะห่างด้านบน */
-  border-radius: 8px!important; /* ความโค้งของขอบตาราง */
-  overflow: hidden!important; /* ซ่อนส่วนที่เกินออกมา */
-  border: 4px solid #007bff; /* สีขอบด้านนอก */
-  border-spacing: 0; /* รีเซ็ตช่องว่างระหว่างเซลล์ตาราง */
+.promotion-ant-table {
+  padding: 10px;
+  margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+  margin-bottom: 20px;
+  border-radius: 8px ; /* ความโค้งของขอบตาราง */
+  overflow: auto !important; /* ซ่อนส่วนที่เกินออกมา */
+  border: 1px solid #acacac; /* สีขอบด้านนอก */
+  table-layout: fixed!important; /* ทำให้ตารางมีขนาดคงที่ */
+}
+
+.ant-pagination {
+  display: flex!important;
+  justify-content: space-between; /* Align left and right elements */
+  width: 100%;
+}
+
+
+.promotion-ant-table th, .promotion-ant-table td {
+  padding: 8px!important; /* เพิ่มช่องว่างในแต่ละเซลล์ */
+  text-align: center!important; /* จัดข้อความให้อยู่กลางเซลล์ */
+}
+
+/* ทำให้ชื่อช่องในหัวตารางอยู่ตรงกลาง */
+.promotion-ant-table .ant-table-thead th {
+  text-align: center!important; /* จัดตำแหน่งชื่อช่องในหัวตารางให้อยู่ตรงกลาง */
+  font-weight: bold!important; /* ทำให้ชื่อช่องเด่นชัด */
+  background-color: #f4f4f4!important; /* สีพื้นหลังของหัวตาราง */
+}
+
+
+/* กำหนดความกว้างให้กับคอลัมน์แต่ละคอลัมน์ */
+.promotion-ant-table .ant-table-thead th:nth-child(1),
+.promotion-ant-table .ant-table-tbody td:nth-child(1) {
+  width: 120px; /* กำหนดความกว้างคอลัมน์แรก */
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.promotion-ant-table .ant-table-thead th:nth-child(2),
+.promotion-ant-table .ant-table-tbody td:nth-child(2) {
+  width: 150px; /* กำหนดความกว้างคอลัมน์ที่สอง */
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.promotion-ant-table .ant-table-thead th:nth-child(3),
+.promotion-ant-table .ant-table-tbody td:nth-child(3) {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+.promotion-ant-table .ant-table-thead th:nth-child(4),
+.promotion-ant-table .ant-table-tbody td:nth-child(4),
+.promotion-ant-table .ant-table-thead th:nth-child(5),
+.promotion-ant-table .ant-table-tbody td:nth-child(5) {
+  width: 110px; /* กำหนดความกว้างคอลัมน์ที่สี่ */
+  min-width: 110px;
+  max-width: 110px;
+}
+.promotion-ant-table .ant-table-thead th:nth-child(6),
+.promotion-ant-table .ant-table-tbody td:nth-child(6),
+.promotion-ant-table .ant-table-thead th:nth-child(12),
+.promotion-ant-table .ant-table-tbody td:nth-child(12),
+.promotion-ant-table .ant-table-thead th:nth-child(13),
+.promotion-ant-table .ant-table-tbody td:nth-child(13)  {
+  width: 140px;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+
+.promotion-ant-table .ant-table-thead th:nth-child(7),
+.promotion-ant-table .ant-table-tbody td:nth-child(7),
+.promotion-ant-table .ant-table-thead th:nth-child(8),
+.promotion-ant-table .ant-table-tbody td:nth-child(8),
+.promotion-ant-table .ant-table-thead th:nth-child(9),
+.promotion-ant-table .ant-table-tbody td:nth-child(9),
+.promotion-ant-table .ant-table-thead th:nth-child(10),
+.promotion-ant-table .ant-table-tbody td:nth-child(10),
+.promotion-ant-table .ant-table-thead th:nth-child(11),
+.promotion-ant-table .ant-table-tbody td:nth-child(11) {
+  width: 100px; /* กำหนดความกว้างคอลัมน์ที่สี่ */
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.promotion-ant-table .ant-table-thead th:nth-child(14),
+.promotion-ant-table .ant-table-tbody td:nth-child(14) {
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+
+.promotion-header {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333333; /* สีที่เน้นและหรูหรา */
+  margin-bottom: 15px;
+  text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
+  letter-spacing: 2px; /* ระยะห่างระหว่างตัวอักษร */
+  text-align: center; /* จัดข้อความให้อยู่ตรงกลางแนวนอน */
+}
+
+.promotion-filter-drawer {
+  background-color: #f9f9f9; /* พื้นหลังของ drawer */
+  border-radius: 10px; /* ความโค้งของมุมของ drawer */
+  padding: 20px; /* ระยะห่างภายใน */
+}
+
+.promotion-filter-section {
+  margin-bottom: 16px; /* เพิ่มระยะห่างระหว่างแต่ละส่วน */
+}
+
+.promotion-filter-section h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333; /* สีข้อความ */
+}
+
+.promotion-filter-section .ant-select {
+  width: 100%; /* ให้ Select เต็มความกว้าง */
+  border-radius: 8px; /* ความโค้งของ Select */
+  font-size: 14px;
+}
+
+.promotion-usefilter-button {
+  width: 100%;
+  margin-top: 12px;
+  background-color: #133e87; /* สีปุ่มตรงกับธีม */
+  border-color: #133e87; /* สีขอบปุ่มตรงกับธีม */
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.promotion-usefilter-button:hover {
+  background-color: #4a6b9a!important; /* สีเมื่อวางเมาส์เหนือปุ่ม */
+  border-color: #4a6b9a!important;
+}
+
+.promtion-reset-filter-button {
+  width: 100%;
+  margin-top: 8px;
+  background-color: #fff;
+  border: 1px solid #d9d9d9; /* สีของขอบปุ่ม */
+  font-size: 14px;
+}
+
+.promtion-reset-filter-button:hover {
+  background-color: #f0f0f0;
+}
+
+.ant-select-selector {
+  border-radius: 8px !important; /* ความโค้งของมุมของ Selector */
+}
+
+.ant-select-single .ant-select-selector {
+  border-color: #d9d9d9; /* สีขอบของ Select */
+}
+
+.ant-select-focused .ant-select-selector {
+  border-color: #133e87 !important; /* สีขอบเมื่อ Select ถูกเลือก */
+  box-shadow: none; /* เอาเงาออก */
+}
+
+
+.ant-drawer-close {
+  color: white; /* สีปุ่มปิด */
+}
+
+.ant-drawer-body {
+  padding-top: 0; /* ไม่ให้มีระยะห่างด้านบนของเนื้อหา */
+}
+
+
+ /* Search */
+
+.SearchInputContainer {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  padding-left: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
+}
+
+.SearchInputContainer:focus-within {
+  box-shadow: 0px 4px 12px #4a6b9a;
+  border: 1px solid #007bff;
+}
+
+.search-input {
+  width: 200px;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 0.9em;
+  caret-color: rgb(255, 81, 0);
+}
+
+.labelforsearch {
+  cursor: text;
+  padding: 0px 12px;
+}
+
+.searchIcon {
+  width: 13px;
+}
+
+.border {
+  height: 40%;
+  width: 1.3px;
+  background-color: rgb(223, 223, 223);
+}
+
+.micIcon {
+  width: 12px;
+}
+
+.micButton {
+  padding: 0px 15px 0px 12px;
+  border: none;
+  background-color: transparent;
+  height: 40px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.searchIcon path {
+  fill: rgb(114, 114, 114);
+}
+
+.micIcon path {
+  fill: rgb(255, 81, 0);
+}
+
+.micButton:hover {
+  background-color: rgb(255, 230, 230);
+  transition-duration: 0.3s;
+}
+
+
+ /* Promotion Filter Button */
+
+.filter {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.192);
+  cursor: pointer;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.021);
+  transition: all 0.3s;
+}
+
+.filter svg {
+  height: 16px;
+  fill: rgb(77, 77, 77);
+  transition: all 0.3s;
+}
+.filter:hover {
+  background-color: #4a6b9a;
+}
+.filter:hover svg {
+  fill: white;
+}
+
+
+ /* Promotion Create Button */
+
+.promotion-create-button {
+  position: relative;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #4a6b9a;
+  background-color: #133e87;
+}
+
+.promotion-create-button, .promotion-create-button__icon, .promotion-create-button__text {
+  transition: all 0.3s;
+}
+
+.promotion-create-button .promotion-create-button__text {
+  transform: translateX(30px);
+  color: #fff;
+  font-weight: 600;
+}
+
+.promotion-create-button .promotion-create-button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #4a6b9a ;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promotion-create-button .svg {
+  width: 30px;
+  stroke: #fff;
+}
+
+.promotion-create-button:hover {
+  background: #4a6b9a;
+}
+
+.promotion-create-button:hover .promotion-create-button__text {
+  color: transparent;
+}
+
+.promotion-create-button:hover .promotion-create-button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.promotion-create-button:active .promotion-create-button__icon {
+  background-color: #133e87;
+}
+
+.promotion-create-button:active {
+  border: 1px solid #133e87;
+}
+
+ /* Promotion Edit Button */
+
+.Btn-edit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 85px;
+  height: 40px;
+  border: none;
+  padding: 0px 20px;
+  background-color:#133e87;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  transition-duration: .3s;
+}
+
+.svg-edit {
+  width: 13px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: white;
+  transition-duration: .3s;
+}
+
+.Btn-edit:hover {
+  color: transparent;
+  background-color: #4a6b9a;
+}
+
+.Btn-edit:hover svg {
+  right: 43%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: .3s;
+}
+
+.Btn-edit:active {
+  transform: translate(3px , 3px);
+  transition-duration: .3s;
+  box-shadow: 2px 2px 0px #4a6b9a;
+}
+
+ /* Promotion Delete Button */
+
+.delete-Button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.delete-Button svg {
+  width: 44%;
+}
+.delete-Button:hover {
+  background-color: rgb(237, 56, 56);
+  overflow: visible;
+}
+.delete-bin path {
+  transition: all 0.2s;
+}
+.delete-Button:hover .delete-bin path {
+  fill: #fff;
+}
+.delete-Button:active {
+  transform: scale(0.98);
+}
+.delete-tooltip {
+  --tooltip-color: rgb(41, 41, 41);
+  position: absolute;
+  top: -40px;
+  background-color: var(--tooltip-color);
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 8px 12px;
+  font-weight: 600;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.105);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.delete-tooltip::before {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  content: "";
+  background-color: var(--tooltip-color);
+  bottom: -10%;
+}
+.delete-Button:hover .delete-tooltip {
+  opacity: 1;
+}
+
+
+
+.promotion-summary {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  gap: 20px; /* Add space between the items */
+  font-size: 16px;
+  color: #333;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* Light background for the summary */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a floating effect */
+}
+
+.summary-item {
+  display: flex;
+  align-items: center; /* Align items in the same row */
+}
+
+.summary-title {
+  font-weight: bold;
+  color: #888; /* Lighter color for the title */
+}
+
+.summary-value {
+  margin-left: 5px;
+  font-weight: 600;
+  color: #1d3557; /* Dark blue color for the values */
+}
+
+
+.promotion-filter-drawer {
+  width: 100%; /* สำหรับ Mobile จะใช้เต็มหน้าจอ */
+  max-width: 400px; /* กำหนดความกว้างสูงสุดสำหรับ Desktop */
+  background-color: #ffffff; /* สีพื้นหลัง */
+  border-radius: 12px; /* มุมโค้งมน */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เงา */
+  padding: 24px; /* ระยะห่างภายใน */
+  font-family: 'Arial', sans-serif; /* ฟอนต์ */
+}
+
+.promotion-filter-drawer header {
+  font-size: 20px; /* ขนาดข้อความหัวเรื่อง */
+  font-weight: bold;
+  color: #333333; /* สีข้อความ */
+  margin-bottom: 20px; /* ระยะห่างจากเนื้อหา */
+}
+
+.promotion-filter-drawer select {
+  width: 100%; /* ให้ select ครอบคลุมพื้นที่ทั้งหมด */
+  padding: 12px; /* ระยะห่างภายใน */
+  border: 1px solid #d9d9d9; /* เส้นขอบ */
+  border-radius: 8px; /* มุมโค้งมน */
+  background-color: #f7f7f7; /* สีพื้นหลัง */
+  color: #333333; /* สีข้อความ */
+  font-size: 16px; /* ขนาดข้อความ */
+  margin-bottom: 16px; /* ระยะห่างระหว่าง input */
+}
+
+.promotion-filter-drawer select:focus {
+  outline: none;
+  border-color: #1890ff; /* สีเส้นขอบเมื่อเลือก */
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2); /* เงาเส้นขอบ */
+}
+
+.promotion-usefilter-button {
+  width: 100%; /* ปุ่มเต็มพื้นที่ */
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff; /* สีข้อความ */
+  background-color: #133e87; /* สีพื้นหลังปุ่ม */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* เพิ่มการเปลี่ยนแปลงสีอย่างนุ่มนวล */
+}
+
+.promotion-filter-drawer button:hover {
+  background-color: #4a6b9a; /* สีเมื่อ hover */
+}
+
+.promotion-filter-drawer button:disabled {
+  background-color: #d9d9d9; /* สีเมื่อปิดการใช้งาน */
+  color: #666666; /* สีข้อความเมื่อปิดการใช้งาน */
+  cursor: not-allowed;
+}
+
+.promotion-filter-drawer .reset-button {
+  background-color: transparent; /* พื้นหลังโปร่งใส */
+  color: #4a6b9a; /* สีข้อความ */
+  text-align: center;
+  margin-top: 16px; /* ระยะห่างจากปุ่มด้านบน */
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.promotion-filter-drawer .reset-button:hover {
+  text-decoration: underline; /* ขีดเส้นใต้เมื่อ hover */
 }

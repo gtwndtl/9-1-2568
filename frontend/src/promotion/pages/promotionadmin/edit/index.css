@@ -1,0 +1,104 @@
+
+/* Container Styling */
+.edit-promotion-page {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; 
+    max-height: 90vh;
+    background-color: #FFFFFF; /* Light gray background */
+    padding: 20px;
+}
+
+/* Card Styling */
+.card-edit-promotion {
+    width: 40%;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Header Styling */
+.card-edit-promotion h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d1d1f;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Divider */
+.ant-divider {
+    margin: 16px 0;
+    border-top: 1px solid #d2d2d7;
+}
+
+/* Form Styling */
+.ant-form-item {
+    margin-bottom: 16px;
+}
+
+.ant-form-item-label > label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.ant-input,
+.ant-input-number,
+.ant-select-selector,
+.ant-picker {
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid #d2d2d7;
+    padding: 8px; /* Padding for better text alignment */
+    transition: all 0.3s ease;
+}
+
+.ant-input:focus,
+.ant-input-number:focus,
+.ant-select-selector:focus,
+.ant-picker:focus,
+.ant-input:hover,
+.ant-input-number:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+    border-color: #007aff;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.4);
+}
+
+/* TextArea Styling */
+.ant-input-textarea {
+    border-radius: 8px;
+}
+
+.ant-input-textarea:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.4);
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .card-edit-promotion {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .ant-col {
+        flex: 1 1 100%;
+    }
+}
+
+/* Input Alignment Fix */
+.ant-input,
+.ant-input-number,
+.ant-picker {
+    display: flex;
+    align-items: center; /* Centers text vertically */
+    padding-left: 12px; /* Padding for alignment with placeholder */
+    text-align: left; /* Aligns text to the left */
+}

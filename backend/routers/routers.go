@@ -156,6 +156,7 @@ func setupBookingTripRoutes(r *gin.RouterGroup) {
 func setupCruiseTripRoutes(r *gin.RouterGroup) {
 	r.GET("/cruise-trips", cruise_trip.ListCruiseTrips)
 	r.GET("/cruise-trip/:id", cruise_trip.GetCruiseTrip)
+	r.GET("/cruisetrips", cruise_trip.GetAll)
 	// r.POST("/cruise-trip", cruise_trip.CreateBookingTrip)
 	// r.PUT("/cruise-trip/:id", cruise_trip.UpdateBookingTripByID)
 }
@@ -171,11 +172,11 @@ func setupPromotionRoutes(r *gin.RouterGroup) {
 	r.DELETE("/promotion/:id", promotion.Delete)
 
 	//PromotionUsed
-	r.POST("/used", promotion_used.AddPromotionUsed)
-	r.PUT("/used/:id", promotion_used.Update)
-	r.GET("/useds", promotion_used.GetAll)
-	r.GET("/used/:id", promotion_used.Get)
-	r.DELETE("/used/:id", promotion_used.Delete)
+	r.POST("/promotionused", promotion_used.AddPromotionUsed)
+	r.PUT("/promotionused/:id", promotion_used.Update)
+	r.GET("/promotionuseds", promotion_used.GetAll)
+	r.GET("/promotionused/:id", promotion_used.Get)
+	r.DELETE("/promotionused/:id", promotion_used.Delete)
 
 	//PromotionType
 	r.GET("/types", promotion_type.GetAll)
