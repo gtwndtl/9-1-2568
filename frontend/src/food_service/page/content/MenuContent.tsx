@@ -1,8 +1,9 @@
-import React from "react";
+
 import MenuList from "../menu_list/MenuList";
 import OrderList from "../order_list/OrderList";
 import "./MenuContent.css";
 import PromoButton from "../../../promotion/pages/promobutton/promobutton";
+import ReviewTripShow from "../../../review/pages/reviewshow/reviewtripshow/ReviewTripShow";
 import ReviewShow from "../../../review/pages/reviewshow/ReviewShow";
 
 interface MenuListProps {
@@ -21,6 +22,7 @@ export default function MenuContent({ selectFoodCategory }: MenuListProps) {
         <PromoButton />
       </div>
       <div><ReviewShow/></div>
+      <div><ReviewTripShow/></div>
     </section>
   );
 }

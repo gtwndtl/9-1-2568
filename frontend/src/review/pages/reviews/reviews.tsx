@@ -40,7 +40,7 @@ const Reviews: React.FC = () => {
       );
 
       const enrichedReviews = await Promise.all(
-        reviews.data.map(async (review: { customer_id: number; order_id: any }) => {
+        reviews.data.filter((review: { review_type_id: number }) => review.review_type_id === 2).map(async (review: { customer_id: number; order_id: any }) => {
           const userResponse = await GetUsersById(review.customer_id);
           if (userResponse.status !== 200) {
             throw new Error("Failed to fetch user details.");
@@ -438,14 +438,14 @@ const Reviews: React.FC = () => {
                             fontSize: '16px',
                             fontFamily: "'Roboto', sans-serif",
                           }}>💵 Price</p>
-                          <Rate allowHalf disabled defaultValue={review.price_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
+                          <Rate allowHalf disabled defaultValue={review.value_for_money_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
                           <p style={{
                             margin: 0,
                             fontSize: '14px',
                             color: '#888',
                             fontFamily: "'Roboto', sans-serif",
                           }}>
-                            {review.price_rating} / 5
+                            {review.value_for_money_rating} / 5
                           </p>
                         </div>
 

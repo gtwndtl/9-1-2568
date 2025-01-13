@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { Avatar, Rate, Spin } from "antd";
 import dayjs from "dayjs";
-import "swiper/swiper-bundle.css"; // Swiper CSS
-import "./ReviewShow.css"; // External CSS
-import { GetReviews } from "../../service/ReviewAPI";
-import { GetUsersById } from "../../../services/https";
+import "swiper/swiper-bundle.css";
+import "./ReviewTripShow.css";
+import { GetReviews } from "../../../service/ReviewAPI";
+import { GetUsersById } from "../../../../services/https";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Keyboard, Mousewheel, EffectCoverflow, Autoplay } from "swiper/modules"; // Import Autoplay
 import { useNavigate } from "react-router-dom";
-
-
-export default function ReviewShow() {
+export default function ReviewTripShow() {
   const [reviewedFoodItems, setReviewedFoodItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const fetchData = async () => {
@@ -18,13 +16,10 @@ export default function ReviewShow() {
       const [reviews] = await Promise.all([
         GetReviews(),
       ]);
-      if ([reviews].some((response) => response.status !== 200)) {
-        throw new Error("Failed to fetch necessary data.");
-      }
       const enrichedReviews = (
         await Promise.all(
           reviews.data
-            .filter((review: { review_type_id: number }) => review.review_type_id === 2) // กรองเฉพาะ review_type_id === 2
+            .filter((review: { review_type_id: number }) => review.review_type_id === 1)
             .map(async (review: { customer_id: number; order_id: any }) => {
               const userResponse = await GetUsersById(review.customer_id);
               if (userResponse.status !== 200) {
