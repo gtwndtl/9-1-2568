@@ -239,7 +239,7 @@ export default function TripReviewedPage() {
                     content: "แก้ไขรีวิวสำเร็จ!",
                 });
                 setTimeout(() => {
-                    window.location.href = "/reviewforcustomer/fullcontent";
+                    window.location.href = "/customer/review";
                 }, 2000);
             } else {
                 message.open({
@@ -362,7 +362,7 @@ export default function TripReviewedPage() {
                     key={review.ID}
                     type="inner"
                     title={
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%', maxWidth: '1400px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%'}}>
                             <img
                                 src={userInfo.picture}
                                 alt="User"
@@ -415,8 +415,9 @@ export default function TripReviewedPage() {
                         padding: '20px',
                     }}
                 >
+
                     {/* เนื้อหารีวิว */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', maxWidth: '1400px' }}>
                         <div style={{ flex: 1 }}>
                             <h2 style={{
                                 marginBottom: '16px',
@@ -432,7 +433,11 @@ export default function TripReviewedPage() {
                                 fontSize: '16px',
                                 fontFamily: "'Roboto', sans-serif",
                                 color: '#555',
-                                lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย
+                                lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย  
+                                maxWidth: '1400px',
+                                wordWrap: 'break-word', // รองรับการตัดคำยาวเกิน
+                                overflowWrap: 'break-word', // เพิ่มความยืดหยุ่น
+                                whiteSpace: 'normal', // ป้องกันการไม่ตัดบรรทัด
                             }}>
                                 {review.review_text}
                             </h4>
@@ -446,7 +451,7 @@ export default function TripReviewedPage() {
                                     padding: '24px',
                                 }}
                             >
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
                                     {/* คะแนนบริการ */}
                                     <div style={{ textAlign: 'center' }}>
                                         <p style={{
@@ -454,7 +459,7 @@ export default function TripReviewedPage() {
                                             fontWeight: '600',
                                             fontSize: '16px',
                                             fontFamily: "'Roboto', sans-serif",
-                                        }}>💼 Service</p>
+                                        }}>⛴️ Service</p>
                                         <Rate allowHalf disabled defaultValue={review.service_rating} style={{ fontSize: '22px', color: '#4CAF50' }} />
                                         <p style={{
                                             margin: 0,
@@ -466,14 +471,14 @@ export default function TripReviewedPage() {
                                         </p>
                                     </div>
 
-                                    {/* คะแนนรสชาติ */}
+                                    {/* คะแนนรที่พัก */}
                                     <div style={{ textAlign: 'center' }}>
                                         <p style={{
                                             margin: 0,
                                             fontWeight: '600',
                                             fontSize: '16px',
                                             fontFamily: "'Roboto', sans-serif",
-                                        }}>🍴 Cabin</p>
+                                        }}>🛏️ Cabin</p>
                                         <Rate allowHalf disabled defaultValue={review.cabin_rating} style={{ fontSize: '22px', color: '#FF5722' }} />
                                         <p style={{
                                             margin: 0,

@@ -195,10 +195,10 @@ export default function FoodReviewedPage() {
         ...currentReview,
         review_text: values.reviewText,
         service_rating: values.serviceRating,
-        value_for_money_rating: values.value_for_money_rating,
+        value_for_money_rating: values.valueForMoneyRating,
         taste_rating: values.tasteRating,
         overall_rating: (
-          parseFloat(values.value_for_money_rating) +
+          parseFloat(values.valueForMoneyRating) +
           parseFloat(values.tasteRating) +
           parseFloat(values.serviceRating)
         ) / 3,
@@ -211,7 +211,7 @@ export default function FoodReviewedPage() {
           content: "แก้ไขรีวิวสำเร็จ!",
         });
         setTimeout(() => {
-          window.location.href = "/reviewforcustomer/fullcontent";
+          window.location.href = "/customer/review";
         }, 2000);
       } else {
         message.open({
@@ -331,7 +331,7 @@ export default function FoodReviewedPage() {
           key={review.ID}
           type="inner"
           title={
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%', maxWidth: '1400px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
               <img
                 src={userInfo.picture}
                 alt="User"
@@ -388,7 +388,7 @@ export default function FoodReviewedPage() {
 
 
           {/* เนื้อหารีวิว */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px' ,maxWidth:'1400px'}}>
             <div style={{ flex: 1 }}>
               <h2 style={{
                 marginBottom: '16px',
@@ -404,7 +404,11 @@ export default function FoodReviewedPage() {
                 fontSize: '16px',
                 fontFamily: "'Roboto', sans-serif",
                 color: '#555',
-                lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย
+                lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย  
+                maxWidth: '1400px',
+                wordWrap: 'break-word', // รองรับการตัดคำยาวเกิน
+                overflowWrap: 'break-word', // เพิ่มความยืดหยุ่น
+                whiteSpace: 'normal', // ป้องกันการไม่ตัดบรรทัด
               }}>
                 {review.review_text}
               </h4>
@@ -606,9 +610,8 @@ export default function FoodReviewedPage() {
                 </span>
               }
               name="menuNames"
-              rules={[{ required: true, message: 'Please enter menu names' }]}
             >
-              <Input disabled style={{ backgroundColor: '#f5f5f5', borderRadius: '8px' }} />
+              <Input readOnly />
             </Form.Item>
 
             <Form.Item
@@ -618,9 +621,8 @@ export default function FoodReviewedPage() {
                 </span>
               }
               name="reviewType"
-              rules={[{ required: true, message: 'Please select review type' }]}
             >
-              <Input disabled style={{ backgroundColor: '#f5f5f5', borderRadius: '8px' }} />
+              <Input readOnly />
             </Form.Item>
 
             <Form.Item

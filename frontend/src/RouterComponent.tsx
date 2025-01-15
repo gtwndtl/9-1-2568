@@ -12,11 +12,12 @@ import DotLoader from "./components/third-party/DotLoader";
 import ReviewForCustomerPage from "./review/pages/reviewforcustomer/reviewcustomerpage/reviewcustomerpage";
 import PromotionTripPage from "./promotion/pages/promotion/promotripcodepage/promotripcode";
 import PromotionFoodPage from "./promotion/pages/promotion/promofoodcodepage/promofoodcode";
-import Reviews from "./review/pages/reviews/reviews";
+import AllReviewsFood from "./review/pages/reviews/food/allreviewsfood";
 import Promotion from "./promotion/pages/promotionadmin";
 import PromotionCreate from "./promotion/pages/promotionadmin/create";
 import PromotionEdit from "./promotion/pages/promotionadmin/edit";
 import NavbarAdmin from "./adminpage/navbar";
+import AllReviewsTrip from "./review/pages/reviews/trip/allreviewstrip";
 
 // import TripCompletePage from "./payment/page/trip_stripe/TripCompletePage";
 // import TripSummary from "./payment/page/trip_summary/TripSummary";
@@ -115,21 +116,17 @@ const RouterComponent: React.FC = () => {
       ),
     },
     {
-      path: "/reviewforcustomer/fullcontent",
-      element: <ReviewForCustomerPage />,
-    },
-    {
-      path: "/promotion/promotiontrippage",
+      path: "/promotion/trip",
       element: <PromotionTripPage />,
     },
     {
-      path: "/promotion",
+      path: "/promotion/food",
       element: <OrderProvider><NavbarFoodService /></OrderProvider>,
       children: [
 
         {
 
-          path: "/promotion/promotionfoodpage",
+          path: "/promotion/food",
 
           element: <PromotionFoodPage />,
 
@@ -137,15 +134,23 @@ const RouterComponent: React.FC = () => {
       ]
     },
     {
-      path: "/reviews",
+      path: "/customer/review",
+      element: <ReviewForCustomerPage />,
+    },
+    {
+      path: "/reviews/trip",
+      element: <AllReviewsTrip />,
+    },
+    {
+      path: "/reviews/food-service",
       element: <OrderProvider><NavbarFoodService /></OrderProvider>,
       children: [
 
         {
 
-          path: "/reviews",
+          path: "/reviews/food-service",
 
-          element: <Reviews />,
+          element: <AllReviewsFood />,
 
         },
       ]

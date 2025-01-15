@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Rate, Card, Button, Modal, Select } from 'antd';
-import { GetUsersById } from '../../../services/https/index';
-import { GetOrderDetail } from '../../../food_service/service/https/OrderDetailAPI';
-import { GetMenu } from '../../../food_service/service/https/MenuAPI';
-import { GetReviews } from '../../service/ReviewAPI';
-import { ReviewInterface } from '../../interface/Review';
+import { GetUsersById } from '../../../../services/https/index';
+import { GetOrderDetail } from '../../../../food_service/service/https/OrderDetailAPI';
+import { GetMenu } from '../../../../food_service/service/https/MenuAPI';
+import { GetReviews } from '../../../service/ReviewAPI';
+import { ReviewInterface } from '../../../interface/Review';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import './reviews.css';
+import './allreviewsfood.css';
 
 // เปิดใช้งาน plugin relativeTime
 dayjs.extend(relativeTime);
 
-const Reviews: React.FC = () => {
+const AllReviewsFood: React.FC = () => {
   const [reviewedFoodItems, setReviewedFoodItems] = useState<ReviewInterface[]>([]);
   const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
   const [ratingFilter, setRatingFilter] = useState<number | null>(null); // ฟิลเตอร์จำนวนดาวที่เลือก
@@ -123,7 +123,7 @@ const Reviews: React.FC = () => {
 
   return (
 
-    <div style={{ width: '100%', maxWidth: '1400px', minHeight: "100vh", padding: '40px 20px' }}>
+    <div style={{ width: '100%', maxWidth:'1600px',minHeight: "100vh", padding: '40px 20px' }}>
       {/* กลับไปหน้าเมนูอาหาร */}
       <Link to={"/food-service/login/menu/order"}>
         <IoChevronBackSharp size={30} className="back-to-menu" />
@@ -185,10 +185,8 @@ const Reviews: React.FC = () => {
         backgroundColor: '#ddd',
         margin: '20px 0'
       }}></div>
-
-
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-        <div style={{ width: '100%', maxWidth: '1400px', padding: '20px', backgroundColor: 'white', borderRadius: '16px' }}>
+        <div style={{ width: '100%', padding: '20px', backgroundColor: 'white', borderRadius: '16px' }}>
           <Card style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}>
             <div style={{
               display: 'flex',
@@ -286,7 +284,7 @@ const Reviews: React.FC = () => {
                 key={review.ID}
                 type="inner"
                 title={
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%', maxWidth: '1400px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%'}}>
                     <img
                       src={review.user.picture}
                       alt="User"
@@ -357,7 +355,6 @@ const Reviews: React.FC = () => {
                   padding: '24px',
                   backgroundColor: '#fff',
                   width: '100%',
-                  maxWidth: '1280px',
                 }}
               >
                 {/* เนื้อหารีวิว */}
@@ -377,7 +374,11 @@ const Reviews: React.FC = () => {
                       fontSize: '16px',
                       fontFamily: "'Roboto', sans-serif",
                       color: '#555',
-                      lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย
+                      lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย  
+                      maxWidth: '1400px',
+                      wordWrap: 'break-word', // รองรับการตัดคำยาวเกิน
+                      overflowWrap: 'break-word', // เพิ่มความยืดหยุ่น
+                      whiteSpace: 'normal', // ป้องกันการไม่ตัดบรรทัด
                     }}>
                       {review.review_text}
                     </h4>
@@ -494,4 +495,4 @@ const Reviews: React.FC = () => {
   );
 };
 
-export default Reviews;
+export default AllReviewsFood;

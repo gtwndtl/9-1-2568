@@ -183,7 +183,7 @@ export default function NotReviewedTripPage() {
                     content: "สร้างรีวิวสำเร็จ!",
                 });
                 setTimeout(() => {
-                    window.location.href = "/reviewforcustomer/fullcontent";
+                    window.location.href = "/customer/review";
                 }, 2000);
             } else {
                 message.open({

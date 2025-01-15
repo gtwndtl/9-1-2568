@@ -1,0 +1,121 @@
+.review-trip-card-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  overflow: hidden; /* ป้องกันการ์ดล้นออก */
+}
+
+.review-trip-card-swiper {
+  width: 100%;
+  height: 550px; /* ความสูงของ Swiper */
+  border-radius: 10px;
+}
+
+.review-trip-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+  align-items: flex-start; /* จัดข้อความชิดซ้าย */
+  padding: 20px; /* เพิ่ม padding รอบข้อความ */
+  height: 100%; /* ใช้ความสูงทั้งหมดของการ์ด */
+  text-align: left; /* ชิดซ้าย */
+  
+}
+
+
+.review-trip-card-swiper .swiper-slide {
+  opacity: 1; /* ลบเอฟเฟกต์จาง */
+  filter: none; /* ลบการเบลอ */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* เอฟเฟกต์ลื่นไหล */
+}
+
+.trip-review-text {
+  font-size: 14px;
+  line-height: 1.5; /* ปรับ line-height ให้เหมาะสม */
+  margin: 5px 0;
+  overflow: hidden; /* ปิดการแสดงส่วนที่เกิน */
+  display: -webkit-box;
+  -webkit-line-clamp: 7; /* ตัดข้อความหลังบรรทัดที่ 6 */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  color: #fff;
+  height: calc(1.5em * 7); /* ความสูงสัมพันธ์กับ 6 บรรทัด */
+}
+
+
+.quote {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #007aff; /* สีที่สอดคล้องกับปุ่ม */
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  margin-bottom: 40px;
+  
+  
+}
+
+.top-section{
+  margin-top: 100px;
+}
+
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.cta span {
+  padding-bottom: 7px;
+  letter-spacing: 4px;
+  font-size: 14px;
+  padding-right: 15px;
+  text-transform: uppercase;
+}
+
+.cta svg {
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active svg {
+  transform: scale(0.9);
+}
+
+.hover-underline-animation {
+  position: relative;
+  color: black;
+  padding-bottom: 20px;
+}
+
+.hover-underline-animation:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.cta:hover .hover-underline-animation:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

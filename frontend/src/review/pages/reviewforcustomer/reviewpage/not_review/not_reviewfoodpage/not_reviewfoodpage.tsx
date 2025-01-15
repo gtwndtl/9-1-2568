@@ -146,7 +146,7 @@ export default function NotReviewedTripPage() {
     };
     const onFinish = async (values: any) => {
         if (currentReview) {
-            const overallRating = (Number(values.service_rating) + Number(values.price_rating) + Number(values.taste_rating)) / 3;
+            const overallRating = (Number(values.service_rating) + Number(values.value_for_money_rating) + Number(values.taste_rating)) / 3;
             const newReview = {
                 ...values,
                 review_date: new Date(),
@@ -169,7 +169,7 @@ export default function NotReviewedTripPage() {
                     content: "สร้างรีวิวสำเร็จ!",
                 });
                 setTimeout(() => {
-                    window.location.href = "/reviewforcustomer/fullcontent";
+                    window.location.href = "/customer/review";
                 }, 2000);
             } else {
                 message.open({
@@ -401,11 +401,13 @@ export default function NotReviewedTripPage() {
                         label="🍽️ Recommended Dishes"
                         rules={[{ required: true, message: 'Please select a Recommended Dish!' }]}
                     >
-                        <Select placeholder="Select a dish" defaultValue={currentReview?.menuNames?.[0] || 'Unknown'}>
-                            {/* Add an option for 'Not Recommended' */}
-                            <Select.Option value="Not Recommended">No recommended dish.</Select.Option>
+                        <Select
+                            placeholder="Select a dish"
+                        >
+                            {/* ตัวเลือกสำหรับ 'Not Recommended' */}
+                            <Select.Option value="Not Recommended">Not Recommended</Select.Option>
 
-                            {/* Map over the menuNames array to create options */}
+                            {/* สร้างตัวเลือกจาก menuNames */}
                             {currentReview?.menuNames?.map((menuName: string, index: number) => (
                                 <Select.Option key={index} value={menuName}>
                                     {menuName}
@@ -413,6 +415,7 @@ export default function NotReviewedTripPage() {
                             ))}
                         </Select>
                     </Form.Item>
+
                     <Form.Item
                         name="images"
                         label="Upload Images"

@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { Avatar, Rate, Spin } from "antd";
 import dayjs from "dayjs";
 import "swiper/swiper-bundle.css"; // Swiper CSS
-import "./ReviewShow.css"; // External CSS
-import { GetReviews } from "../../service/ReviewAPI";
-import { GetUsersById } from "../../../services/https";
+import "./ReviewFoodShow.css"; // External CSS
+import { GetReviews } from "../../../service/ReviewAPI";
+import { GetUsersById } from "../../../../services/https";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Keyboard, Mousewheel, EffectCoverflow, Autoplay } from "swiper/modules"; // Import Autoplay
 import { useNavigate } from "react-router-dom";
 
 
-export default function ReviewShow() {
+export default function ReviewFoodShow() {
   const [reviewedFoodItems, setReviewedFoodItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const fetchData = async () => {
@@ -49,7 +49,7 @@ export default function ReviewShow() {
   }, []);
   const navigate = useNavigate(); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทาง
   const handleSeeAllButtonClick = () => {
-    navigate("/reviews"); // กำหนดเส้นทางเมื่อกดปุ่ม
+    navigate("/reviews/food-service"); // กำหนดเส้นทางเมื่อกดปุ่ม
   };
   return (
     <div className="review-container" id="review-section">
@@ -121,7 +121,7 @@ export default function ReviewShow() {
                     </div>
                   </div>
                   <div className="review-content">
-                    <p className="review-text">"{review.review_text}"</p>
+                    <p className="review-text" >"{review.review_text}"</p>
                     <p className="review-date">
                       Reviewed on {dayjs(review.review_date).format("MMMM D, YYYY")}
                     </p>

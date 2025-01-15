@@ -163,6 +163,13 @@
 
 
 .review-text {
+  word-wrap: break-word; /* ตัดคำเมื่อข้อความยาวเกินขอบ */
+  overflow-wrap: break-word; /* รองรับการตัดคำ */
+  white-space: normal; /* อนุญาตให้ตัดข้อความลงบรรทัด */
+  display: block; /* ใช้เพื่อให้ข้อความแสดงในรูปแบบบล็อก */
+  max-width: 100%; /* กำหนดขอบเขตของ container */
+
+  
   font-size: 1rem;
   color: #6e6e73;
   line-height: 1.5;
@@ -178,6 +185,8 @@
   line-clamp: 6; /* Standard property */
   box-orient: vertical; /* Works with 'line-clamp' in some browsers */
   text-overflow: ellipsis; /* Ensure trailing dots for overflowing text */
+
+  
 }
 
 

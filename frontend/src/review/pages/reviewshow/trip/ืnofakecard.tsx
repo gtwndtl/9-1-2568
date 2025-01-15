@@ -8,10 +8,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { GetBookingTripById } from "../../../../booking_cabin/service/https/BookingTripAPI";
 import { GetCruiseTripById } from "../../../../booking_cabin/service/https/CruiseTripAPI";
+import { useNavigate } from "react-router-dom";
 
 export default function ReviewTripShow() {
   const [reviewedFoodItems, setReviewedFoodItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); // ใช้สำหรับเปลี่ยนเส้นทาง
+
+  const handleSeeAllClick = () => {
+    navigate("/reviews/trip"); // เปลี่ยนเส้นทางไปยัง "/reviews/trip"
+  };
 
   const fetchData = async () => {
     try {
@@ -55,18 +61,22 @@ export default function ReviewTripShow() {
 
   return (
     <div className="review-trip-card-container" id="review-trip-card-section">
-      <div className="top-section"><h1
-        style={{
-          fontSize: '36px',
-          fontWeight: '700',
-          color: '#333',
-          marginBottom: '16px',
-          lineHeight: '1.4',
-          fontFamily: "'Roboto', sans-serif",
-        }}
-      >
-        Perfect journeys begin with stories from real travelers
-      </h1></div>
+      <div className="top-section">
+        <h1
+          style={{
+            fontSize: "48px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "24px",
+            lineHeight: "1.2",
+            fontFamily: "'San Francisco', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+            textAlign: "center",
+          }}
+        >
+          Experiences That Inspire
+        </h1>
+        <p className="quote">"Real stories from real travelers about their unforgettable journeys"</p>
+      </div>
       {isLoading ? (
         <div className="loading-container">
           <Spin size="large" />
@@ -156,6 +166,25 @@ export default function ReviewTripShow() {
           })}
         </Swiper>
       )}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <button className="cta" onClick={handleSeeAllClick}>
+          <span className="hover-underline-animation"> See all </span>
+          <svg
+            id="arrow-horizontal"
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="10"
+            viewBox="0 0 46 16"
+          >
+            <path
+              id="Path_10"
+              data-name="Path 10"
+              d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+              transform="translate(30)"
+            ></path>
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

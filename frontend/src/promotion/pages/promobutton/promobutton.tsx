@@ -5,7 +5,7 @@ export default function PromoButton() {
     const navigate = useNavigate(); // ใช้ useNavigate เพื่อเปลี่ยนเส้นทาง
 
     const handleButtonClick = () => {
-        navigate("/promotion/promotionfoodpage"); // กำหนดเส้นทางเมื่อกดปุ่ม
+        navigate("/promotion/food"); // กำหนดเส้นทางเมื่อกดปุ่ม
     };
 
     return (

@@ -41,7 +41,7 @@ const NavbarAdmin: React.FC = () => {
               Promotion
             </button>
           </Link>
-          <Link to="/reviewforcustomer/fullcontent">
+          <Link to="/customer/review">
             <button
               className={`navbaradmin-button ${
                 active === "Review" ? "active" : ""

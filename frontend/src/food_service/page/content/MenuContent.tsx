@@ -3,8 +3,9 @@ import MenuList from "../menu_list/MenuList";
 import OrderList from "../order_list/OrderList";
 import "./MenuContent.css";
 import PromoButton from "../../../promotion/pages/promobutton/promobutton";
-import ReviewTripShow from "../../../review/pages/reviewshow/reviewtripshow/ReviewTripShow";
-import ReviewShow from "../../../review/pages/reviewshow/ReviewShow";
+import ReviewTripShow from "../../../review/pages/reviewshow/trip/ReviewTripShow";
+import ReviewFoodShow from "../../../review/pages/reviewshow/food/ReviewFoodShow";
+
 
 interface MenuListProps {
   selectFoodCategory: string;
@@ -21,7 +22,7 @@ export default function MenuContent({ selectFoodCategory }: MenuListProps) {
       <div className="promo-container">
         <PromoButton />
       </div>
-      <div><ReviewShow/></div>
+      <div><ReviewFoodShow/></div>
       <div><ReviewTripShow/></div>
     </section>
   );
