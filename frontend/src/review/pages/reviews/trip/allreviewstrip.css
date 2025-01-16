@@ -19,13 +19,6 @@
     }
   }
 
-
-  /* Demo Code: */
-body {
-	font-family: 'Open Sans', arial, sans-serif;
-	color: #333;
-	font-size: 14px;
-}
 .projcard-container {
 	margin: 50px 0;
 }
@@ -38,8 +31,10 @@ body {
 .projcard-container {
 	margin-left: auto;
 	margin-right: auto;
-	width: 1000px;
+	width: 1300px;
 }
+
+
 .projcard {
 	position: relative;
 	width: 100%;
@@ -80,7 +75,7 @@ body {
 }
 .projcard-img {
 	position: absolute;
-	height: 300px;
+	height: 400px;
 	width: 400px;
 	top: 0;
 	left: 0;
@@ -227,10 +222,17 @@ body {
 .projcard-top-images {
 	position: absolute;
 	top: 10px;
-	right: 10px;
+	right: 10px; /* ค่าเริ่มต้นสำหรับรูปทั่วไป */
 	display: flex;
 	gap: 5px;
+	z-index: 2; /* ให้แน่ใจว่าชั้นอยู่ด้านบน */
   }
+  
+  .projcard:nth-child(2n) .projcard-top-images {
+	right: initial; /* ยกเลิกตำแหน่งขวา */
+	left: 350px; /* ย้ายไปทางซ้าย */
+  }
+  
   
   .projcard-thumbnail {
 	width: 80px;
@@ -252,6 +254,10 @@ body {
 	border-radius: 8px;
 	z-index: 2; /* ทำให้ชั้นแสดงอยู่ด้านบน */
   }
+  .projcard:nth-child(2n) .projcard-rating {
+	left: initial; /* ยกเลิกตำแหน่งซ้าย */
+	right: 10px; /* ย้ายไปทางขวา */
+  }
 
   .projcard-date {
 	position: absolute;
@@ -260,5 +266,6 @@ body {
 	font-size: 12px;
 	border-radius: 5px;
 	font-family: 'Roboto', sans-serif;
+	z-index: 2;
   }
   

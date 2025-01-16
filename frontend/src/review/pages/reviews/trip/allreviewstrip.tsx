@@ -14,6 +14,32 @@ import { GetAllCruiseTrip } from '../../../../booking_cabin/service/https/Cruise
 // เปิดใช้งาน plugin relativeTime
 dayjs.extend(relativeTime);
 
+const generateFakeReviews = (count: number) => {
+  const fakeReviews: ReviewInterface[] = Array.from({ length: count }, (_, index) => ({
+    overall_rating: parseFloat((Math.random() * 5).toFixed(1)), // Random rating between 0-5
+    service_rating: parseFloat((Math.random() * 5).toFixed(1)),
+    cabin_rating: parseFloat((Math.random() * 5).toFixed(1)),
+    value_for_money_rating: parseFloat((Math.random() * 5).toFixed(1)),
+    review_text: `This is a fake review number ${index + 1}. The trip was amazing!`,
+    review_date: dayjs().subtract(index, 'days').toDate(),
+    customer_id: index + 1,
+    booking_trip_id: index + 1,
+    CruiseTripName: `Fake Cruise Trip ${index + 1}`,
+    user: {
+      first_name: `FakeUser${index + 1}`,
+      last_name: `LastName${index + 1}`,
+    },
+    pictures: [
+      `https://picsum.photos/300/500?random=${index + 1}`,
+    ],
+  }));
+
+  return fakeReviews;
+};
+
+
+
+
 const AllReviewsTrip: React.FC = () => {
   const [reviewedFoodItems, setReviewedFoodItems] = useState<ReviewInterface[]>([]);
   const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
@@ -21,6 +47,8 @@ const AllReviewsTrip: React.FC = () => {
   const [dateFilter, setDateFilter] = useState<string | null>(null); // ฟิลเตอร์วันที่
   const [isModalVisible, setIsModalVisible] = useState(false); // สำหรับแสดง Modal
   const [currentImage, setCurrentImage] = useState<string | null>(null); // สำหรับเก็บรูปที่คลิก
+  const [currentPage, setCurrentPage] = useState(1); // หน้าเริ่มต้น
+  const reviewsPerPage = 10; // จำนวนรีวิวต่อหน้า
 
   const fetchData = async () => {
     try {
@@ -74,16 +102,15 @@ const AllReviewsTrip: React.FC = () => {
           })
       );
 
-      // ตั้งค่าข้อมูลใน state
-      setReviewedFoodItems(enrichedReviews);
-      setFilteredReviews(enrichedReviews); // แสดงผลทั้งหมดเริ่มต้น
+      // เพิ่ม fake reviews
+      const fakeReviews = generateFakeReviews(25); // สร้างรีวิวปลอม 25 รายการ
+
+      setReviewedFoodItems([...enrichedReviews, ...fakeReviews]); // รวมรีวิวจริงและปลอม
+      setFilteredReviews([...enrichedReviews, ...fakeReviews]);
     } catch (error) {
       console.error("Error fetching reviewed trips:", error);
     }
   };
-
-
-
 
   useEffect(() => {
     window.scrollTo(0, 0); // เลื่อนหน้าไปยังตำแหน่งบนสุด
@@ -122,6 +149,7 @@ const AllReviewsTrip: React.FC = () => {
     }
 
     setFilteredReviews(filtered);
+    setCurrentPage(1); // รีเซ็ตหน้าหลังกรอง
   };
 
 
@@ -129,6 +157,7 @@ const AllReviewsTrip: React.FC = () => {
     setRatingFilter(null);
     setDateFilter(null);
     setFilteredReviews(reviewedFoodItems); // รีเซ็ตการกรอง
+    setCurrentPage(1); // รีเซ็ตหน้าหลังเคลียร์ฟิลเตอร์
   };
 
   const handleImageClick = (imageUrl: string) => {
@@ -140,6 +169,35 @@ const AllReviewsTrip: React.FC = () => {
     setIsModalVisible(false);
     setCurrentImage(null);
   };
+
+  // Pagination Logic
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
+
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0); // เลื่อนหน้าไปด้านบนเมื่อเปลี่ยนหน้า
+  };
+
+  const colorClasses = [
+    "projcard-blue",
+    "projcard-red",
+    "projcard-green",
+    "projcard-yellow",
+    "projcard-orange",
+    "projcard-brown",
+    "projcard-grey",
+  ];
+
+  // ฟังก์ชันสุ่มสี
+  const getRandomColorClass = () => {
+    const randomIndex = Math.floor(Math.random() * colorClasses.length);
+    return colorClasses[randomIndex];
+  };
+
 
   return (
     <div style={{
@@ -169,7 +227,7 @@ const AllReviewsTrip: React.FC = () => {
               fontFamily: "'Roboto', sans-serif",
             }}
           >
-            See What Our Customers Say About Us
+            What Travelers Loved About Their Trips
           </h1>
           <div
             style={{
@@ -195,7 +253,7 @@ const AllReviewsTrip: React.FC = () => {
                 width: '0', // Starts at 0 width for the typing effect
               }}
             >
-              "Every review is a flavor-filled journey"
+              "Go where you feel most alive"
             </span>
           </div>
         </div>
@@ -302,14 +360,12 @@ const AllReviewsTrip: React.FC = () => {
                 </Button>
               </div>
 
+
               <div className="projcard-container">
-                {filteredReviews.map((review, index) => (
+                {currentReviews.map((review, index) => (
                   <div
                     key={index}
-                    className="projcard projcard-customcolor"
-                    style={{
-                      "--projcard-color": "#F5AF41", // You can dynamically set colors if needed
-                    } as React.CSSProperties}
+                    className={`projcard ${getRandomColorClass()}`} // เพิ่ม class สีที่สุ่ม
                   >
                     <div className="projcard-innerbox">
                       {/* Overall Rating */}
@@ -326,6 +382,8 @@ const AllReviewsTrip: React.FC = () => {
                               className="projcard-thumbnail"
                               src={pic}
                               alt={`Thumbnail ${idx + 1}`}
+                              onClick={() => handleImageClick(pic)} // เรียกฟังก์ชัน handleImageClick เมื่อคลิก
+                              style={{ cursor: 'pointer' }} // เพิ่ม cursor pointer เพื่อให้ชัดเจนว่าสามารถคลิกได้
                             />
                           ))
                         ) : (
@@ -336,6 +394,7 @@ const AllReviewsTrip: React.FC = () => {
                           />
                         )}
                       </div>
+
 
                       {/* Review Image */}
                       <img
@@ -377,13 +436,29 @@ const AllReviewsTrip: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                   ))}
+                ))}
               </div>
             </Card>
           </div>
         </div>
+        {/* Pagination Controls */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <Button
+              key={page}
+              onClick={() => changePage(page)}
+              style={{
+                margin: '0 5px',
+                backgroundColor: currentPage === page ? '#007AFF' : '#fff',
+                color: currentPage === page ? '#fff' : '#007AFF',
+                border: '1px solid #007AFF',
+              }}
+            >
+              {page}
+            </Button>
+          ))}
+        </div>
 
-        {/* Modal สำหรับแสดงรูปขนาดใหญ่ */}
         <Modal
           visible={isModalVisible}
           footer={null}
@@ -394,9 +469,10 @@ const AllReviewsTrip: React.FC = () => {
           <img
             src={currentImage || ''}
             alt="Enlarged"
-            style={{ width: 'auto', height: 'auto', maxHeight: '600px' }}
+            style={{ width: '100%', maxHeight: '600px', objectFit: 'contain' }} // ปรับให้รูปพอดีกับ Modal
           />
         </Modal>
+
       </div>
     </div>
   );

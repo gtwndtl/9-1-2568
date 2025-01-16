@@ -195,7 +195,7 @@ const AllReviewsTrip: React.FC = () => {
                 width: '0', // Starts at 0 width for the typing effect
               }}
             >
-              "Every review is a flavor-filled journey"
+              "It's not the trip that changes your life; it's the people and moments along the way"
             </span>
           </div>
         </div>
