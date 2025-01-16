@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Form, Input, message, Modal, Rate, Select, } from "antd";
+import { Button, Card, Col, Form, Input, message, Modal, Rate, Row, Select, } from "antd";
 import { CreateReview, GetReviews, GetReviewTypes } from "../../../../../service/ReviewAPI";
 import { ReviewInterface } from "../../../../../interface/Review";
 import { GetMenu } from "../../../../../../food_service/service/https/MenuAPI";
@@ -227,78 +227,112 @@ export default function NotReviewedTripPage() {
     };
 
     return (
-        <section className="reviewed-food-page" id="reviewed-food-page">
-            {/* Filter Controls */}
-            <div
-        style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "16px 20px",
-            backgroundColor: "#FFFFFF",
-            borderRadius: "12px",
-            marginBottom: "24px",
-          }}
-            >
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
-                    <Select
-                        value={dateFilter}
-                        onChange={setDateFilter}
-                        style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
-                        placeholder="All"
-                    >
-                        <Select.Option value="asc">Oldest First</Select.Option>
-                        <Select.Option value="desc">Newest First</Select.Option>
-                    </Select>
-                </div>
-                <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
-                    Clear Filters
-                </Button>
-            </div>
-            {filteredReviews.map((order) => (
-                <Card
-                    key={order.id}
-                    type="inner"
-                    title={
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
-                            <span style={{ flex: 1, textAlign: 'left'}}>{`Order #${order.id}`}</span>
-                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888'}}>
-                                {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}`}
-                            </span>
-                            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button
-                                    onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                                    icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '120px', // กำหนดความกว้างเฉพาะ
-                                        height: '40px', // กำหนดความสูงของปุ่ม
-                                        padding: '0 16px', // ปรับ padding ภายในปุ่ม
-                                        fontSize: '14px', // ปรับขนาดข้อความ
-                                    }}
-                                >
-                                    {expandedOrder === order.id ? 'Show Less' : 'Show More'}
-                                </Button>
-                            </div>
-                        </div>
-                    }
+        <section className="not-reviewed-food-page" id="reviewed-food-page">
+            <Card style={{
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}>
+                {/* Filter Controls */}
+                <div
                     style={{
-                        marginBottom: '20px',
-                        borderRadius: '10px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        padding: '20px',
-                      }}
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "16px 20px",
+                        backgroundColor: "#f9f9f9",
+                        borderRadius: "12px",
+                        marginBottom: "24px",
+                    }}
                 >
-                    {expandedOrder === order.id ? (
-                        <>
-                            <div>
-                                {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+                        <Select
+                            value={dateFilter}
+                            onChange={setDateFilter}
+                            style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                            placeholder="All"
+                        >
+                            <Select.Option value="asc">Oldest First</Select.Option>
+                            <Select.Option value="desc">Newest First</Select.Option>
+                        </Select>
+                    </div>
+                    <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+                        Clear Filters
+                    </Button>
+                </div>
+                {filteredReviews.map((order) => (
+                    <Card
+                        key={order.id}
+                        type="inner"
+                        title={
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                                <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
+                                <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
+                                    {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                    })}`}
+                                </span>
+                                <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button
+                                        onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                                        icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
+                                        style={{
+                                            borderRadius: '8px',
+                                            width: '120px', // กำหนดความกว้างเฉพาะ
+                                            height: '40px', // กำหนดความสูงของปุ่ม
+                                            padding: '0 16px', // ปรับ padding ภายในปุ่ม
+                                            fontSize: '14px', // ปรับขนาดข้อความ
+                                        }}
+                                    >
+                                        {expandedOrder === order.id ? 'Show Less' : 'Show More'}
+                                    </Button>
+                                </div>
+                            </div>
+                        }
+                        style={{
+                            marginBottom: '20px',
+                            borderRadius: '10px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            padding: '20px',
+                        }}
+                    >
+                        {expandedOrder === order.id ? (
+                            <>
+                                <div>
+                                    {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                            <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
+                                            <img
+                                                src={detail.menuImage}
+                                                alt={`Menu Image ${Number(index) + 1}`}
+                                                style={{
+                                                    width: '60px',
+                                                    height: '60px',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '8px',
+                                                    marginRight: '12px',
+                                                }}
+                                            />
+                                            <div>
+                                                <p><strong>Menu Name:</strong> {detail.menuName}</p>
+                                                <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
+                                                <p><strong>Amount:</strong> {detail.amount}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0)}</p>
+                                <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toFixed(2)}</p>
+                                <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toFixed(2)}</p>
+                                <p><strong>Discount:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2) === '0.00' ? '-' : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2)}</p>
+                                <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toFixed(2)}</p>
+                                <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
+                            </>
+                        ) : (
+                            <>
+                                {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
                                     <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                        <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
                                         <img
                                             src={detail.menuImage}
                                             alt={`Menu Image ${Number(index) + 1}`}
@@ -313,133 +347,131 @@ export default function NotReviewedTripPage() {
                                         <div>
                                             <p><strong>Menu Name:</strong> {detail.menuName}</p>
                                             <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                            <p><strong>Amount:</strong> {detail.amount}</p>
                                         </div>
                                     </div>
                                 ))}
-                            </div>
-                            <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0)}</p>
-                            <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toFixed(2)}</p>
-                            <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toFixed(2)}</p>
-                            <p><strong>Discount:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2) === '0.00' ? '-' : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2)}</p>
-                            <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toFixed(2)}</p>
-                            <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
-                        </>
-                    ) : (
-                        <>
-                            {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
-                                <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                    <img
-                                        src={detail.menuImage}
-                                        alt={`Menu Image ${Number(index) + 1}`}
-                                        style={{
-                                            width: '60px',
-                                            height: '60px',
-                                            objectFit: 'cover',
-                                            borderRadius: '8px',
-                                            marginRight: '12px',
-                                        }}
-                                    />
-                                    <div>
-                                        <p><strong>Menu Name:</strong> {detail.menuName}</p>
-                                        <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                    </div>
-                                </div>
-                            ))}
-                            <Button
-                                type="primary"
-                                onClick={() => handleAddReview(order)}
-                                style={{ float: 'right', marginTop: '12px' }}
-                            >
-                                Add Review
-                            </Button>
-                        </>
-                    )}
-                </Card>
-            ))}
+                                <Button
+                                    type="primary"
+                                    onClick={() => handleAddReview(order)}
+                                    style={{ float: 'right', marginTop: '12px' }}
+                                >
+                                    Add Review
+                                </Button>
+                            </>
+                        )}
+                    </Card>
+                ))}
+            </Card>
             <Modal
                 title="Add Review"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 onOk={() => form.submit()}
+                width={800} // ปรับความกว้างของ Modal
             >
                 <Form form={form} onFinish={onFinish} layout="vertical">
-                    <Form.Item name="reviewtype" label="ReviewType">
-                        <Input value={currentReview && currentReview.review_type_id !== undefined ? reviewTypes[currentReview.review_type_id] : ''} readOnly />
-                    </Form.Item>
-                    <Form.Item name="title" label="Title">
-                        <Input readOnly />
-                    </Form.Item>
-
-                    <Form.Item name="menuNames" label="Menu Name">
-                        <Input readOnly />
-                    </Form.Item>
-                    <Form.Item
-                        name="review_text"
-                        label="เขียนรีวิว"
-                        rules={[{ required: true, message: 'Please enter a Review!' }]}
-                    >
-                        <Input.TextArea rows={3} />
-                    </Form.Item>
-                    <Form.Item
-                        name="service_rating"
-                        label="💼 Service"
-                        rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="value_for_money_rating"
-                        label="💵 Value for Money"
-                        rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="taste_rating"
-                        label="🍴 Taste"
-                        rules={[{ required: true, message: 'Please provide a Taste Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="recommended_dishes"
-                        label="🍽️ Recommended Dishes"
-                        rules={[{ required: true, message: 'Please select a Recommended Dish!' }]}
-                    >
-                        <Select
-                            placeholder="Select a dish"
-                        >
-                            {/* ตัวเลือกสำหรับ 'Not Recommended' */}
-                            <Select.Option value="Not Recommended">Not Recommended</Select.Option>
-
-                            {/* สร้างตัวเลือกจาก menuNames */}
-                            {currentReview?.menuNames?.map((menuName: string, index: number) => (
-                                <Select.Option key={index} value={menuName}>
-                                    {menuName}
-                                </Select.Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item
-                        name="images"
-                        label="Upload Images"
-                        valuePropName="fileList"
-                        getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-                    >
-                        <Upload
-                            name="images"
-                            listType="picture"
-                            maxCount={3}
-                            multiple
-                            beforeUpload={handleCreateImageUpload}
-                        >
-                            <Button icon={<UploadOutlined />}>Click to Upload (Max: 3)</Button>
-                        </Upload>
-                    </Form.Item>
+                    <Row gutter={16}> {/* ใช้ Grid layout */}
+                        <Col span={12}>
+                            <Form.Item name="reviewtype" label="Review Type">
+                                <Input value={currentReview && currentReview.review_type_id !== undefined ? reviewTypes[currentReview.review_type_id] : ''} readOnly />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="title" label="Title">
+                                <Input readOnly />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item name="menuNames" label="Menu Name">
+                                <Input readOnly />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item
+                                name="review_text"
+                                label="เขียนรีวิว"
+                                rules={[{ required: true, message: 'Please enter a Review!' }]}
+                            >
+                                <Input.TextArea rows={3} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={8}>
+                            <Form.Item
+                                name="service_rating"
+                                label="💼 Service"
+                                rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="value_for_money_rating"
+                                label="💵 Value for Money"
+                                rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="taste_rating"
+                                label="🍴 Taste"
+                                rules={[{ required: true, message: 'Please provide a Taste Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item
+                                name="recommended_dishes"
+                                label="🍽️ Recommended Dishes"
+                                rules={[{ required: true, message: 'Please select a Recommended Dish!' }]}
+                            >
+                                <Select
+                                    placeholder="Select a dish"
+                                >
+                                    <Select.Option value="Not Recommended">Not Recommended</Select.Option>
+                                    {currentReview?.menuNames?.map((menuName: string, index: number) => (
+                                        <Select.Option key={index} value={menuName}>
+                                            {menuName}
+                                        </Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item
+                                name="images"
+                                label="Upload Images"
+                                valuePropName="fileList"
+                                getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+                            >
+                                <Upload
+                                    name="images"
+                                    listType="picture"
+                                    maxCount={3}
+                                    multiple
+                                    beforeUpload={handleCreateImageUpload}
+                                >
+                                    <Button icon={<UploadOutlined />}>Click to Upload (Max: 3)</Button>
+                                </Upload>
+                            </Form.Item>
+                        </Col>
+                    </Row>
                 </Form>
             </Modal>
+
         </section>
     );
 }

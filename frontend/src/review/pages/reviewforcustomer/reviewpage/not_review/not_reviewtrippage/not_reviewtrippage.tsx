@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Form, Input, message, Modal, Rate, Select, } from "antd";
+import { Button, Card, Col, Form, Input, message, Modal, Rate, Row, Select, } from "antd";
 import { CreateReview, GetReviews, GetReviewTypes } from "../../../../../service/ReviewAPI";
 import { ReviewInterface } from "../../../../../interface/Review";
 import { DownOutlined, UploadOutlined, UpOutlined } from "@ant-design/icons";
@@ -238,84 +238,117 @@ export default function NotReviewedTripPage() {
         setFilteredReviews(notReviewedTripItems);
     };
     return (
-        <section className="reviewed-trip-page" id="reviewed-trip-page">
-            {/* Filter Controls */}
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "16px 20px",
-                    backgroundColor: "#f9f9f9",
-                    borderRadius: "12px",
-                    marginBottom: "24px",
-                }}
-            >
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
-                    <Select
-                        value={dateFilter}
-                        onChange={setDateFilter}
-                        style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
-                        placeholder="All"
-                    >
-                        <Select.Option value="asc">Oldest First</Select.Option>
-                        <Select.Option value="desc">Newest First</Select.Option>
-                    </Select>
-                </div>
-                <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
-                    Clear Filters
-                </Button>
-            </div>
-            {filteredReviews.map((tripcabin) => (
-                <Card
-                    key={tripcabin.paymentid}
-                    type="inner"
-                    title={
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            {/* ชิดซ้าย */}
-                            <span style={{ flex: 1, textAlign: 'left', fontFamily: "'Roboto', sans-serif", }}>
-                                {`Booking Trip ID #${tripcabin.bookingTripId}`}
-                            </span>
-                            {/* ตรงกลาง */}
-                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>
-                                {`รหัสการชำระเงิน : ${tripcabin.tripPaymentId}, ${new Date(tripcabin.tripPaymentDate ?? '').toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}`}
-                            </span>
-                            {/* ชิดขวา */}
-                            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button
-                                    onClick={() =>
-                                        setExpandedTripCabin(
-                                            expandedTripCabin === tripcabin.paymentid ? null : tripcabin.paymentid
-                                        )
-                                    }
-                                    icon={expandedTripCabin === tripcabin.paymentid ? <UpOutlined /> : <DownOutlined />}
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '120px', // กำหนดความกว้างเฉพาะ
-                                        height: '40px', // กำหนดความสูงของปุ่ม
-                                        padding: '0 16px', // ปรับ padding ภายในปุ่ม
-                                        fontSize: '14px', // ปรับขนาดข้อความ
-                                        fontFamily: "'Roboto', sans-serif",
-                                    }}
-                                >
-                                    {expandedTripCabin === tripcabin.paymentid ? 'Show Less' : 'Show More'}
-                                </Button>
-                            </div>
-                        </div>
-                    }
+        <section className="not-reviewed-trip-page" id="reviewed-trip-page">
+            <Card style={{
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}>
+                {/* Filter Controls */}
+                <div
                     style={{
-                        marginBottom: '20px',
-                        borderRadius: '10px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        padding: '20px',
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "16px 20px",
+                        backgroundColor: "#f9f9f9",
+                        borderRadius: "12px",
+                        marginBottom: "24px",
                     }}
-                >{expandedTripCabin === tripcabin.paymentid ? (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+                        <Select
+                            value={dateFilter}
+                            onChange={setDateFilter}
+                            style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                            placeholder="All"
+                        >
+                            <Select.Option value="asc">Oldest First</Select.Option>
+                            <Select.Option value="desc">Newest First</Select.Option>
+                        </Select>
+                    </div>
+                    <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+                        Clear Filters
+                    </Button>
+                </div>
+                {filteredReviews.map((tripcabin) => (
+                    <Card
+                        key={tripcabin.paymentid}
+                        type="inner"
+                        title={
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                {/* ชิดซ้าย */}
+                                <span style={{ flex: 1, textAlign: 'left', fontFamily: "'Roboto', sans-serif", }}>
+                                    {`Booking Trip ID #${tripcabin.bookingTripId}`}
+                                </span>
+                                {/* ตรงกลาง */}
+                                <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>
+                                    {`รหัสการชำระเงิน : ${tripcabin.tripPaymentId}, ${new Date(tripcabin.tripPaymentDate ?? '').toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                    })}`}
+                                </span>
+                                {/* ชิดขวา */}
+                                <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button
+                                        onClick={() =>
+                                            setExpandedTripCabin(
+                                                expandedTripCabin === tripcabin.paymentid ? null : tripcabin.paymentid
+                                            )
+                                        }
+                                        icon={expandedTripCabin === tripcabin.paymentid ? <UpOutlined /> : <DownOutlined />}
+                                        style={{
+                                            borderRadius: '8px',
+                                            width: '120px', // กำหนดความกว้างเฉพาะ
+                                            height: '40px', // กำหนดความสูงของปุ่ม
+                                            padding: '0 16px', // ปรับ padding ภายในปุ่ม
+                                            fontSize: '14px', // ปรับขนาดข้อความ
+                                            fontFamily: "'Roboto', sans-serif",
+                                        }}
+                                    >
+                                        {expandedTripCabin === tripcabin.paymentid ? 'Show Less' : 'Show More'}
+                                    </Button>
+                                </div>
+                            </div>
+                        }
+                        style={{
+                            marginBottom: '20px',
+                            borderRadius: '10px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            padding: '20px',
+                        }}
+                    >{expandedTripCabin === tripcabin.paymentid ? (
+                        <>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                    <img
+                                        src={tripcabin.cabinTypeImage}
+                                        alt={tripcabin.cabinTypeName}
+                                        style={{
+                                            width: '60px',
+                                            height: '60px',
+                                            objectFit: 'cover',
+                                            borderRadius: '8px',
+                                            marginRight: '12px',
+                                        }}
+                                    />
+                                    <div>
+                                        <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
+                                        <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
+                                        <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
+                                        <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toFixed(2)}</p>
+                            <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toFixed(2)}</p>
+                            <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toFixed(2)}</p>
+                            <p><strong>Discount: -</strong> { }</p>
+                            <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toFixed(2)}</p>
+                            <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
+                        </>
+                    ) : (
+                        <>
                             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
                                 <img
                                     src={tripcabin.cabinTypeImage}
@@ -335,112 +368,111 @@ export default function NotReviewedTripPage() {
                                     <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
                                 </div>
                             </div>
-                        </div>
-                        <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toFixed(2)}</p>
-                        <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toFixed(2)}</p>
-                        <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toFixed(2)}</p>
-                        <p><strong>Discount: -</strong> { }</p>
-                        <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toFixed(2)}</p>
-                        <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
-                    </>
-                ) : (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                            <img
-                                src={tripcabin.cabinTypeImage}
-                                alt={tripcabin.cabinTypeName}
-                                style={{
-                                    width: '60px',
-                                    height: '60px',
-                                    objectFit: 'cover',
-                                    borderRadius: '8px',
-                                    marginRight: '12px',
-                                }}
-                            />
-                            <div>
-                                <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
-                                <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
-                                <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
-                                <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
-                            </div>
-                        </div>
-                        <Button
-                            type="primary"
-                            onClick={() => handleAddReview(tripcabin)}
-                            style={{ float: 'right', marginTop: '12px' }}
-                        >
-                            Add Review
-                        </Button>
-                    </>
-                )}
-                </Card>
+                            <Button
+                                type="primary"
+                                onClick={() => handleAddReview(tripcabin)}
+                                style={{ float: 'right', marginTop: '12px' }}
+                            >
+                                Add Review
+                            </Button>
+                        </>
+                    )}
+                    </Card>
 
-            ))}
+                ))}
+            </Card>
             <Modal
                 title="Add Review"
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 onOk={() => form.submit()}
+                width={800} // ปรับความกว้าง
             >
                 <Form form={form} onFinish={onFinish} layout="vertical">
-                    <Form.Item name="reviewtype" label="Review Type">
-                        <Input value={currentReviewTrip && currentReviewTrip.review_type_id !== undefined ? reviewTypes[currentReviewTrip.review_type_id] : ''} readOnly />
-                    </Form.Item>
-                    <Form.Item name="cruisetrip" label="Cruise Trip">
-                        <Input readOnly />
-                    </Form.Item>
-
-                    <Form.Item name="cabinType" label="Cabin Type">
-                        <Input readOnly />
-                    </Form.Item>
-                    <Form.Item
-                        name="review_text"
-                        label="เขียนรีวิว"
-                        rules={[{ required: true, message: 'Please enter a Review!' }]}
-                    >
-                        <Input.TextArea rows={3} />
-                    </Form.Item>
-                    <Form.Item
-                        name="service_rating"
-                        label="💼 Service"
-                        rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="value_for_money_rating"
-                        label="💵 Value for Money"
-                        rules={[{ required: true, message: 'Please provide a Price Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="cabin_rating"
-                        label="🍴 Cabin"
-                        rules={[{ required: true, message: 'Please provide a Cabin Rating!' }]}
-                    >
-                        <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                    </Form.Item>
-                    <Form.Item
-                        name="images"
-                        label="Upload Images"
-                        valuePropName="fileList"
-                        getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-                    >
-                        <Upload
-                            name="images"
-                            listType="picture"
-                            maxCount={3}
-                            multiple
-                            beforeUpload={handleCreateImageUpload}
-                        >
-                            <Button icon={<UploadOutlined />}>Click to Upload (Max: 3)</Button>
-                        </Upload>
-                    </Form.Item>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item name="reviewtype" label="Review Type">
+                                <Input
+                                    value={currentReviewTrip && currentReviewTrip.review_type_id !== undefined ? reviewTypes[currentReviewTrip.review_type_id] : ''}
+                                    readOnly
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item name="cruisetrip" label="Cruise Trip">
+                                <Input readOnly />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Form.Item name="cabinType" label="Cabin Type">
+                                <Input readOnly />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item
+                                name="review_text"
+                                label="เขียนรีวิว"
+                                rules={[{ required: true, message: 'Please enter a Review!' }]}
+                            >
+                                <Input.TextArea rows={3} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={8}>
+                            <Form.Item
+                                name="service_rating"
+                                label="⛴️ Service"
+                                rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="value_for_money_rating"
+                                label="💵 Value for Money"
+                                rules={[{ required: true, message: 'Please provide a Price Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="cabin_rating"
+                                label="🛏️ Cabin"
+                                rules={[{ required: true, message: 'Please provide a Cabin Rating!' }]}
+                            >
+                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item
+                                name="images"
+                                label="Upload Images"
+                                valuePropName="fileList"
+                                getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+                            >
+                                <Upload
+                                    name="images"
+                                    listType="picture"
+                                    maxCount={3}
+                                    multiple
+                                    beforeUpload={handleCreateImageUpload}
+                                >
+                                    <Button icon={<UploadOutlined />}>Click to Upload (Max: 3)</Button>
+                                </Upload>
+                            </Form.Item>
+                        </Col>
+                    </Row>
                 </Form>
             </Modal>
-
-
         </section>
     );
 }
