@@ -214,31 +214,31 @@ export default function NotReviewedTripPage() {
         setImageCount(getTotalValidImages());
     }, []); // เมื่อคอมโพเนนต์โหลด, กำหนดค่าเริ่มต้น
 
-        // Update filtered reviews when filters change
-        useEffect(() => {
-            let filtered = [...notReviewedTripItems];
-        
-            if (dateFilter === "asc") {
-                filtered.sort((a, b) =>
-                    new Date(a.tripPaymentDate).getTime() - new Date(b.tripPaymentDate).getTime()
-                );
-            } else if (dateFilter === "desc") {
-                filtered.sort((a, b) =>
-                    new Date(b.tripPaymentDate).getTime() - new Date(a.tripPaymentDate).getTime()
-                );
-            }
-        
-            setFilteredReviews(filtered);
-        }, [dateFilter, notReviewedTripItems]);
-        
-    
-        // Handle filter clearing
-        const clearFilters = () => {
-            setDateFilter(null);
-            setFilteredReviews(notReviewedTripItems);
-        };
+    // Update filtered reviews when filters change
+    useEffect(() => {
+        let filtered = [...notReviewedTripItems];
+
+        if (dateFilter === "asc") {
+            filtered.sort((a, b) =>
+                new Date(a.tripPaymentDate).getTime() - new Date(b.tripPaymentDate).getTime()
+            );
+        } else if (dateFilter === "desc") {
+            filtered.sort((a, b) =>
+                new Date(b.tripPaymentDate).getTime() - new Date(a.tripPaymentDate).getTime()
+            );
+        }
+
+        setFilteredReviews(filtered);
+    }, [dateFilter, notReviewedTripItems]);
+
+
+    // Handle filter clearing
+    const clearFilters = () => {
+        setDateFilter(null);
+        setFilteredReviews(notReviewedTripItems);
+    };
     return (
-        <section className="reviewed-page" id="reviewed-page">
+        <section className="reviewed-trip-page" id="reviewed-trip-page">
             {/* Filter Controls */}
             <div
                 style={{
@@ -273,11 +273,11 @@ export default function NotReviewedTripPage() {
                     title={
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                             {/* ชิดซ้าย */}
-                            <span style={{ flex: 1, textAlign: 'left' }}>
+                            <span style={{ flex: 1, textAlign: 'left', fontFamily: "'Roboto', sans-serif", }}>
                                 {`Booking Trip ID #${tripcabin.bookingTripId}`}
                             </span>
                             {/* ตรงกลาง */}
-                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
+                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>
                                 {`รหัสการชำระเงิน : ${tripcabin.tripPaymentId}, ${new Date(tripcabin.tripPaymentDate ?? '').toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
@@ -299,6 +299,7 @@ export default function NotReviewedTripPage() {
                                         height: '40px', // กำหนดความสูงของปุ่ม
                                         padding: '0 16px', // ปรับ padding ภายในปุ่ม
                                         fontSize: '14px', // ปรับขนาดข้อความ
+                                        fontFamily: "'Roboto', sans-serif",
                                     }}
                                 >
                                     {expandedTripCabin === tripcabin.paymentid ? 'Show Less' : 'Show More'}
@@ -306,7 +307,12 @@ export default function NotReviewedTripPage() {
                             </div>
                         </div>
                     }
-                    style={{ marginBottom: '16px' }}
+                    style={{
+                        marginBottom: '20px',
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        padding: '20px',
+                    }}
                 >{expandedTripCabin === tripcabin.paymentid ? (
                     <>
                         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>

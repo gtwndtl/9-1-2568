@@ -159,7 +159,7 @@ function PromotionTripPage() {
       <NavbarAdmin/>
       <div className="promofoodcode-container">
         {/* กลับไปหน้าเมนูอาหาร */}
-        <Link to={"/promotionadmin"}>
+        <Link to={"/admin/promotion"}>
           <IoChevronBackSharp size={30} className="back-to-menu" />
         </Link>
         {contextHolder}

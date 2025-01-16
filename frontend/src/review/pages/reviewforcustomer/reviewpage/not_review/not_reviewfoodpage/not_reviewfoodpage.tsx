@@ -10,6 +10,7 @@ import { FoodServicePaymentInterface } from "../../../../../../payment/interface
 import { MenuInterface } from "../../../../../../food_service/interface/IMenu";
 import { GetFoodServicePayment } from "../../../../../../payment/service/https/FoodServicePaymentAPI";
 import { GetOrder } from "../../../../../../food_service/service/https/OrderAPI";
+import "./not_reviewfoodpage.css";
 
 const customerID = Number(localStorage.getItem('id'));
 
@@ -226,17 +227,17 @@ export default function NotReviewedTripPage() {
     };
 
     return (
-        <section className="reviewed-page" id="reviewed-page">
+        <section className="reviewed-food-page" id="reviewed-food-page">
             {/* Filter Controls */}
             <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    padding: "16px 20px",
-                    backgroundColor: "#f9f9f9",
-                    borderRadius: "12px",
-                    marginBottom: "24px",
-                }}
+        style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "16px 20px",
+            backgroundColor: "#FFFFFF",
+            borderRadius: "12px",
+            marginBottom: "24px",
+          }}
             >
                 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
@@ -254,14 +255,14 @@ export default function NotReviewedTripPage() {
                     Clear Filters
                 </Button>
             </div>
-            {notReviewedFoodItems.map((order) => (
+            {filteredReviews.map((order) => (
                 <Card
                     key={order.id}
                     type="inner"
                     title={
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
-                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                            <span style={{ flex: 1, textAlign: 'left'}}>{`Order #${order.id}`}</span>
+                            <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888'}}>
                                 {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
@@ -285,7 +286,12 @@ export default function NotReviewedTripPage() {
                             </div>
                         </div>
                     }
-                    style={{ marginBottom: '16px' }}
+                    style={{
+                        marginBottom: '20px',
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        padding: '20px',
+                      }}
                 >
                     {expandedOrder === order.id ? (
                         <>
@@ -434,8 +440,6 @@ export default function NotReviewedTripPage() {
                     </Form.Item>
                 </Form>
             </Modal>
-
-
         </section>
     );
 }

@@ -47,7 +47,11 @@ const RouterComponent: React.FC = () => {
         <>
           <Link to={"/food-service/login"}>to food service</Link><br />
           <Link to={"/trip-summary"}>trip</Link><br />
-          <Link to={"/admin"}>Admin</Link>
+          <Link to={"/admin"}>Admin</Link><br />
+          <Link to={"/promotion/trip"}>Promotion Trip</Link><br />
+          <Link to={"/promotion/food"}>Promotion Food</Link><br />
+          <Link to={"/reviews/trip"}>All Trip Review</Link><br />
+          <Link to={"/reviews/food-service"}>All Food Review</Link><br />
         </>
       ),
     },
