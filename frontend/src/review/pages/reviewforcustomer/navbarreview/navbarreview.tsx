@@ -21,7 +21,7 @@ export default function NavBarReview() {
                 selectedPage.includes("Reviewed") ? "active" : ""
               }`}
             >
-              Reviewed ▼
+              Reviewed
             </button>
             <ul className="dropdown-menu">
               <li onClick={() => setSelectedPage("FoodReviewed")}>Food</li>
@@ -36,7 +36,7 @@ export default function NavBarReview() {
                 selectedPage.includes("NotReviewed") ? "active" : ""
               }`}
             >
-              Not Reviewed ▼
+              Not Reviewed
             </button>
             <ul className="dropdown-menu">
               <li onClick={() => setSelectedPage("FoodNotReviewed")}>Food</li>

@@ -362,7 +362,7 @@ export default function TripReviewedPage() {
                     key={review.ID}
                     type="inner"
                     title={
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%'}}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
                             <img
                                 src={userInfo.picture}
                                 alt="User"
@@ -584,7 +584,7 @@ export default function TripReviewedPage() {
                 visible={isEditModalVisible}
                 title={
                     <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>
-                        ✏️ Edit Review
+                        Edit Review
                     </div>
                 }
                 onCancel={handleCancelEdit}
@@ -613,102 +613,93 @@ export default function TripReviewedPage() {
                 }}
             >
                 <Form form={form} layout="vertical">
-                    <div>
+                    {/* Trip Names and Review Type in one row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
                         <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    📝 Cruise Trip Names
-                                </span>
-                            }
+                            label={<span style={{ fontWeight: 'bold', color: '#555' }}>📝 Cruise Trip Names</span>}
                             name="tripName"
-                            rules={[{ required: true, message: 'Please enter menu names' }]}
+                            rules={[{ required: true, message: 'Please enter cruise trip names' }]}
+                            style={{ flex: 1 }}
                         >
-                            <Input disabled style={{ backgroundColor: '#f5f5f5', borderRadius: '8px' }} />
+                            <Input readOnly />
                         </Form.Item>
 
                         <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    📖 Review Type
-                                </span>
-                            }
+                            label={<span style={{ fontWeight: 'bold', color: '#555' }}>📖 Review Type</span>}
                             name="reviewType"
                             rules={[{ required: true, message: 'Please select review type' }]}
+                            style={{ flex: 1 }}
                         >
-                            <Input disabled style={{ backgroundColor: '#f5f5f5', borderRadius: '8px' }} />
+                            <Input readOnly />
                         </Form.Item>
+                    </div>
 
-                        <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    💬 Review Text
-                                </span>
-                            }
-                            name="reviewText"
-                            rules={[{ required: true, message: 'Please enter review text' }]}
-                        >
-                            <Input.TextArea
-                                rows={4}
-                                placeholder="Write your review here..."
-                                style={{
-                                    borderRadius: '8px',
-                                    border: '1px solid #ccc',
-                                    backgroundColor: '#fefefe',
-                                }}
-                            />
-                        </Form.Item>
+                    {/* Review Text */}
+                    <Form.Item
+                        label={<span style={{ fontWeight: 'bold', color: '#555' }}>💬 Review Text</span>}
+                        name="reviewText"
+                        rules={[{ required: true, message: 'Please enter review text' }]}
+                    >
+                        <Input.TextArea
+                            rows={4}
+                            placeholder="Write your review here..."
+                            style={{ borderRadius: '8px', border: '1px solid #ccc', backgroundColor: '#fefefe' }}
+                        />
+                    </Form.Item>
 
+                    {/* Ratings */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
                         <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    💼 Service Rating
-                                </span>
-                            }
+                            label={<span style={{ fontWeight: 'bold', color: '#555' }}>⛴️ Service Rating</span>}
                             name="serviceRating"
-                            rules={[{ required: true, message: 'Please rate the price' }]}
+                            rules={[{ required: true, message: 'Please rate the service' }]}
+                            style={{ flex: 1 }}
                         >
                             <Rate allowHalf style={{ fontSize: '18px', color: '#4CAF50' }} />
                         </Form.Item>
+
                         <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    🍴 Cabin Rating
-                                </span>
-                            }
+                            label={<span style={{ fontWeight: 'bold', color: '#555' }}>🛏️ Cabin Rating</span>}
                             name="cabinRating"
-                            rules={[{ required: true, message: 'Please rate the taste' }]}
+                            rules={[{ required: true, message: 'Please rate the cabin' }]}
+                            style={{ flex: 1 }}
                         >
                             <Rate allowHalf style={{ fontSize: '18px', color: '#FF5722' }} />
                         </Form.Item>
+
                         <Form.Item
-                            label={
-                                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                                    💵 Value For Money Rating
-                                </span>
-                            }
+                            label={<span style={{ fontWeight: 'bold', color: '#555' }}>💵 Value For Money Rating</span>}
                             name="valueForMoneyRating"
-                            rules={[{ required: true, message: 'Please rate the price' }]}
+                            rules={[{ required: true, message: 'Please rate the value for money' }]}
+                            style={{ flex: 1 }}
                         >
                             <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} />
                         </Form.Item>
                     </div>
 
+                    {/* Upload Images */}
                     <div style={{ marginTop: '20px' }}>
-                        <Form.Item label={<strong>🖼️ Review Images
-                            <span
-                                style={{
-                                    backgroundColor: '#f0f0f0',
-                                    borderRadius: '8px',
-                                    padding: '2px 8px',
-                                    fontSize: '12px',
-                                    color: 'red',
-                                    border: '1px dashed #ccc',
-                                    marginLeft: '8px', // เพิ่มช่องว่างระหว่างข้อความและตัวนับ
-                                }}
-                            >
-                                {getTotalValidImages()} / {maxImages}
-                            </span>
-                        </strong>} name="pictures">
+                        <Form.Item
+                            label={
+                                <strong>
+                                    🖼️ Review Images
+                                    <span
+                                        style={{
+                                            backgroundColor: '#f0f0f0',
+                                            borderRadius: '8px',
+                                            padding: '2px 8px',
+                                            fontSize: '12px',
+                                            color: 'red',
+                                            border: '1px dashed #ccc',
+                                            marginLeft: '8px',
+                                        }}
+                                    >
+                                        {getTotalValidImages()} / {maxImages}
+                                    </span>
+                                </strong>
+                            }
+                            name="pictures"
+                        >
                             <div
                                 style={{
                                     display: 'flex',
@@ -765,7 +756,7 @@ export default function TripReviewedPage() {
                                     accept="image/*"
                                     beforeUpload={handleEditUpload}
                                     showUploadList={false}
-                                    disabled={getTotalValidImages() >= 3} // Disable upload button when 3 images are uploaded
+                                    disabled={getTotalValidImages() >= 3}
                                 >
                                     <Button
                                         icon={<UploadOutlined />}
@@ -780,8 +771,8 @@ export default function TripReviewedPage() {
                                             backgroundColor: '#f9f9f9',
                                             color: '#555',
                                             fontSize: '16px',
-                                            flexDirection: 'column', // Stack the icon and text vertically
-                                            textAlign: 'center', // Center the text below the icon
+                                            flexDirection: 'column',
+                                            textAlign: 'center',
                                         }}
                                     >
                                         <div>Upload</div>
@@ -793,6 +784,7 @@ export default function TripReviewedPage() {
                     </div>
                 </Form>
             </Modal>
+
 
         </section>
     );

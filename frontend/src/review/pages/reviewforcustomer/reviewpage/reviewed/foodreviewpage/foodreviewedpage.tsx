@@ -388,7 +388,7 @@ export default function FoodReviewedPage() {
 
 
           {/* เนื้อหารีวิว */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px' ,maxWidth:'1400px'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', maxWidth: '1400px' }}>
             <div style={{ flex: 1 }}>
               <h2 style={{
                 marginBottom: '16px',
@@ -602,184 +602,170 @@ export default function FoodReviewedPage() {
         }}
       >
         <Form form={form} layout="vertical">
-          <div>
+          {/* Menu Names and Review Type */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
             <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  📝 Menu Names
-                </span>
-              }
+              label={<span style={{ fontWeight: 'bold', color: '#555' }}>📝 Menu Names</span>}
               name="menuNames"
+              style={{ flex: 1 }}
             >
               <Input readOnly />
             </Form.Item>
 
             <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  📖 Review Type
-                </span>
-              }
+              label={<span style={{ fontWeight: 'bold', color: '#555' }}>📖 Review Type</span>}
               name="reviewType"
+              style={{ flex: 1 }}
             >
               <Input readOnly />
             </Form.Item>
+          </div>
 
-            <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  💬 Review Text
-                </span>
-              }
-              name="reviewText"
-              rules={[{ required: true, message: 'Please enter review text' }]}
-            >
-              <Input.TextArea
-                rows={4}
-                placeholder="Write your review here..."
-                style={{
-                  borderRadius: '8px',
-                  border: '1px solid #ccc',
-                  backgroundColor: '#fefefe',
-                }}
-              />
-            </Form.Item>
+          {/* Review Text */}
+          <Form.Item
+            label={<span style={{ fontWeight: 'bold', color: '#555' }}>💬 Review Text</span>}
+            name="reviewText"
+            rules={[{ required: true, message: 'Please enter review text' }]}
+          >
+            <Input.TextArea
+              rows={4}
+              placeholder="Write your review here..."
+              style={{ borderRadius: '8px', border: '1px solid #ccc', backgroundColor: '#fefefe' }}
+            />
+          </Form.Item>
 
+          {/* Ratings */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
             <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  💼 Service Rating
-                </span>
-              }
+              label={<span style={{ fontWeight: 'bold', color: '#555' }}>💼 Service Rating</span>}
               name="serviceRating"
-              rules={[{ required: true, message: 'Please rate the price' }]}
+              rules={[{ required: true, message: 'Please rate the service' }]}
+              style={{ flex: 1 }}
             >
               <Rate allowHalf style={{ fontSize: '18px', color: '#4CAF50' }} />
             </Form.Item>
+
             <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  🍴 Taste Rating
-                </span>
-              }
+              label={<span style={{ fontWeight: 'bold', color: '#555' }}>🍴 Taste Rating</span>}
               name="tasteRating"
               rules={[{ required: true, message: 'Please rate the taste' }]}
+              style={{ flex: 1 }}
             >
               <Rate allowHalf style={{ fontSize: '18px', color: '#FF5722' }} />
             </Form.Item>
+
             <Form.Item
-              label={
-                <span style={{ fontWeight: 'bold', color: '#555' }}>
-                  💵 Value For Money Rating
-                </span>
-              }
+              label={<span style={{ fontWeight: 'bold', color: '#555' }}>💵 Value For Money Rating</span>}
               name="valueForMoneyRating"
-              rules={[{ required: true, message: 'Please rate the price' }]}
+              rules={[{ required: true, message: 'Please rate the value for money' }]}
+              style={{ flex: 1 }}
             >
               <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} />
             </Form.Item>
           </div>
 
-          <div style={{ marginTop: '20px' }}>
-            <Form.Item label={<strong>🖼️ Review Images
-              <span
-                style={{
-                  backgroundColor: '#f0f0f0',
-                  borderRadius: '8px',
-                  padding: '2px 8px',
-                  fontSize: '12px',
-                  color: 'red',
-                  border: '1px dashed #ccc',
-                  marginLeft: '8px', // เพิ่มช่องว่างระหว่างข้อความและตัวนับ
-                }}
-              >
-                {getTotalValidImages()} / {maxImages}
-              </span>
-            </strong>} name="pictures">
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '15px',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  padding: '10px',
-                  background: '#ffffff',
-                  borderRadius: '8px',
-                  boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-                {/* Display Existing Images */}
-                {form.getFieldValue('pictures') &&
-                  form.getFieldValue('pictures').length > 0 &&
-                  form.getFieldValue('pictures').map((pic: string, idx: number) => (
-                    <div
-                      key={idx}
-                      style={{
-                        position: 'relative',
-                        marginBottom: '10px',
-                        borderRadius: '8px',
-                        overflow: 'hidden',
-                        border: '1px solid #ddd',
-                      }}
-                    >
-                      <AntImage
-                        src={pic}
-                        alt={`Review Pic ${idx + 1}`}
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          objectFit: 'cover',
-                        }}
-                      />
-                      <Button
-                        icon={<DeleteOutlined />}
-                        size="small"
-                        style={{
-                          position: 'absolute',
-                          top: '5px',
-                          right: '5px',
-                          backgroundColor: '#ff4d4f',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '50%',
-                        }}
-                        onClick={() => handleImageDelete(idx)}
-                      />
-                    </div>
-                  ))}
-                {/* Upload New Image */}
-                <Upload
-                  accept="image/*"
-                  beforeUpload={handleEditUpload}
-                  showUploadList={false}
-                  disabled={getTotalValidImages() >= 3} // Disable upload button when 3 images are uploaded
+          {/* Upload Images */}
+          <Form.Item
+            label={
+              <strong>
+                🖼️ Review Images
+                <span
+                  style={{
+                    backgroundColor: '#f0f0f0',
+                    borderRadius: '8px',
+                    padding: '2px 8px',
+                    fontSize: '12px',
+                    color: 'red',
+                    border: '1px dashed #ccc',
+                    marginLeft: '8px',
+                  }}
                 >
+                  {getTotalValidImages()} / {maxImages}
+                </span>
+              </strong>
+            }
+            name="pictures"
+          >
+            <div
+              style={{
+                display: 'flex',
+                gap: '15px',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                padding: '10px',
+                background: '#ffffff',
+                borderRadius: '8px',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              {/* Existing Images */}
+              {form.getFieldValue('pictures')?.map((pic: string, idx: number) => (
+                <div
+                  key={idx}
+                  style={{
+                    position: 'relative',
+                    marginBottom: '10px',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    border: '1px solid #ddd',
+                  }}
+                >
+                  <AntImage
+                    src={pic}
+                    alt={`Review Pic ${idx + 1}`}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  />
                   <Button
-                    icon={<UploadOutlined />}
+                    icon={<DeleteOutlined />}
+                    size="small"
                     style={{
-                      width: '100px',
-                      height: '100px',
-                      borderRadius: '8px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      border: '1px dashed #bbb',
-                      backgroundColor: '#f9f9f9',
-                      color: '#555',
-                      fontSize: '16px',
-                      flexDirection: 'column', // Stack the icon and text vertically
-                      textAlign: 'center', // Center the text below the icon
+                      position: 'absolute',
+                      top: '5px',
+                      right: '5px',
+                      backgroundColor: '#ff4d4f',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '50%',
                     }}
-                  >
-                    <div>Upload</div>
-                    <div>(Max: 3)</div>
-                  </Button>
-                </Upload>
-              </div>
-            </Form.Item>
-          </div>
+                    onClick={() => handleImageDelete(idx)}
+                  />
+                </div>
+              ))}
+
+              {/* Upload New Image */}
+              <Upload
+                accept="image/*"
+                beforeUpload={handleEditUpload}
+                showUploadList={false}
+                multiple
+                maxCount={3}
+              >
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    border: '1px dashed #bbb',
+                    backgroundColor: '#f9f9f9',
+                    color: '#555',
+                    fontSize: '16px',
+                    flexDirection: 'column',
+                    textAlign: 'center',
+                  }}
+                >
+                  <div>Upload</div>
+                  <div>(Max: 3)</div>
+                </Button>
+              </Upload>
+            </div>
+          </Form.Item>
         </Form>
       </Modal>
+
 
     </section>
   );
