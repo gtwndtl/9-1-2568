@@ -23,7 +23,7 @@ type Review struct {
 	ReviewType   *Review_type `gorm:"foreignKey: review_type_id" json:"review_type"`
 
 	OrderID uint         `json:"order_id"`
-	Order   *Review_type `gorm:"foreignKey: order_id" json:"order"`
+	Order   *Orders `gorm:"foreignKey: order_id" json:"order"`
 
 	FoodServicePaymentID uint                `json:"food_service_payment_id"`
 	FoodServicePayment   *FoodServicePayment `gorm:"foreignKey:food_service_payment_id" json:"food_service_payment"` // Referencing 'FoodServicePayment' struct from 'entity' package

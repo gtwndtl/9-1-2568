@@ -315,13 +315,23 @@ function PromotionCreate() {
                             <>
                               <Col xs={24} sm={24} md={12}>
                                 <Form.Item
-                                  label={<Text strong>ส่วนลด (เปอร์เซ็นต์)</Text>}
+                                  label={<Text strong>ส่วนลด (%)</Text>}
                                   name="discount"
-                                  rules={[{ required: true, message: "กรุณากรอกส่วนลด!" }]}
+                                  rules={[
+                                    { required: true, message: "กรุณากรอกส่วนลด!" },
+                                    { pattern: /^[0-9]*$/, message: "กรุณากรอกเฉพาะตัวเลข!" },
+                                    {
+                                      validator: (_, value) =>
+                                        value && (value < 1 || value > 100)
+                                          ? Promise.reject("กรุณากรอกตัวเลขระหว่าง 1 ถึง 100!")
+                                          : Promise.resolve(),
+                                    },
+                                  ]}
                                 >
-                                  <InputNumber min={0} max={100} addonAfter="%" style={{ width: "100%" }} />
+                                  <Input addonAfter="%" />
                                 </Form.Item>
                               </Col>
+
                               <Col xs={24} sm={24} md={12}>
                                 <Form.Item
                                   label={<Text strong>ส่วนลดสูงสุด</Text>}
@@ -344,7 +354,7 @@ function PromotionCreate() {
                           ) : (
                             <Col xs={24} sm={24} md={12}>
                               <Form.Item
-                                label={<Text strong>ส่วนลด (จำนวนเงิน)</Text>}
+                                label={<Text strong>ส่วนลด (฿)</Text>}
                                 name="discount"
                                 rules={[
                                   { required: true, message: "กรุณากรอกส่วนลด!" },
