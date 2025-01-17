@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import Navbar from "../../../adminpage/navbar";
 import "./index.css";
 import { ColumnType } from "antd/es/table";
+import Loader from "../../../components/third-party/Loader";
 
 function Promotion() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Promotion() {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [selectedPromotion, setSelectedPromotion] = useState<PromotionInterface | null>(null);
   const [searchCode, setSearchCode] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true); // State for loader
 
   const [filters, setFilters] = useState({
     type_id: null,
@@ -393,11 +395,27 @@ function Promotion() {
 
 
   useEffect(() => {
-    getPromotions();
-    getPromotionTypes();
-    getPromotionStatuses();
-    getPromotionDiscounts();
+    const fetchData = async () => {
+      setIsLoading(true); // Show loader
+
+      // Create a minimum delay of 3 seconds
+      const minimumDelay = new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Fetch data
+      const fetchPromotions = getPromotions();
+      const fetchTypes = getPromotionTypes();
+      const fetchStatuses = getPromotionStatuses();
+      const fetchDiscounts = getPromotionDiscounts();
+
+      // Wait for both data fetching and minimum delay
+      await Promise.all([fetchPromotions, fetchTypes, fetchStatuses, fetchDiscounts, minimumDelay]);
+
+      setIsLoading(false); // Hide loader after data is fetched and delay is complete
+    };
+
+    fetchData();
   }, []);
+
 
   const filteredPromotions = promotions.filter(
     (promo) =>
@@ -424,212 +442,219 @@ function Promotion() {
   return (
     <div>
       <Navbar />
-      <div className="promotion-admin-page" style={{ padding: "20px" }}>
-        <div className="promotion-layout-container">
-          <div className="actions-container">
-            <div className="button-create">
-              <button type="button" className="promotion-create-button" onClick={() => navigate(`/admin/promotion/create`)}>
-                <span className="promotion-create-button__text">Add Code</span>
-                <span className="promotion-create-button__icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke-linejoin="round"
-                    stroke-linecap="round"
-                    stroke="currentColor"
-                    height="24"
-                    fill="none"
-                    className="svg"
-                  >
-                    <line y2="19" y1="5" x2="12" x1="12"></line>
-                    <line y2="12" y1="12" x2="19" x1="5"></line>
-                  </svg>
-                </span>
-              </button>
-            </div>
-            <div className="filter-search">
-              <div className="SearchInputContainer">
-                <input
-                  placeholder="Search"
-                  id="input"
-                  className="search-input"
-                  name="text"
-                  type="text"
-                  value={searchCode}
-                  onChange={(e) => setSearchCode(e.target.value)}
-                />
-                <label className="labelforsearch" htmlFor="input">
-                  <svg className="searchIcon" viewBox="0 0 512 512">
+      {isLoading ? (
+        <div className="spinner-review-container">
+          <Loader />
+        </div>
+      ) : (
+        <div className="promotion-admin-page" style={{ padding: "20px" }}>
+          <div className="promotion-layout-container">
+            <div className="actions-container">
+              <div className="button-create">
+                <button type="button" className="promotion-create-button" onClick={() => navigate(`/admin/promotion/create`)}>
+                  <span className="promotion-create-button__text">Add Code</span>
+                  <span className="promotion-create-button__icon">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      stroke="currentColor"
+                      height="24"
+                      fill="none"
+                      className="svg"
+                    >
+                      <line y2="19" y1="5" x2="12" x1="12"></line>
+                      <line y2="12" y1="12" x2="19" x1="5"></line>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div className="filter-search">
+                <div className="SearchInputContainer">
+                  <input
+                    placeholder="Search"
+                    id="input"
+                    className="search-input"
+                    name="text"
+                    type="text"
+                    value={searchCode}
+                    onChange={(e) => setSearchCode(e.target.value)}
+                  />
+                  <label className="labelforsearch" htmlFor="input">
+                    <svg className="searchIcon" viewBox="0 0 512 512">
+                      <path
+                        d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                      ></path>
+                    </svg>
+                  </label>
+                </div>
+
+                <button title="filter" className="filter" onClick={() => setIsFilterDrawerOpen(true)}>
+                  <svg viewBox="0 0 512 512" height="1em">
                     <path
-                      d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                      d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
                     ></path>
                   </svg>
-                </label>
-              </div>
+                </button>
 
-              <button title="filter" className="filter" onClick={() => setIsFilterDrawerOpen(true)}>
-                <svg viewBox="0 0 512 512" height="1em">
-                  <path
-                    d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
-                  ></path>
-                </svg>
-              </button>
-
-              <Drawer
-                title="กรองโปรโมชั่น"
-                placement="right"
-                closable
-                onClose={() => setIsFilterDrawerOpen(false)}
-                open={isFilterDrawerOpen}
-                width={300}
-                className="promotion-filter-drawer"
-              >
-                <div className="promotion-filter-section">
-                  <h4 style={{ fontSize: "16px", marginBottom: "8px" }}>ประเภทโปรโมชั่น</h4>
-                  <Select
-                    placeholder="เลือกประเภทโปรโมชั่น"
-                    value={filters.type_id}
-                    onChange={(value) =>
-                      setFilters((prev) => ({ ...prev, type_id: value }))
-                    }
-                    allowClear
-                  >
-                    {Object.entries(promotionTypes).map(([id, type]) => (
-                      <Select.Option key={id} value={parseInt(id)}>
-                        {type}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="promotion-filter-section">
-                  <h4>สถานะ</h4>
-                  <Select
-                    placeholder="เลือกสถานะ"
-                    style={{
-                      width: "100%",
-                      borderRadius: "8px",
-                    }}
-                    value={filters.status_id}
-                    onChange={(value) =>
-                      setFilters((prev) => ({ ...prev, status_id: value }))
-                    }
-                    allowClear
-                  >
-                    {Object.entries(promotionStatuses).map(([id, status]) => (
-                      <Select.Option key={id} value={parseInt(id)}>
-                        {status}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="promotion-filter-section">
-                  <h4>ประเภทส่วนลด</h4>
-                  <Select
-                    placeholder="เลือกประเภทส่วนลด"
-                    style={{
-                      width: "100%",
-                      borderRadius: "8px",
-                    }}
-                    value={filters.discount_id}
-                    onChange={(value) =>
-                      setFilters((prev) => ({ ...prev, discount_id: value }))
-                    }
-                    allowClear
-                  >
-                    {Object.entries(promotionDiscounts).map(([id, discount]) => (
-                      <Select.Option key={id} value={parseInt(id)}>
-                        {discount}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </div>
-                <Button
-                  type="primary"
-                  onClick={applyFilters}
-                  className="promotion-usefilter-button"
+                <Drawer
+                  title="กรองโปรโมชั่น"
+                  placement="right"
+                  closable
+                  onClose={() => setIsFilterDrawerOpen(false)}
+                  open={isFilterDrawerOpen}
+                  width={300}
+                  className="promotion-filter-drawer"
                 >
-                  ใช้ตัวกรอง
-                </Button>
-                <Button
-                  className="promtion-reset-filter-button"
-                  type="default"
-                  onClick={() => {
-                    setFilters({ type_id: null, status_id: null, discount_id: null });
-                    setPromotions(originalPromotions); // คืนค่าข้อมูลต้นฉบับ
-                    setIsFilterDrawerOpen(false);
+                  <div className="promotion-filter-section">
+                    <h4 style={{ fontSize: "16px", marginBottom: "8px" }}>ประเภทโปรโมชั่น</h4>
+                    <Select
+                      placeholder="เลือกประเภทโปรโมชั่น"
+                      value={filters.type_id}
+                      onChange={(value) =>
+                        setFilters((prev) => ({ ...prev, type_id: value }))
+                      }
+                      allowClear
+                    >
+                      {Object.entries(promotionTypes).map(([id, type]) => (
+                        <Select.Option key={id} value={parseInt(id)}>
+                          {type}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div className="promotion-filter-section">
+                    <h4>สถานะ</h4>
+                    <Select
+                      placeholder="เลือกสถานะ"
+                      style={{
+                        width: "100%",
+                        borderRadius: "8px",
+                      }}
+                      value={filters.status_id}
+                      onChange={(value) =>
+                        setFilters((prev) => ({ ...prev, status_id: value }))
+                      }
+                      allowClear
+                    >
+                      {Object.entries(promotionStatuses).map(([id, status]) => (
+                        <Select.Option key={id} value={parseInt(id)}>
+                          {status}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <div className="promotion-filter-section">
+                    <h4>ประเภทส่วนลด</h4>
+                    <Select
+                      placeholder="เลือกประเภทส่วนลด"
+                      style={{
+                        width: "100%",
+                        borderRadius: "8px",
+                      }}
+                      value={filters.discount_id}
+                      onChange={(value) =>
+                        setFilters((prev) => ({ ...prev, discount_id: value }))
+                      }
+                      allowClear
+                    >
+                      {Object.entries(promotionDiscounts).map(([id, discount]) => (
+                        <Select.Option key={id} value={parseInt(id)}>
+                          {discount}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </div>
+                  <Button
+                    type="primary"
+                    onClick={applyFilters}
+                    className="promotion-usefilter-button"
+                  >
+                    ใช้ตัวกรอง
+                  </Button>
+                  <Button
+                    className="promtion-reset-filter-button"
+                    type="default"
+                    onClick={() => {
+                      setFilters({ type_id: null, status_id: null, discount_id: null });
+                      setPromotions(originalPromotions); // คืนค่าข้อมูลต้นฉบับ
+                      setIsFilterDrawerOpen(false);
+                    }}
+                  >
+                    รีเซ็ตตัวกรอง
+                  </Button>
+                </Drawer>
+                <Modal
+                  title={<h2 style={{ textAlign: 'center', margin: 0 }}>ยืนยันการลบโปรโมชั่น</h2>}
+                  open={isModalOpen}
+                  onOk={handleDelete}
+                  onCancel={() => setIsModalOpen(false)}
+                  okText="ยืนยัน"
+                  cancelText="ยกเลิก"
+                  centered
+                  bodyStyle={{
+                    textAlign: 'center',
+                    padding: '24px',
+                    fontFamily: 'Arial, Helvetica, sans-serif',
                   }}
+                  okButtonProps={{
+                    danger: true,
+                    style: { backgroundColor: '#ff4d4f', border: 'none', fontWeight: 'bold' },
+                  }}
+                  cancelButtonProps={{
+                    style: { backgroundColor: '#d9d9d9', border: 'none', fontWeight: 'bold' },
+                  }}
+                  width={400}
                 >
-                  รีเซ็ตตัวกรอง
-                </Button>
-              </Drawer>
-              <Modal
-                title={<h2 style={{ textAlign: 'center', margin: 0 }}>ยืนยันการลบโปรโมชั่น</h2>}
-                open={isModalOpen}
-                onOk={handleDelete}
-                onCancel={() => setIsModalOpen(false)}
-                okText="ยืนยัน"
-                cancelText="ยกเลิก"
-                centered
-                bodyStyle={{
-                  textAlign: 'center',
-                  padding: '24px',
-                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  <p style={{ fontSize: '16px', marginBottom: '16px' }}>
+                    คุณต้องการลบโปรโมชั่นนี้หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้
+                  </p>
+                  <p style={{ fontSize: '14px', color: 'gray' }}>
+                    กรุณายืนยันการกระทำของคุณด้านล่าง
+                  </p>
+                </Modal>
+              </div>
+            </div>
+            <div className="table-container">
+              <Table
+                className="promotion-ant-table"
+                rowKey="ID"
+                columns={columns}
+                dataSource={filteredPromotions}
+                pagination={{
+                  current: currentPage,
+                  pageSize: pageSize,
+                  showSizeChanger: true,
+                  pageSizeOptions: ['7', '10', '20'],
+                  onChange: handleTableChange,
+                  onShowSizeChange: (size) => setPageSize(size),
                 }}
-                okButtonProps={{
-                  danger: true,
-                  style: { backgroundColor: '#ff4d4f', border: 'none', fontWeight: 'bold' },
-                }}
-                cancelButtonProps={{
-                  style: { backgroundColor: '#d9d9d9', border: 'none', fontWeight: 'bold' },
-                }}
-                width={400}
-              >
-                <p style={{ fontSize: '16px', marginBottom: '16px' }}>
-                  คุณต้องการลบโปรโมชั่นนี้หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้
-                </p>
-                <p style={{ fontSize: '14px', color: 'gray' }}>
-                  กรุณายืนยันการกระทำของคุณด้านล่าง
-                </p>
-              </Modal>
+              />
+            </div>
+
+          </div>
+          <div className="promotion-summary">
+            <div className="summary-item">
+              <span className="summary-title">Total Code:</span>
+              <span className="summary-value">{totalPromotions}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-title">Total Trip and Cabin:</span>
+              <span className="summary-value">{type1Promotions}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-title">Total Food:</span>
+              <span className="summary-value">{type2Promotions}</span>
             </div>
           </div>
-          <div className="table-container">
-            <Table
-              className="promotion-ant-table"
-              rowKey="ID"
-              columns={columns}
-              dataSource={filteredPromotions}
-              pagination={{
-                current: currentPage,
-                pageSize: pageSize,
-                showSizeChanger: true,
-                pageSizeOptions: ['7', '10', '20'],
-                onChange: handleTableChange,
-                onShowSizeChange: (size) => setPageSize(size),
-              }}
-            />
-          </div>
-
         </div>
-        <div className="promotion-summary">
-          <div className="summary-item">
-            <span className="summary-title">Total Code:</span>
-            <span className="summary-value">{totalPromotions}</span>
-          </div>
-          <div className="summary-item">
-            <span className="summary-title">Total Trip and Cabin:</span>
-            <span className="summary-value">{type1Promotions}</span>
-          </div>
-          <div className="summary-item">
-            <span className="summary-title">Total Food:</span>
-            <span className="summary-value">{type2Promotions}</span>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
+
 
 export default Promotion;

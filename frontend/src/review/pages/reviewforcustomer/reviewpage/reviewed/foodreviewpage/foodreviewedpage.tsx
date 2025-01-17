@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Dropdown, Form, Input, Menu, message, Modal, Rate, Image as AntImage, Select, } from "antd";
+import { Button, Card, Dropdown, Form, Input, Menu, message, Modal, Rate, Select, } from "antd";
 import { DeleteReviewById, GetReviews, GetReviewTypes, UpdateReviewById } from "../../../../../service/ReviewAPI";
 import { ReviewInterface } from "../../../../../interface/Review";
 import { GetMenu } from "../../../../../../food_service/service/https/MenuAPI";
@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Upload, { RcFile } from "antd/es/upload";
 import { GetUsersById } from "../../../../../../services/https";
 import "./foodreviewedpage.css";
+import SpinnerReview from "../../../reviewspinner/spinner_review";
 
 const customerID = Number(localStorage.getItem('id'));
 
@@ -28,6 +29,7 @@ export default function FoodReviewedPage() {
   const [ratingFilter, setRatingFilter] = useState<number | null>(null);
   const [dateFilter, setDateFilter] = useState<string | null>(null);
   const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // State to manage loading
 
 
   // Fetch Reviewed Items
@@ -35,52 +37,64 @@ export default function FoodReviewedPage() {
     const fetchReviewedItems = async () => {
       if (!isReviewedLoaded) {
         try {
-          const reviewResponse = await GetReviews();
-          if (reviewResponse.status !== 200) throw new Error('Failed to fetch reviews.');
-          const allReviews = reviewResponse.data;
+          setIsLoading(true); // Show spinner
 
-          // กรองเฉพาะรีวิวของ Customer ID
-          const customerReviews = allReviews.filter(
-            (review: any) => review.customer_id === customerID && review.review_type_id === 2
-          );
+          const fetchData = new Promise<void>(async (resolve) => {
+            const reviewResponse = await GetReviews();
+            if (reviewResponse.status !== 200) throw new Error("Failed to fetch reviews.");
+            const allReviews = reviewResponse.data;
 
-          // ดึงข้อมูล OrderDetail
-          const orderDetailResponse = await GetOrderDetail();
-          if (orderDetailResponse.status !== 200) throw new Error('Failed to fetch order details.');
-          const allOrderDetails = orderDetailResponse.data;
-
-          // ดึงข้อมูล Menu
-          const menuResponse = await GetMenu();
-          if (menuResponse.status !== 200) throw new Error('Failed to fetch menu.');
-          const allMenus = menuResponse.data;
-
-          // สร้าง Map ของ Menu ID กับชื่อเมนู
-          const menuMap = allMenus.reduce((acc: Record<number, string>, menu: any) => {
-            acc[menu.ID] = menu.MenuName;
-            return acc;
-          }, {});
-
-          // เชื่อมโยงชื่อเมนูเข้ากับรีวิว
-          const enrichedReviews = customerReviews.map((review: any) => {
-            const orderDetails = allOrderDetails.filter(
-              (detail: any) => detail.OrderID === review.order_id
+            // Filter reviews for the current customer
+            const customerReviews = allReviews.filter(
+              (review: any) => review.customer_id === customerID && review.review_type_id === 2
             );
-            return {
-              ...review,
-              menuNames: orderDetails.map((detail: any) => menuMap[detail.MenuID] || 'Unknown'),
-            };
+
+            const orderDetailResponse = await GetOrderDetail();
+            if (orderDetailResponse.status !== 200) throw new Error("Failed to fetch order details.");
+            const allOrderDetails = orderDetailResponse.data;
+
+            const menuResponse = await GetMenu();
+            if (menuResponse.status !== 200) throw new Error("Failed to fetch menu.");
+            const allMenus = menuResponse.data;
+
+            // Create a map of Menu ID to Menu Name
+            const menuMap = allMenus.reduce((acc: Record<number, string>, menu: any) => {
+              acc[menu.ID] = menu.MenuName;
+              return acc;
+            }, {});
+
+            // Enrich reviews with menu names
+            const enrichedReviews = customerReviews.map((review: any) => {
+              const orderDetails = allOrderDetails.filter(
+                (detail: any) => detail.OrderID === review.order_id
+              );
+              return {
+                ...review,
+                menuNames: orderDetails.map((detail: any) => menuMap[detail.MenuID] || "Unknown"),
+              };
+            });
+
+            setReviewedFoodItems(enrichedReviews);
+            setFilteredReviews(enrichedReviews);
+            setIsReviewedLoaded(true);
+            resolve(); // Mark fetching as complete
           });
 
-          setReviewedFoodItems(enrichedReviews);
-          setFilteredReviews(enrichedReviews);
-          setIsReviewedLoaded(true);
+          const minimumDelay = new Promise((resolve) => setTimeout(resolve, 1000)); // Enforce 3-second delay
+
+          await Promise.all([fetchData, minimumDelay]); // Wait for both fetching and delay
+          setIsLoading(false); // Hide spinner
         } catch (error) {
-          console.error('Error fetching reviewed items:', error);
+          console.error("Error fetching reviewed items:", error);
+          setIsLoading(false); // Hide spinner even if there's an error
         }
       }
     };
+
     fetchReviewedItems();
   }, [isReviewedLoaded]);
+
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (customerID) {
@@ -289,258 +303,270 @@ export default function FoodReviewedPage() {
 
   return (
     <section className="reviewed-food-page" id="reviewed-food-page">
-      <Card style={{
-        borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      }}>
-        {/* Filter Controls */}
-        <div
+      {isLoading ? (
+        <SpinnerReview />
+      ) : (
+        <Card
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "16px 20px",
-            backgroundColor: "#f9f9f9",
-            borderRadius: "12px",
-            marginBottom: "24px",
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>⭐ Rating:</span>
-            <Rate
-              allowClear
-              value={ratingFilter ?? undefined}
-              onChange={setRatingFilter}
-              style={{ fontSize: "20px", color: "#FF9800", cursor: "pointer" }}
-            />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
-            <Select
-              value={dateFilter}
-              onChange={setDateFilter}
-              style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
-              placeholder="All"
-            >
-              <Select.Option value="asc">Oldest First</Select.Option>
-              <Select.Option value="desc">Newest First</Select.Option>
-            </Select>
-          </div>
-          <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
-            Clear Filters
-          </Button>
-        </div>
-
-        {filteredReviews.map((review) => (
-          <Card
-            key={review.ID}
-            type="inner"
-            title={
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
-                <img
-                  src={userInfo.picture}
-                  alt="User"
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                  }}
-                />
-                <div style={{ flex: 1 }}>
-                  <p style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: '#333', fontFamily: "'Roboto', sans-serif", }}>{`${userInfo.first_name} ${userInfo.last_name}`}</p>
-                  <p style={{ fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>{userInfo.email}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Rate
-                      allowHalf
-                      disabled
-                      defaultValue={review.overall_rating}
-                      style={{ fontSize: '16px', color: '#FF9800' }}
-                    />
-                    <p style={{ fontSize: '14px', color: '#888', margin: 0, fontFamily: "'Roboto', sans-serif", }}>
-                      {dayjs(review.review_date).fromNow()}
-                    </p>
-                  </div>
-                </div>
-                <div style={{ marginLeft: 'auto' }}>
-                  <Dropdown
-                    overlay={
-                      <Menu>
-                        <Menu.Item onClick={() => handleEditClick(review)}>Edit</Menu.Item>
-                        <Menu.Item onClick={() => showDeleteReviewModal(String(review.ID))}>Delete</Menu.Item>
-                      </Menu>
-                    }
-                    trigger={['click']}
-                  >
-                    <Button
-                      icon={<EllipsisOutlined />}
-                      shape="circle"
-                      style={{ border: 'none', background: 'transparent' }}
-                    />
-                  </Dropdown>
-                </div>
-              </div>
-            }
+          {/* Filter Controls */}
+          <div
             style={{
-              marginBottom: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              padding: '20px',
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "16px 20px",
+              backgroundColor: "#f9f9f9",
+              borderRadius: "12px",
+              marginBottom: "24px",
             }}
           >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>⭐ Rating:</span>
+              <Rate
+                allowClear
+                value={ratingFilter ?? undefined}
+                onChange={setRatingFilter}
+                style={{ fontSize: "20px", color: "#FF9800", cursor: "pointer" }}
+              />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+              <Select
+                value={dateFilter}
+                onChange={setDateFilter}
+                style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                placeholder="All"
+              >
+                <Select.Option value="asc">Oldest First</Select.Option>
+                <Select.Option value="desc">Newest First</Select.Option>
+              </Select>
+            </div>
+            <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+              Clear Filters
+            </Button>
+          </div>
 
-
-
-            {/* เนื้อหารีวิว */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', maxWidth: '1400px' }}>
-              <div style={{ flex: 1 }}>
-                <h2 style={{
-                  marginBottom: '16px',
-                  fontSize: '20px',
-                  fontWeight: '600',
-                  fontFamily: "'Roboto', sans-serif",
-                  color: '#333',
-                }}>
-                  {review.menuNames.join(', ')} (Order #{review.order_id})
-                </h2>
-                <h4 style={{
-                  marginBottom: '24px',
-                  fontSize: '16px',
-                  fontFamily: "'Roboto', sans-serif",
-                  color: '#555',
-                  lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย  
-                  maxWidth: '1400px',
-                  wordWrap: 'break-word', // รองรับการตัดคำยาวเกิน
-                  overflowWrap: 'break-word', // เพิ่มความยืดหยุ่น
-                  whiteSpace: 'normal', // ป้องกันการไม่ตัดบรรทัด
-                }}>
-                  {review.review_text}
-                </h4>
-                {/* การ์ดสำหรับคะแนน */}
-                <Card
-                  style={{
-                    background: '#fff',
-                    borderRadius: '16px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                    marginTop: '28px',
-                    padding: '24px',
-                  }}
-                >
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-                    {/* คะแนนบริการ */}
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{
-                        margin: 0,
-                        fontWeight: '600',
-                        fontSize: '16px',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>💼 Service</p>
-                      <Rate allowHalf disabled defaultValue={review.service_rating} style={{ fontSize: '22px', color: '#4CAF50' }} />
-                      <p style={{
-                        margin: 0,
-                        fontSize: '14px',
-                        color: '#888',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>
-                        {review.service_rating} / 5
-                      </p>
+          {filteredReviews.length > 0 ? (
+            filteredReviews.map((review) => (
+              <Card
+                key={review.ID}
+                type="inner"
+                title={
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                    <img
+                      src={userInfo.picture}
+                      alt="User"
+                      style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                      }}
+                    />
+                    <div style={{ flex: 1 }}>
+                      <p style={{ margin: 0, fontSize: '18px', fontWeight: '600', color: '#333', fontFamily: "'Roboto', sans-serif", }}>{`${userInfo.first_name} ${userInfo.last_name}`}</p>
+                      <p style={{ fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>{userInfo.email}</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <Rate
+                          allowHalf
+                          disabled
+                          defaultValue={review.overall_rating}
+                          style={{ fontSize: '16px', color: '#FF9800' }}
+                        />
+                        <p style={{ fontSize: '14px', color: '#888', margin: 0, fontFamily: "'Roboto', sans-serif", }}>
+                          {dayjs(review.review_date).fromNow()}
+                        </p>
+                      </div>
                     </div>
-
-                    {/* คะแนนรสชาติ */}
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{
-                        margin: 0,
-                        fontWeight: '600',
-                        fontSize: '16px',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>🍴 Taste</p>
-                      <Rate allowHalf disabled defaultValue={review.taste_rating} style={{ fontSize: '22px', color: '#FF5722' }} />
-                      <p style={{
-                        margin: 0,
-                        fontSize: '14px',
-                        color: '#888',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>
-                        {review.taste_rating} / 5
-                      </p>
-                    </div>
-
-                    {/* คะแนนราคา */}
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{
-                        margin: 0,
-                        fontWeight: '600',
-                        fontSize: '16px',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>💵 Value for Money</p>
-                      <Rate allowHalf disabled defaultValue={review.value_for_money_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
-                      <p style={{
-                        margin: 0,
-                        fontSize: '14px',
-                        color: '#888',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>
-                        {review.value_for_money_rating} / 5
-                      </p>
-                    </div>
-
-                    {/* เมนูแนะนำ */}
-                    <div style={{ textAlign: 'center' }}>
-                      <p style={{
-                        margin: 0,
-                        fontWeight: '600',
-                        fontSize: '16px',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>🍽️ Recommended Dish</p>
-                      <h3 style={{
-                        margin: '8px 0',
-                        fontSize: '14px',
-                        color: '#333',
-                        fontFamily: "'Roboto', sans-serif",
-                      }}>
-                        {review.recommended_dishes || 'No recommended dish provided.'}
-                      </h3>
+                    <div style={{ marginLeft: 'auto' }}>
+                      <Dropdown
+                        overlay={
+                          <Menu>
+                            <Menu.Item onClick={() => handleEditClick(review)}>Edit</Menu.Item>
+                            <Menu.Item onClick={() => showDeleteReviewModal(String(review.ID))}>Delete</Menu.Item>
+                          </Menu>
+                        }
+                        trigger={['click']}
+                      >
+                        <Button
+                          icon={<EllipsisOutlined />}
+                          shape="circle"
+                          style={{ border: 'none', background: 'transparent' }}
+                        />
+                      </Dropdown>
                     </div>
                   </div>
-                </Card>
+                }
+                style={{
+                  marginBottom: '20px',
+                  borderRadius: '10px',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '20px',
+                }}
+              >
 
-                {/* Pictures below the Rating Card */}
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center', // จัดรูปให้อยู่ตรงกลางในแนวนอน
-                    alignItems: 'center', // จัดรูปให้อยู่ตรงกลางในแนวตั้ง (ถ้าสูงกว่าหนึ่งบรรทัด)
-                    flexWrap: 'wrap', // รองรับรูปหลายแถว
-                    gap: '16px', // เพิ่มระยะห่างระหว่างรูป
-                    marginTop: '24px',
-                  }}
-                >
-                  {review.pictures && review.pictures.length > 0 ? (
-                    review.pictures.map((pic, idx) => (
-                      <div key={idx} style={{ width: '120px', height: '120px' }}>
-                        <img
-                          src={pic}
-                          alt={`Review Pic ${idx + 1}`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // เพิ่มเงาสำหรับรูป
-                          }}
-                        />
+
+
+                {/* เนื้อหารีวิว */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '30px', maxWidth: '1400px' }}>
+                  <div style={{ flex: 1 }}>
+                    <h2 style={{
+                      marginBottom: '16px',
+                      fontSize: '20px',
+                      fontWeight: '600',
+                      fontFamily: "'Roboto', sans-serif",
+                      color: '#333',
+                    }}>
+                      {review.menuNames.join(', ')} (Order #{review.order_id})
+                    </h2>
+                    <h4 style={{
+                      marginBottom: '24px',
+                      fontSize: '16px',
+                      fontFamily: "'Roboto', sans-serif",
+                      color: '#555',
+                      lineHeight: '1.6', // เพิ่มความโปร่งเพื่อให้อ่านง่าย  
+                      maxWidth: '1400px',
+                      wordWrap: 'break-word', // รองรับการตัดคำยาวเกิน
+                      overflowWrap: 'break-word', // เพิ่มความยืดหยุ่น
+                      whiteSpace: 'normal', // ป้องกันการไม่ตัดบรรทัด
+                    }}>
+                      {review.review_text}
+                    </h4>
+                    {/* การ์ดสำหรับคะแนน */}
+                    <Card
+                      style={{
+                        background: '#fff',
+                        borderRadius: '16px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                        marginTop: '28px',
+                        padding: '24px',
+                      }}
+                    >
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+                        {/* คะแนนบริการ */}
+                        <div style={{ textAlign: 'center' }}>
+                          <p style={{
+                            margin: 0,
+                            fontWeight: '600',
+                            fontSize: '16px',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>💼 Service</p>
+                          <Rate allowHalf disabled defaultValue={review.service_rating} style={{ fontSize: '22px', color: '#4CAF50' }} />
+                          <p style={{
+                            margin: 0,
+                            fontSize: '14px',
+                            color: '#888',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>
+                            {review.service_rating} / 5
+                          </p>
+                        </div>
+
+                        {/* คะแนนรสชาติ */}
+                        <div style={{ textAlign: 'center' }}>
+                          <p style={{
+                            margin: 0,
+                            fontWeight: '600',
+                            fontSize: '16px',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>🍴 Taste</p>
+                          <Rate allowHalf disabled defaultValue={review.taste_rating} style={{ fontSize: '22px', color: '#FF5722' }} />
+                          <p style={{
+                            margin: 0,
+                            fontSize: '14px',
+                            color: '#888',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>
+                            {review.taste_rating} / 5
+                          </p>
+                        </div>
+
+                        {/* คะแนนราคา */}
+                        <div style={{ textAlign: 'center' }}>
+                          <p style={{
+                            margin: 0,
+                            fontWeight: '600',
+                            fontSize: '16px',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>💵 Value for Money</p>
+                          <Rate allowHalf disabled defaultValue={review.value_for_money_rating} style={{ fontSize: '22px', color: '#FFC107' }} />
+                          <p style={{
+                            margin: 0,
+                            fontSize: '14px',
+                            color: '#888',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>
+                            {review.value_for_money_rating} / 5
+                          </p>
+                        </div>
+
+                        {/* เมนูแนะนำ */}
+                        <div style={{ textAlign: 'center' }}>
+                          <p style={{
+                            margin: 0,
+                            fontWeight: '600',
+                            fontSize: '16px',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>🍽️ Recommended Dish</p>
+                          <h3 style={{
+                            margin: '8px 0',
+                            fontSize: '14px',
+                            color: '#333',
+                            fontFamily: "'Roboto', sans-serif",
+                          }}>
+                            {review.recommended_dishes || 'No recommended dish provided.'}
+                          </h3>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <p style={{ color: '#888', fontSize: '14px', textAlign: 'center' }}>No pictures available.</p>
-                  )}
-                </div>
+                    </Card>
 
-              </div>
+                    {/* Pictures below the Rating Card */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center', // จัดรูปให้อยู่ตรงกลางในแนวนอน
+                        alignItems: 'center', // จัดรูปให้อยู่ตรงกลางในแนวตั้ง (ถ้าสูงกว่าหนึ่งบรรทัด)
+                        flexWrap: 'wrap', // รองรับรูปหลายแถว
+                        gap: '16px', // เพิ่มระยะห่างระหว่างรูป
+                        marginTop: '24px',
+                      }}
+                    >
+                      {review.pictures && review.pictures.length > 0 ? (
+                        review.pictures.map((pic, idx) => (
+                          <div key={idx} style={{ width: '120px', height: '120px' }}>
+                            <img
+                              src={pic}
+                              alt={`Review Pic ${idx + 1}`}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                borderRadius: '10px',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // เพิ่มเงาสำหรับรูป
+                              }}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <p style={{ color: '#888', fontSize: '14px', textAlign: 'center' }}>No pictures available.</p>
+                      )}
+                    </div>
+
+                  </div>
+                </div>
+              </Card>
+            ))
+          ) : (
+            <div style={{ textAlign: 'center', padding: '20px', color: '#555', fontSize: '16px' }}>
+              <p style={{ marginBottom: '16px' }}>You don't have any food reviews at the moment. Start exploring delicious meals and leave your reviews!</p>
             </div>
-          </Card>
-        ))}
-      </Card>
+          )}
+        </Card>
+      )}
       {/* Delete Confirmation Modal */}
       <Modal
         className="delete-food-modal"

@@ -6,11 +6,10 @@ import { GetMenu } from "../../../../../../food_service/service/https/MenuAPI";
 import { GetOrderDetail } from "../../../../../../food_service/service/https/OrderDetailAPI";
 import { DownOutlined, UploadOutlined, UpOutlined } from "@ant-design/icons";
 import Upload from "antd/es/upload";
-import { FoodServicePaymentInterface } from "../../../../../../payment/interface/IFoodServicePayment";
-import { MenuInterface } from "../../../../../../food_service/interface/IMenu";
 import { GetFoodServicePayment } from "../../../../../../payment/service/https/FoodServicePaymentAPI";
 import { GetOrder } from "../../../../../../food_service/service/https/OrderAPI";
 import "./not_reviewfoodpage.css";
+import SpinnerReview from "../../../reviewspinner/spinner_review";
 
 const customerID = Number(localStorage.getItem('id'));
 
@@ -26,84 +25,108 @@ export default function NotReviewedTripPage() {
     const [, setImageCount] = useState<number>(0); // เก็บจำนวนรูปที่อัปโหลด
     const [dateFilter, setDateFilter] = useState<string | null>(null);
     const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
+    const [isLoading, setIsLoading] = useState(true); // State for loader
+
 
     // Fetch Not Reviewed Items
     useEffect(() => {
         const fetchNotReviewedItems = async () => {
             if (!isNotReviewedLoaded) {
                 try {
-                    const reviewResponse = await GetReviews();
-                    if (reviewResponse.status !== 200) throw new Error('Failed to fetch reviews.');
-                    const allReviews = reviewResponse.data;
-                    const allReviewsFood = allReviews.filter((review: { review_type_id: any }) => review.review_type_id === 2);
-                    // ดึง ID ของ Order ที่มีการรีวิวแล้ว
-                    const reviewedOrderIds = allReviewsFood.map((review: { order_id: any; }) => review.order_id);
-                    const ordersResponse = await GetOrder();
-                    if (ordersResponse.status !== 200) throw new Error('Failed to fetch orders.');
-                    const allOrders = ordersResponse.data;
-                    // กรองเฉพาะ Orders ของ Customer ID ที่มีสถานะเป็น "paid"
-                    const customerOrders = allOrders.filter(
-                        (orders: any) => orders.CustomerID === customerID && orders.StatusID === 5
-                    );
-                    // กรองเฉพาะ Orders ที่ยังไม่มีการรีวิว
-                    const notReviewedOrders = customerOrders.filter(
-                        (order: any) => !reviewedOrderIds.includes(order.ID)
-                    );
-                    // ดึงรายละเอียดของ Order จาก API GetOrderDetail
-                    const ordersDetailsResponse = await GetOrderDetail();
-                    if (ordersDetailsResponse.status !== 200) throw new Error('Failed to fetch order details.');
-                    const allOrderDetails = ordersDetailsResponse.data;
-                    // ดึงรายละเอียดของ Menu ทั้งหมด
-                    const menuResponse = await GetMenu(); // สมมติว่าฟังก์ชันนี้ดึงเมนูทั้งหมดได้
-                    if (menuResponse.status !== 200) throw new Error('Failed to fetch menu details.');
-                    const allMenus = menuResponse.data;
-                    // ดึงรายละเอียดของ Food Service Paments ทั้งหมด
-                    const foodpaymentResponse = await GetFoodServicePayment(); // สมมติว่าฟังก์ชันนี้ดึงเมนูทั้งหมดได้
-                    if (foodpaymentResponse.status !== 200) throw new Error('Failed to fetch Food Service Payment.');
-                    const allFoodPayment = foodpaymentResponse.data;
-                    // สร้าง Map ระหว่าง MenuID และ MenuName
-                    const menuMap = allMenus.reduce((acc: Record<number, string>, menu: MenuInterface) => {
-                        acc[menu.ID] = menu.MenuName;
-                        return acc;
-                    }, {});
-                    // สร้าง Map ระหว่าง MenuID และ MenuPrice
-                    const menuPriceMap = allMenus.reduce((acc: Record<number, number>, menu: MenuInterface) => {
-                        acc[menu.ID] = menu.Price;
-                        return acc;
-                    }, {});
-                    // สร้าง Map ระหว่าง MenuID และ MenuImage
-                    const menuImage = allMenus.reduce((acc: Record<number, string>, menu: MenuInterface) => {
-                        acc[menu.ID] = menu.ImageMenu;
-                        return acc;
-                    }, {});
-                    // สร้าง enrichedOrders พร้อมข้อมูลทั้งหมด
-                    const enrichedOrders = notReviewedOrders.map((order: any) => {
-                        const relatedDetails = allOrderDetails.filter((detail: any) => detail.OrderID === order.ID);
-                        const payment = allFoodPayment.find((p: FoodServicePaymentInterface) => p.OrderID === order.ID);
-                        return {
-                            id: order.ID,
-                            review_type_id: 2,
-                            orderID: `Order #${order.ID}`,
-                            menuDetails: relatedDetails.map((detail: any) => ({
-                                menuName: menuMap[detail.MenuID] || 'Unknown',
-                                quantity: detail.Quantity || 0,
-                                amount: detail.Amount || 0,
-                                menuPrice: menuPriceMap[detail.MenuID] || 'Unknown',
-                                menuImage: menuImage[detail.MenuID] || 'Unknown',
-                            })),
-                            totalPrice: payment ? payment.Price : 'Unknown',
-                            paymentDate: payment ? payment.PaymentDate : 'Unknown', // ดึง paymentDate จาก payment
-                            paymentID: payment ? payment.ID : 'Unknown', // ดึง paymentID จาก payment
-                            paymentMethod: payment ? payment.PaymentMethod : 'Unknown', // ดึง paymentID จาก payment
-                        };
+                    setIsLoading(true); // Show loader
+
+                    const fetchData = new Promise<void>(async (resolve) => {
+                        const reviewResponse = await GetReviews();
+                        if (reviewResponse.status !== 200) throw new Error("Failed to fetch reviews.");
+                        const allReviews = reviewResponse.data;
+                        const allReviewsFood = allReviews.filter(
+                            (review: { review_type_id: any }) => review.review_type_id === 2
+                        );
+
+                        // Get IDs of reviewed orders
+                        const reviewedOrderIds = allReviewsFood.map((review: { order_id: any }) => review.order_id);
+
+                        const ordersResponse = await GetOrder();
+                        if (ordersResponse.status !== 200) throw new Error("Failed to fetch orders.");
+                        const allOrders = ordersResponse.data;
+
+                        // Filter orders of the current customer with "paid" status
+                        const customerOrders = allOrders.filter(
+                            (orders: any) => orders.CustomerID === customerID && orders.StatusID === 5
+                        );
+
+                        // Filter orders that haven't been reviewed
+                        const notReviewedOrders = customerOrders.filter(
+                            (order: any) => !reviewedOrderIds.includes(order.ID)
+                        );
+
+                        const ordersDetailsResponse = await GetOrderDetail();
+                        if (ordersDetailsResponse.status !== 200) throw new Error("Failed to fetch order details.");
+                        const allOrderDetails = ordersDetailsResponse.data;
+
+                        const menuResponse = await GetMenu();
+                        if (menuResponse.status !== 200) throw new Error("Failed to fetch menu details.");
+                        const allMenus = menuResponse.data;
+
+                        const foodpaymentResponse = await GetFoodServicePayment();
+                        if (foodpaymentResponse.status !== 200) throw new Error("Failed to fetch food service payments.");
+                        const allFoodPayment = foodpaymentResponse.data;
+
+                        // Create mappings for menu properties
+                        const menuMap = allMenus.reduce((acc: Record<number, string>, menu: any) => {
+                            acc[menu.ID] = menu.MenuName;
+                            return acc;
+                        }, {});
+                        const menuPriceMap = allMenus.reduce((acc: Record<number, number>, menu: any) => {
+                            acc[menu.ID] = menu.Price;
+                            return acc;
+                        }, {});
+                        const menuImage = allMenus.reduce((acc: Record<number, string>, menu: any) => {
+                            acc[menu.ID] = menu.ImageMenu;
+                            return acc;
+                        }, {});
+
+                        // Enrich orders with additional details
+                        const enrichedOrders = notReviewedOrders.map((order: any) => {
+                            const relatedDetails = allOrderDetails.filter(
+                                (detail: any) => detail.OrderID === order.ID
+                            );
+                            const payment = allFoodPayment.find((p: any) => p.OrderID === order.ID);
+
+                            return {
+                                id: order.ID,
+                                review_type_id: 2,
+                                orderID: `Order #${order.ID}`,
+                                menuDetails: relatedDetails.map((detail: any) => ({
+                                    menuName: menuMap[detail.MenuID] || "Unknown",
+                                    quantity: detail.Quantity || 0,
+                                    amount: detail.Amount || 0,
+                                    menuPrice: menuPriceMap[detail.MenuID] || "Unknown",
+                                    menuImage: menuImage[detail.MenuID] || "Unknown",
+                                })),
+                                totalPrice: payment ? payment.Price : "Unknown",
+                                paymentDate: payment ? payment.PaymentDate : "Unknown",
+                                paymentID: payment ? payment.ID : "Unknown",
+                                paymentMethod: payment ? payment.PaymentMethod : "Unknown",
+                            };
+                        });
+
+                        setNotReviewedFoodItems(enrichedOrders);
+                        setIsNotReviewedLoaded(true);
+                        resolve(); // Mark fetching as complete
                     });
-                    setNotReviewedFoodItems(enrichedOrders);
-                    setIsNotReviewedLoaded(true);
+
+                    const minimumDelay = new Promise((resolve) => setTimeout(resolve, 1000)); // Enforce 3-second delay
+
+                    await Promise.all([fetchData, minimumDelay]); // Wait for both fetching and delay
+                    setIsLoading(false); // Hide loader
                 } catch (error) {
-                    console.error('Error fetching not reviewed items:', error);
+                    console.error("Error fetching not reviewed items:", error);
+                    setIsLoading(false); // Hide loader even if there's an error
                 }
             }
         };
+
         fetchNotReviewedItems();
     }, [isNotReviewedLoaded]);
     useEffect(() => {
@@ -127,6 +150,8 @@ export default function NotReviewedTripPage() {
         };
         getReviewTypes();
     }, [customerID]);
+
+
     const handleAddReview = (order: ReviewInterface) => {
         // Extract menu names from order.menuDetails and update the state
         const menuNames = order.menuDetails?.map((detail: { menuName: any; }) => detail.menuName) || [];
@@ -228,11 +253,16 @@ export default function NotReviewedTripPage() {
 
     return (
         <section className="not-reviewed-food-page" id="reviewed-food-page">
-            <Card style={{
-                borderRadius: '10px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}>
-                {/* Filter Controls */}
+            {isLoading ? (
+                <SpinnerReview />
+            ) : (
+                <Card
+                    style={{
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
+                    {/* Filter Controls */}
                 <div
                     style={{
                         display: "flex",
@@ -259,50 +289,86 @@ export default function NotReviewedTripPage() {
                         Clear Filters
                     </Button>
                 </div>
-                {filteredReviews.map((order) => (
-                    <Card
-                        key={order.id}
-                        type="inner"
-                        title={
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
-                                <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
-                                <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
-                                    {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                    })}`}
-                                </span>
-                                <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                                    <Button
-                                        onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                                        icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
-                                        style={{
-                                            borderRadius: '8px',
-                                            width: '120px', // กำหนดความกว้างเฉพาะ
-                                            height: '40px', // กำหนดความสูงของปุ่ม
-                                            padding: '0 16px', // ปรับ padding ภายในปุ่ม
-                                            fontSize: '14px', // ปรับขนาดข้อความ
-                                        }}
-                                    >
-                                        {expandedOrder === order.id ? 'Show Less' : 'Show More'}
-                                    </Button>
+
+                {filteredReviews.length > 0 ? (
+                    filteredReviews.map((order) => (
+                        <Card
+                            key={order.id}
+                            type="inner"
+                            title={
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                                    <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
+                                    <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
+                                        {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                        })}`}
+                                    </span>
+                                    <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                        <Button
+                                            onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                                            icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
+                                            style={{
+                                                borderRadius: '8px',
+                                                width: '120px', // กำหนดความกว้างเฉพาะ
+                                                height: '40px', // กำหนดความสูงของปุ่ม
+                                                padding: '0 16px', // ปรับ padding ภายในปุ่ม
+                                                fontSize: '14px', // ปรับขนาดข้อความ
+                                            }}
+                                        >
+                                            {expandedOrder === order.id ? 'Show Less' : 'Show More'}
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                        style={{
-                            marginBottom: '20px',
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                            padding: '20px',
-                        }}
-                    >
-                        {expandedOrder === order.id ? (
-                            <>
-                                <div>
-                                    {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                            }
+                            style={{
+                                marginBottom: '20px',
+                                borderRadius: '10px',
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                padding: '20px',
+                            }}
+                        >
+                            {expandedOrder === order.id ? (
+                                <>
+                                    <div>
+                                        {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                                            <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                                <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
+                                                <img
+                                                    src={detail.menuImage}
+                                                    alt={`Menu Image ${Number(index) + 1}`}
+                                                    style={{
+                                                        width: '60px',
+                                                        height: '60px',
+                                                        objectFit: 'cover',
+                                                        borderRadius: '8px',
+                                                        marginRight: '12px',
+                                                    }}
+                                                />
+                                                <div>
+                                                    <p><strong>Menu Name:</strong> {detail.menuName}</p>
+                                                    <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
+                                                    <p><strong>Amount:</strong> {detail.amount}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>Discount:</strong> {
+                                        ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) === '0.00'
+                                            ? '-'
+                                            : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                    }</p>
+                                    <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
+                                </>
+                            ) : (
+                                <>
+                                    {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
                                         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                            <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
                                             <img
                                                 src={detail.menuImage}
                                                 alt={`Menu Image ${Number(index) + 1}`}
@@ -317,55 +383,36 @@ export default function NotReviewedTripPage() {
                                             <div>
                                                 <p><strong>Menu Name:</strong> {detail.menuName}</p>
                                                 <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                                <p><strong>Amount:</strong> {detail.amount}</p>
                                             </div>
                                         </div>
                                     ))}
-                                </div>
-                                <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                <p><strong>Discount:</strong> {
-                                    ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) === '0.00'
-                                        ? '-'
-                                        : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                }</p>
-                                <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
-                            </>
-                        ) : (
-                            <>
-                                {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
-                                    <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                        <img
-                                            src={detail.menuImage}
-                                            alt={`Menu Image ${Number(index) + 1}`}
-                                            style={{
-                                                width: '60px',
-                                                height: '60px',
-                                                objectFit: 'cover',
-                                                borderRadius: '8px',
-                                                marginRight: '12px',
-                                            }}
-                                        />
-                                        <div>
-                                            <p><strong>Menu Name:</strong> {detail.menuName}</p>
-                                            <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                                <Button
-                                    type="primary"
-                                    onClick={() => handleAddReview(order)}
-                                    style={{ float: 'right', marginTop: '12px' }}
-                                >
-                                    Add Review
-                                </Button>
-                            </>
-                        )}
-                    </Card>
-                ))}
-            </Card>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => handleAddReview(order)}
+                                        style={{ float: 'right', marginTop: '12px' }}
+                                    >
+                                        Add Review
+                                    </Button>
+                                </>
+                            )}
+                        </Card>
+                    ))
+                ) : (
+                    <div style={{ textAlign: 'center', padding: '20px', color: '#555', fontSize: '16px' }}>
+                        <p style={{ marginBottom: '16px' }}>You don't have any orders right now. Start ordering your favorite meals!</p>
+                        <button
+                            className="button_booking_trip"
+                            onClick={() => window.location.href = '/food-service/login/menu/order'} // Update with the actual trip planning page URL
+                        >
+                            <span className="button_booking_trip_lg">
+                                <span className="button_booking_trip_sl"></span>
+                                <span className="button_booking_trip_text">Order Now</span>
+                                </span>
+                            </button>
+                        </div>
+                    )}
+                </Card>
+            )}
             <Modal
                 title="Add Review"
                 open={isModalOpen}
@@ -411,7 +458,7 @@ export default function NotReviewedTripPage() {
                                 label="💼 Service"
                                 rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
                             >
-                                <Rate allowHalf  style={{ fontSize: '18px', color: '#4CAF50' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#4CAF50' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                             </Form.Item>
                         </Col>
                         <Col span={8}>

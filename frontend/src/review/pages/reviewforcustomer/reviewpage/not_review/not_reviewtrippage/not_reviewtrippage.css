@@ -1,3 +1,124 @@
 .not-reviewed-trip-page * {
     font-family: 'Roboto', sans-serif !important;
 }
+
+
+.button_booking_trip {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #0f1923;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all .15s ease;
+  }
+  
+  .button_booking_trip::before,
+  .button_booking_trip::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid #7D8082;
+    transition: all .15s ease;
+  }
+  
+  .button_booking_trip::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
+  
+  .button_booking_trip::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
+  
+  .button_booking_trip:active,
+  .button_booking_trip:focus {
+    outline: none;
+  }
+  
+  .button_booking_trip:active::before,
+  .button_booking_trip:active::after {
+    right: 3px;
+    left: 3px;
+  }
+  
+  .button_booking_trip:active::before {
+    top: 3px;
+  }
+  
+  .button_booking_trip:active::after {
+    bottom: 3px;
+  }
+  
+  .button_booking_trip_lg {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #133e87;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+  
+  .button_booking_trip_lg::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #133e87;
+  }
+  
+  .button_booking_trip_lg::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #0f1923;
+    transition: all .2s ease;
+  }
+  
+  .button_booking_trip_sl {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: -8px;
+    width: 0;
+    background-color: #ff4655;
+    transform: skew(-15deg);
+    transition: all .2s ease;
+  }
+  
+  .button_booking_trip_text {
+    position: relative;
+  }
+  
+  .button_booking_trip:hover {
+    color: #0f1923;
+  }
+  
+  .button_booking_trip:hover .button_booking_trip_sl {
+    width: calc(100% + 15px);
+  }
+  
+  .button_booking_trip:hover .button_booking_trip_lg::after {
+    background-color: #fff;
+  }
+  

@@ -10,6 +10,8 @@ import { GetTripPayment } from "../../../../../../payment/service/https/TripPaym
 import { GetAllCruiseTrip } from "../../../../../../booking_cabin/service/https/CruiseTripAPI";
 import { GetCabinTypes } from "../../../../../../booking_cabin/service/https/CabinTypeAPI";
 import "./not_reviewtrippage.css";
+import SpinnerReview from "../../../reviewspinner/spinner_review";
+
 const customerID = Number(localStorage.getItem('id'));
 export default function NotReviewedTripPage() {
     const [notReviewedTripItems, setNotReviewedTripItems] = useState<ReviewInterface[]>([]);
@@ -23,111 +25,142 @@ export default function NotReviewedTripPage() {
     const [, setImageCount] = useState<number>(0); // เก็บจำนวนรูปที่อัปโหลด
     const [dateFilter, setDateFilter] = useState<string | null>(null);
     const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
+    const [isLoading, setIsLoading] = useState(true); // State for loader
 
     // Fetch Not Reviewed Items
     useEffect(() => {
         const fetchNotReviewedItems = async () => {
             if (!isNotReviewedLoaded) {
                 try {
-                    const reviewResponse = await GetReviews();
-                    if (reviewResponse.status !== 200) throw new Error('Failed to fetch reviews.');
-                    const allReviews = reviewResponse.data;
-                    const allReviewsFood = allReviews.filter((review: { review_type_id: any }) => review.review_type_id === 1);
-                    // ดึง ID ของ Order ที่มีการรีวิวแล้ว
-                    const reviewedBookingTripIds = allReviewsFood.map((review: { booking_trip_id: any; }) => review.booking_trip_id);
-                    const bookingTripResponse = await GetBookingTrip();
-                    if (bookingTripResponse.status !== 200) throw new Error('Failed to fetch booking trips.');
-                    const allBookingTrips = bookingTripResponse.data;
-                    // Filter booking_trips where booking_trips.customer_id === customerID
-                    const customerBookingTrips = allBookingTrips.filter(
-                        (booking_trips: any) => booking_trips.CustomerID === customerID
-                    );
-                    const bookingTripIDs = customerBookingTrips.map((trip: any) => trip.ID);
-                    const bookingCabinResponse = await GetBookingCabin();
-                    if (bookingCabinResponse.status !== 200) throw new Error('Failed to fetch booking cabins.');
-                    const allBookingCabins = bookingCabinResponse.data;
-                    // Find booking_cabins where booking_cabins.booking_trip_id matches customer bookingTripIDs
-                    const relatedBookingCabins = allBookingCabins.filter((cabin: any) =>
-                        bookingTripIDs.includes(cabin.BookingTripID)
-                    );
-                    const bookingCabinIDs = relatedBookingCabins.map((cabin: any) => cabin.ID);
-                    const tripPaymentResponse = await GetTripPayment(); // Assuming GetFoodServicePayment fetches trip payments
-                    if (tripPaymentResponse.status !== 200) throw new Error('Failed to fetch trip payments.');
-                    const allTripPayments = tripPaymentResponse.data;
-                    // Find trip_payments where trip_payment.booking_cabin_id matches related bookingCabinIDs
-                    const relatedTripPayments = allTripPayments.filter((payment: any) =>
-                        bookingCabinIDs.includes(payment.BookingCabinID)
-                    );
-                    const cruiseTripResponse = await GetAllCruiseTrip();
-                    if (cruiseTripResponse.status !== 200) throw new Error('Failed to fetch cruise trips.');
-                    const allCruiseTrips = cruiseTripResponse.data;
-                    const cabinTypeResponse = await GetCabinTypes();
-                    if (cruiseTripResponse.status !== 200) throw new Error('Failed to fetch cruise trips.');
-                    const allCabinType = cabinTypeResponse.data;
-                    // Prepare enriched data for display
-                    const enrichedOrders = relatedTripPayments
-                        .filter((tripPayment: any) => {
-                            // Include only items whose bookingTripId is not in reviewedBookingTripIds
-                            const relatedBookingCabin = relatedBookingCabins.find(
-                                (cabin: any) => cabin.ID === tripPayment.BookingCabinID
-                            );
-                            const relatedBookingTrip = customerBookingTrips.find(
-                                (trip: any) => trip.ID === relatedBookingCabin?.BookingTripID
-                            );
-                            return !reviewedBookingTripIds.includes(relatedBookingTrip?.ID); // Exclude reviewed items
-                        })
-                        .map((tripPayment: any) => {
-                            const relatedBookingCabin = relatedBookingCabins.find(
-                                (cabin: any) => cabin.ID === tripPayment.BookingCabinID
-                            );
-                            const relatedBookingTrip = customerBookingTrips.find(
-                                (trip: any) => trip.ID === relatedBookingCabin?.BookingTripID
-                            );
-                            const relatedCruiseTrip = allCruiseTrips.find(
-                                (cruiseTrip: any) => cruiseTrip.ID === relatedBookingTrip?.CruiseTripID
-                            );
-                            const relatedCabinType = allCabinType.find(
-                                (cabinType: any) => cabinType.ID === relatedBookingCabin?.Cabin.CabinTypeID
-                            );
-                            return {
-                                review_type_id: 1,
-                                tripPaymentId: tripPayment.ID,
-                                bookingTripId: relatedBookingTrip?.ID,
-                                bookingCabinId: relatedBookingCabin?.ID,
-                                cruiseTripId: relatedCruiseTrip?.ID,
-                                tripName: relatedCruiseTrip?.CruiseTripName,
-                                tripDays: relatedCruiseTrip?.Deets,
-                                tripStartDate: relatedCruiseTrip?.StartDate,
-                                tripEndDate: relatedCruiseTrip?.EndDate,
-                                tripImage: relatedCruiseTrip?.PlanImg,
-                                tripPrice: relatedCruiseTrip?.PlanPrice,
-                                bookingCabinPrice: relatedBookingCabin?.TotalPrice,
-                                bookingCabinStatus: relatedBookingCabin?.BookingStatus,
-                                cabinId: relatedBookingCabin?.CabinID,
-                                cabinNumber: relatedBookingCabin?.Cabin.CabinNumber,
-                                cabinCapacity: relatedBookingCabin?.Cabin.Capacity,
-                                cabinTypeId: relatedBookingCabin?.Cabin.CabinTypeID,
-                                cabinTypeName: relatedCabinType?.TypeName,
-                                cabinTypePrice: relatedCabinType?.CabinPrice,
-                                cabinTypeImage: relatedCabinType?.Image,
-                                cabinTypeSize: relatedCabinType?.Cabinsize,
-                                tripPaymentDate: tripPayment.PaymentDate,
-                                tripPaymentTotalPrice: tripPayment.TotalPrice,
-                                tripPaymentVat: tripPayment.VAT,
-                                tripPaymentStatus: tripPayment.PaymentStatus,
-                                tripPaymentMethod: tripPayment.PaymentMethod,
-                            };
-                        });
+                    setIsLoading(true); // Show loader
 
-                    setNotReviewedTripItems(enrichedOrders);
-                    setIsNotReviewedLoaded(true);
+                    const fetchData = new Promise<void>(async (resolve) => {
+                        const reviewResponse = await GetReviews();
+                        if (reviewResponse.status !== 200) throw new Error("Failed to fetch reviews.");
+                        const allReviews = reviewResponse.data;
+                        const allReviewsFood = allReviews.filter(
+                            (review: { review_type_id: any }) => review.review_type_id === 1
+                        );
+
+                        // Get IDs of reviewed booking trips
+                        const reviewedBookingTripIds = allReviewsFood.map(
+                            (review: { booking_trip_id: any }) => review.booking_trip_id
+                        );
+
+                        const bookingTripResponse = await GetBookingTrip();
+                        if (bookingTripResponse.status !== 200) throw new Error("Failed to fetch booking trips.");
+                        const allBookingTrips = bookingTripResponse.data;
+
+                        // Filter booking trips for the customer
+                        const customerBookingTrips = allBookingTrips.filter(
+                            (booking_trips: any) => booking_trips.CustomerID === customerID
+                        );
+
+                        const bookingTripIDs = customerBookingTrips.map((trip: any) => trip.ID);
+
+                        const bookingCabinResponse = await GetBookingCabin();
+                        if (bookingCabinResponse.status !== 200) throw new Error("Failed to fetch booking cabins.");
+                        const allBookingCabins = bookingCabinResponse.data;
+
+                        // Filter booking cabins related to customer booking trips
+                        const relatedBookingCabins = allBookingCabins.filter((cabin: any) =>
+                            bookingTripIDs.includes(cabin.BookingTripID)
+                        );
+
+                        const bookingCabinIDs = relatedBookingCabins.map((cabin: any) => cabin.ID);
+
+                        const tripPaymentResponse = await GetTripPayment();
+                        if (tripPaymentResponse.status !== 200) throw new Error("Failed to fetch trip payments.");
+                        const allTripPayments = tripPaymentResponse.data;
+
+                        // Filter trip payments related to booking cabins
+                        const relatedTripPayments = allTripPayments.filter((payment: any) =>
+                            bookingCabinIDs.includes(payment.BookingCabinID)
+                        );
+
+                        const cruiseTripResponse = await GetAllCruiseTrip();
+                        if (cruiseTripResponse.status !== 200) throw new Error("Failed to fetch cruise trips.");
+                        const allCruiseTrips = cruiseTripResponse.data;
+
+                        const cabinTypeResponse = await GetCabinTypes();
+                        if (cabinTypeResponse.status !== 200) throw new Error("Failed to fetch cabin types.");
+                        const allCabinType = cabinTypeResponse.data;
+
+                        // Prepare enriched data for display
+                        const enrichedOrders = relatedTripPayments
+                            .filter((tripPayment: any) => {
+                                // Exclude reviewed items
+                                const relatedBookingCabin = relatedBookingCabins.find(
+                                    (cabin: any) => cabin.ID === tripPayment.BookingCabinID
+                                );
+                                const relatedBookingTrip = customerBookingTrips.find(
+                                    (trip: any) => trip.ID === relatedBookingCabin?.BookingTripID
+                                );
+                                return !reviewedBookingTripIds.includes(relatedBookingTrip?.ID);
+                            })
+                            .map((tripPayment: any) => {
+                                const relatedBookingCabin = relatedBookingCabins.find(
+                                    (cabin: any) => cabin.ID === tripPayment.BookingCabinID
+                                );
+                                const relatedBookingTrip = customerBookingTrips.find(
+                                    (trip: any) => trip.ID === relatedBookingCabin?.BookingTripID
+                                );
+                                const relatedCruiseTrip = allCruiseTrips.find(
+                                    (cruiseTrip: any) => cruiseTrip.ID === relatedBookingTrip?.CruiseTripID
+                                );
+                                const relatedCabinType = allCabinType.find(
+                                    (cabinType: any) => cabinType.ID === relatedBookingCabin?.Cabin.CabinTypeID
+                                );
+                                return {
+                                    review_type_id: 1,
+                                    tripPaymentId: tripPayment.ID,
+                                    bookingTripId: relatedBookingTrip?.ID,
+                                    bookingCabinId: relatedBookingCabin?.ID,
+                                    cruiseTripId: relatedCruiseTrip?.ID,
+                                    tripName: relatedCruiseTrip?.CruiseTripName,
+                                    tripDays: relatedCruiseTrip?.Deets,
+                                    tripStartDate: relatedCruiseTrip?.StartDate,
+                                    tripEndDate: relatedCruiseTrip?.EndDate,
+                                    tripImage: relatedCruiseTrip?.PlanImg,
+                                    tripPrice: relatedCruiseTrip?.PlanPrice,
+                                    bookingCabinPrice: relatedBookingCabin?.TotalPrice,
+                                    bookingCabinStatus: relatedBookingCabin?.BookingStatus,
+                                    cabinId: relatedBookingCabin?.CabinID,
+                                    cabinNumber: relatedBookingCabin?.Cabin.CabinNumber,
+                                    cabinCapacity: relatedBookingCabin?.Cabin.Capacity,
+                                    cabinTypeId: relatedBookingCabin?.Cabin.CabinTypeID,
+                                    cabinTypeName: relatedCabinType?.TypeName,
+                                    cabinTypePrice: relatedCabinType?.CabinPrice,
+                                    cabinTypeImage: relatedCabinType?.Image,
+                                    cabinTypeSize: relatedCabinType?.Cabinsize,
+                                    tripPaymentDate: tripPayment.PaymentDate,
+                                    tripPaymentTotalPrice: tripPayment.TotalPrice,
+                                    tripPaymentVat: tripPayment.VAT,
+                                    tripPaymentStatus: tripPayment.PaymentStatus,
+                                    tripPaymentMethod: tripPayment.PaymentMethod,
+                                };
+                            });
+
+                        setNotReviewedTripItems(enrichedOrders);
+                        setIsNotReviewedLoaded(true);
+                        resolve(); // Mark fetching as complete
+                    });
+
+                    const minimumDelay = new Promise((resolve) => setTimeout(resolve, 1000)); // Enforce 3-second delay
+
+                    await Promise.all([fetchData, minimumDelay]); // Wait for both fetching and delay
+                    setIsLoading(false); // Hide loader
                 } catch (error) {
-                    console.error('Error fetching not reviewed items:', error);
+                    console.error("Error fetching not reviewed items:", error);
+                    setIsLoading(false); // Hide loader even if there's an error
                 }
             }
         };
+
         fetchNotReviewedItems();
     }, [isNotReviewedLoaded]);
+
+
     useEffect(() => {
         const getReviewTypes = async () => {
             const res = await GetReviewTypes();
@@ -240,148 +273,168 @@ export default function NotReviewedTripPage() {
     };
     return (
         <section className="not-reviewed-trip-page" id="reviewed-trip-page">
-            <Card style={{
-                borderRadius: '10px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            }}>
-                {/* Filter Controls */}
-                <div
+            {isLoading ? (
+                <SpinnerReview />
+            ) : (
+                <Card
                     style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "16px 20px",
-                        backgroundColor: "#f9f9f9",
-                        borderRadius: "12px",
-                        marginBottom: "24px",
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     }}
                 >
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
-                        <Select
-                            value={dateFilter}
-                            onChange={setDateFilter}
-                            style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
-                            placeholder="All"
-                        >
-                            <Select.Option value="asc">Oldest First</Select.Option>
-                            <Select.Option value="desc">Newest First</Select.Option>
-                        </Select>
-                    </div>
-                    <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
-                        Clear Filters
-                    </Button>
-                </div>
-                {filteredReviews.map((tripcabin) => (
-                    <Card
-                        key={tripcabin.paymentid}
-                        type="inner"
-                        title={
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                {/* ชิดซ้าย */}
-                                <span style={{ flex: 1, textAlign: 'left', fontFamily: "'Roboto', sans-serif", }}>
-                                    {`Booking Trip ID #${tripcabin.bookingTripId}`}
-                                </span>
-                                {/* ตรงกลาง */}
-                                <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>
-                                    {`รหัสการชำระเงิน : ${tripcabin.tripPaymentId}, ${new Date(tripcabin.tripPaymentDate ?? '').toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                    })}`}
-                                </span>
-                                {/* ชิดขวา */}
-                                <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                                    <Button
-                                        onClick={() =>
-                                            setExpandedTripCabin(
-                                                expandedTripCabin === tripcabin.paymentid ? null : tripcabin.paymentid
-                                            )
-                                        }
-                                        icon={expandedTripCabin === tripcabin.paymentid ? <UpOutlined /> : <DownOutlined />}
-                                        style={{
-                                            borderRadius: '8px',
-                                            width: '120px', // กำหนดความกว้างเฉพาะ
-                                            height: '40px', // กำหนดความสูงของปุ่ม
-                                            padding: '0 16px', // ปรับ padding ภายในปุ่ม
-                                            fontSize: '14px', // ปรับขนาดข้อความ
-                                            fontFamily: "'Roboto', sans-serif",
-                                        }}
-                                    >
-                                        {expandedTripCabin === tripcabin.paymentid ? 'Show Less' : 'Show More'}
-                                    </Button>
-                                </div>
-                            </div>
-                        }
+                    {/* Filter Controls */}
+                    <div
                         style={{
-                            marginBottom: '20px',
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                            padding: '20px',
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "16px 20px",
+                            backgroundColor: "#f9f9f9",
+                            borderRadius: "12px",
+                            marginBottom: "24px",
                         }}
-                    >{expandedTripCabin === tripcabin.paymentid ? (
-                        <>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                    <img
-                                        src={tripcabin.cabinTypeImage}
-                                        alt={tripcabin.cabinTypeName}
-                                        style={{
-                                            width: '60px',
-                                            height: '60px',
-                                            objectFit: 'cover',
-                                            borderRadius: '8px',
-                                            marginRight: '12px',
-                                        }}
-                                    />
-                                    <div>
-                                        <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
-                                        <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
-                                        <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
-                                        <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            <p><strong>Discount: -</strong> { }</p>
-                            <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
-                        </>
-                    ) : (
-                        <>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                <img
-                                    src={tripcabin.cabinTypeImage}
-                                    alt={tripcabin.cabinTypeName}
-                                    style={{
-                                        width: '60px',
-                                        height: '60px',
-                                        objectFit: 'cover',
-                                        borderRadius: '8px',
-                                        marginRight: '12px',
-                                    }}
-                                />
-                                <div>
-                                    <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
-                                    <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
-                                    <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
-                                    <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
-                                </div>
-                            </div>
-                            <Button
-                                type="primary"
-                                onClick={() => handleAddReview(tripcabin)}
-                                style={{ float: 'right', marginTop: '12px' }}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+                            <Select
+                                value={dateFilter}
+                                onChange={setDateFilter}
+                                style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                                placeholder="All"
                             >
-                                Add Review
-                            </Button>
-                        </>
+                                <Select.Option value="asc">Oldest First</Select.Option>
+                                <Select.Option value="desc">Newest First</Select.Option>
+                            </Select>
+                        </div>
+                        <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+                            Clear Filters
+                        </Button>
+                    </div>
+                    {filteredReviews.length > 0 ? (
+                        filteredReviews.map((tripcabin) => (
+                            <Card
+                                key={tripcabin.paymentid}
+                                type="inner"
+                                title={
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                        {/* ชิดซ้าย */}
+                                        <span style={{ flex: 1, textAlign: 'left', fontFamily: "'Roboto', sans-serif", }}>
+                                            {`Booking Trip ID #${tripcabin.bookingTripId}`}
+                                        </span>
+                                        {/* ตรงกลาง */}
+                                        <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888', fontFamily: "'Roboto', sans-serif", }}>
+                                            {`รหัสการชำระเงิน : ${tripcabin.tripPaymentId}, ${new Date(tripcabin.tripPaymentDate ?? '').toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}`}
+                                        </span>
+                                        {/* ชิดขวา */}
+                                        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                            <Button
+                                                onClick={() =>
+                                                    setExpandedTripCabin(
+                                                        expandedTripCabin === tripcabin.paymentid ? null : tripcabin.paymentid
+                                                    )
+                                                }
+                                                icon={expandedTripCabin === tripcabin.paymentid ? <UpOutlined /> : <DownOutlined />}
+                                                style={{
+                                                    borderRadius: '8px',
+                                                    width: '120px', // กำหนดความกว้างเฉพาะ
+                                                    height: '40px', // กำหนดความสูงของปุ่ม
+                                                    padding: '0 16px', // ปรับ padding ภายในปุ่ม
+                                                    fontSize: '14px', // ปรับขนาดข้อความ
+                                                    fontFamily: "'Roboto', sans-serif",
+                                                }}
+                                            >
+                                                {expandedTripCabin === tripcabin.paymentid ? 'Show Less' : 'Show More'}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                }
+                                style={{
+                                    marginBottom: '20px',
+                                    borderRadius: '10px',
+                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                    padding: '20px',
+                                }}
+                            >{expandedTripCabin === tripcabin.paymentid ? (
+                                <>
+                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                            <img
+                                                src={tripcabin.cabinTypeImage}
+                                                alt={tripcabin.cabinTypeName}
+                                                style={{
+                                                    width: '60px',
+                                                    height: '60px',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '8px',
+                                                    marginRight: '12px',
+                                                }}
+                                            />
+                                            <div>
+                                                <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
+                                                <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
+                                                <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
+                                                <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>Discount: -</strong> { }</p>
+                                    <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
+                                </>
+                            ) : (
+                                <>
+                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                        <img
+                                            src={tripcabin.cabinTypeImage}
+                                            alt={tripcabin.cabinTypeName}
+                                            style={{
+                                                width: '60px',
+                                                height: '60px',
+                                                objectFit: 'cover',
+                                                borderRadius: '8px',
+                                                marginRight: '12px',
+                                            }}
+                                        />
+                                        <div>
+                                            <p><strong>Cruise Trip:</strong> {tripcabin.tripName} {tripcabin.tripDays}</p>
+                                            <p><strong>Cabin Number:</strong> {tripcabin.cabinNumber}</p>
+                                            <p><strong>Cabin Capacity:</strong> {tripcabin.cabinCapacity}</p>
+                                            <p><strong>Cabin Type:</strong> {tripcabin.cabinTypeName}</p>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => handleAddReview(tripcabin)}
+                                        style={{ float: 'right', marginTop: '12px' }}
+                                    >
+                                        Add Review
+                                    </Button>
+                                </>
+                            )}
+                            </Card>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '20px', color: '#555', fontSize: '16px' }}>
+                            <p style={{ marginBottom: '16px' }}>You don't have any trips at the moment. Plan your next adventure now!</p>
+                            <button
+                                className="button_booking_trip"
+                                onClick={() => window.location.href = '/trip-summary'} // Update with the actual trip planning page URL
+                            >
+                                <span className="button_booking_trip_lg">
+                                    <span className="button_booking_trip_sl"></span>
+                                    <span className="button_booking_trip_text">Booking Now</span>
+                                </span>
+                            </button>
+                        </div>
                     )}
-                    </Card>
-
-                ))}
-            </Card>
+                </Card>
+            )}
             <Modal
                 title="Add Review"
                 open={isModalOpen}
