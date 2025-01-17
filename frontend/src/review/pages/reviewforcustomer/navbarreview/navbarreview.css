@@ -8,6 +8,14 @@
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  background-color: #ffffff;
+  /* เพิ่มสีพื้นหลัง (สามารถเปลี่ยนสีตามต้องการ) */
+  border-radius: 10px;
+  /* เพิ่มความโค้งมน */
+  padding: 10px;
+  /* เพิ่ม padding เพื่อให้เนื้อหาด้านในไม่ชิดขอบ */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* เพิ่มเงาเล็กน้อยเพื่อความลึก */
 }
 
 .dropdown-container {
@@ -20,28 +28,12 @@
   position: relative;
 }
 
-.main-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.main-button:hover,
-.main-button.active {
-  background-color: #0056b3;
-}
-
 .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: white;
+  background-color: #133e87;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -59,7 +51,8 @@
 }
 
 .dropdown-menu li:hover {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -69,4 +62,54 @@
 /* Page Content */
 .page-content {
   margin-top: 20px;
+}
+
+.btn {
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  background: #133e87;
+  color: #ffffff;
+}
+
+.btn:hover {
+  box-shadow: 0 0 20px 0px #2e2e2e3a;
+}
+
+.btn .icon {
+  position: absolute;
+  height: 40px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.btn .text {
+  transform: translateX(55px);
+}
+
+.btn:hover .icon {
+  width: 175px;
+}
+
+.btn:hover .text {
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:active .icon {
+  transform: scale(0.85);
 }

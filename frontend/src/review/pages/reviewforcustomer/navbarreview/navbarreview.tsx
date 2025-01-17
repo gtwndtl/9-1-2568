@@ -11,38 +11,45 @@ export default function NavBarReview() {
   >("FoodReviewed");
 
   return (
-    
     <section className="navbar-review" id="navbar-review">
       <div className="navbar-table">
         <div className="dropdown-container">
-          {/* Reviewed Dropdown */}
           <div className="dropdown">
-            <button
-              className={`main-button ${
-                selectedPage.includes("Reviewed") ? "active" : ""
+            <button className={`btn ${selectedPage.includes("Reviewed") ? "active" : ""
               }`}
             >
-              Reviewed
+              <ul className="dropdown-menu">
+                <li onClick={() => setSelectedPage("FoodReviewed")}>Food</li>
+                <li onClick={() => setSelectedPage("TripReviewed")}>Trip</li>
+              </ul>
+              <span className="icon">
+                <svg viewBox="0 0 175 80" width="40" height="40">
+                  <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                  <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                  <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                </svg>
+              </span>
+              <span className="text">Review</span>
             </button>
-            <ul className="dropdown-menu">
-              <li onClick={() => setSelectedPage("FoodReviewed")}>Food</li>
-              <li onClick={() => setSelectedPage("TripReviewed")}>Trip</li>
-            </ul>
           </div>
 
-          {/* Not Reviewed Dropdown */}
           <div className="dropdown">
-            <button
-              className={`main-button ${
-                selectedPage.includes("NotReviewed") ? "active" : ""
+            <button className={`btn ${selectedPage.includes("Reviewed") ? "active" : ""
               }`}
             >
-              Not Reviewed
+              <ul className="dropdown-menu">
+                <li onClick={() => setSelectedPage("FoodNotReviewed")}>Food</li>
+                <li onClick={() => setSelectedPage("TripNotReviewed")}>Trip</li>
+              </ul>
+              <span className="icon">
+                <svg viewBox="0 0 175 80" width="40" height="40">
+                  <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                  <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                  <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                </svg>
+              </span>
+              <span className="text">Not Review</span>
             </button>
-            <ul className="dropdown-menu">
-              <li onClick={() => setSelectedPage("FoodNotReviewed")}>Food</li>
-              <li onClick={() => setSelectedPage("TripNotReviewed")}>Trip</li>
-            </ul>
           </div>
         </div>
       </div>
