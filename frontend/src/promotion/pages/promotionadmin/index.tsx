@@ -424,7 +424,7 @@ function Promotion() {
   return (
     <div>
       <Navbar />
-      <div style={{ padding: "20px" }}>
+      <div className="promotion-admin-page" style={{ padding: "20px" }}>
         <div className="promotion-layout-container">
           <div className="actions-container">
             <div className="button-create">

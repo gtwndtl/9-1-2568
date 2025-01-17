@@ -83,7 +83,7 @@ export default function NotReviewedTripPage() {
                         return {
                             id: order.ID,
                             review_type_id: 2,
-                            title: `Order #${order.ID}`,
+                            orderID: `Order #${order.ID}`,
                             menuDetails: relatedDetails.map((detail: any) => ({
                                 menuName: menuMap[detail.MenuID] || 'Unknown',
                                 quantity: detail.Quantity || 0,
@@ -138,7 +138,7 @@ export default function NotReviewedTripPage() {
         // Set the form fields, including recommended dish dropdown
         form.setFieldsValue({
             reviewtype: order.review_type_id !== undefined ? reviewTypes[order.review_type_id] : '',
-            title: order.title,
+            orderID: order.orderID,
             menuNames: menuNames.join(' , '),
             recommended_dish: menuNames[0] || 'Unknown', // Set the first menuName as default
         });
@@ -322,11 +322,15 @@ export default function NotReviewedTripPage() {
                                         </div>
                                     ))}
                                 </div>
-                                <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0)}</p>
-                                <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toFixed(2)}</p>
-                                <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toFixed(2)}</p>
-                                <p><strong>Discount:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2) === '0.00' ? '-' : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toFixed(2)}</p>
-                                <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toFixed(2)}</p>
+                                <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                <p><strong>Discount:</strong> {
+                                    ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) === '0.00'
+                                        ? '-'
+                                        : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                }</p>
+                                <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                                 <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
                             </>
                         ) : (
@@ -372,19 +376,19 @@ export default function NotReviewedTripPage() {
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <Row gutter={16}> {/* ใช้ Grid layout */}
                         <Col span={12}>
-                            <Form.Item name="reviewtype" label="Review Type">
+                            <Form.Item name="reviewtype" label={<span style={{ fontWeight: 'bold', color: '#555' }}>📖 Review Type</span>}>
                                 <Input value={currentReview && currentReview.review_type_id !== undefined ? reviewTypes[currentReview.review_type_id] : ''} readOnly />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item name="title" label="Title">
+                            <Form.Item name="orderID" label="Order">
                                 <Input readOnly />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={24}>
-                            <Form.Item name="menuNames" label="Menu Name">
+                            <Form.Item name="menuNames" label={<span style={{ fontWeight: 'bold', color: '#555' }}>📝 Menu Names</span>}>
                                 <Input readOnly />
                             </Form.Item>
                         </Col>
@@ -393,7 +397,7 @@ export default function NotReviewedTripPage() {
                         <Col span={24}>
                             <Form.Item
                                 name="review_text"
-                                label="เขียนรีวิว"
+                                label={<span style={{ fontWeight: 'bold', color: '#555' }}>💬 Review Text</span>}
                                 rules={[{ required: true, message: 'Please enter a Review!' }]}
                             >
                                 <Input.TextArea rows={3} />
@@ -407,16 +411,7 @@ export default function NotReviewedTripPage() {
                                 label="💼 Service"
                                 rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
                             >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item
-                                name="value_for_money_rating"
-                                label="💵 Value for Money"
-                                rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
-                            >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate allowHalf  style={{ fontSize: '18px', color: '#4CAF50' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
@@ -425,7 +420,16 @@ export default function NotReviewedTripPage() {
                                 label="🍴 Taste"
                                 rules={[{ required: true, message: 'Please provide a Taste Rating!' }]}
                             >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#FF5722' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="value_for_money_rating"
+                                label="💵 Value for Money"
+                                rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
+                            >
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -453,7 +457,7 @@ export default function NotReviewedTripPage() {
                         <Col span={24}>
                             <Form.Item
                                 name="images"
-                                label="Upload Images"
+                                label="🖼️ Upload Images"
                                 valuePropName="fileList"
                                 getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
                             >

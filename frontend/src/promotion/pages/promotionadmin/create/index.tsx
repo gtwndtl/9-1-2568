@@ -29,7 +29,7 @@ import "./index.css";
 
 dayjs.extend(isSameOrBefore); // เพิ่มปลั๊กอินลงใน Dayjs
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { Step } = Steps;
 
 function PromotionCreate() {
@@ -40,7 +40,7 @@ function PromotionCreate() {
   const [selectedType, setSelectedType] = useState<PromotionTypeInterface | null>(null);
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
-  const [startDate, setStartDate] = useState<Dayjs | null>(null); // กำหนดประเภทเป็น Dayjs หรือ null
+  const [, setStartDate] = useState<Dayjs | null>(null); // กำหนดประเภทเป็น Dayjs หรือ null
   const [currentStep, setCurrentStep] = useState(0); // สำหรับการติดตามขั้นตอน
 
   useEffect(() => {
@@ -121,7 +121,7 @@ function PromotionCreate() {
   }
 
   return (
-    <div>
+    <div className="promotion-admin-create-page">
       <Navbar />
       <div
         style={{
@@ -220,9 +220,15 @@ function PromotionCreate() {
                         },
                       ]}
                     >
-                      <Input />
+                      <Input
+                        onChange={(e) => {
+                          const { value } = e.target;
+                          form.setFieldsValue({ code: value.toUpperCase() }); // แปลงค่าเป็นตัวพิมพ์ใหญ่
+                        }}
+                      />
                     </Form.Item>
                   </Col>
+
                   <Col xs={24} sm={24} md={24}>
                     <Form.Item
                       label={<Text strong>รายละเอียด</Text>}
@@ -240,6 +246,7 @@ function PromotionCreate() {
                     >
                       <DatePicker
                         style={{ width: "100%" }}
+                        format="YYYY MMMM DD" // กำหนดรูปแบบการแสดงผล
                         disabledDate={(current) => current && current.isBefore(dayjs().startOf("day"))}
                         onChange={(date) => {
                           setStartDate(date);
@@ -258,11 +265,21 @@ function PromotionCreate() {
                     >
                       <DatePicker
                         style={{ width: "100%" }}
+                        format="YYYY MMMM DD" // กำหนดรูปแบบการแสดงผล
                         disabledDate={(current) => {
+                          const startDate = form.getFieldValue("start_date"); // ดึงค่า start_date จากฟอร์ม
                           if (!startDate) {
-                            return current && current.isBefore(dayjs().startOf("day"));
+                            return current && current.isBefore(dayjs().startOf("day")); // ปิดวันที่ก่อนวันนี้ ถ้ายังไม่มีค่า start_date
                           }
-                          return current && (current.isBefore(dayjs().startOf("day")) || current.isSameOrBefore(startDate));
+
+                          const isStartDateToday = dayjs(startDate).isSame(dayjs(), "day"); // เช็คว่า start_date คือวันนี้หรือไม่
+
+                          return (
+                            current &&
+                            (current.isBefore(dayjs().startOf("day")) || // ปิดวันที่ก่อนวันนี้
+                              current.isSameOrBefore(startDate) || // ปิดวันที่ก่อนหรือเท่ากับ start_date
+                              (isStartDateToday && current.isSame(dayjs(), "day"))) // ปิดวันที่วันนี้ ถ้า start_date คือวันนี้
+                          );
                         }}
                       />
                     </Form.Item>

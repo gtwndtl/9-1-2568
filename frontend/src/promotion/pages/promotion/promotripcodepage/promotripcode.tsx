@@ -12,7 +12,6 @@ import duration from "dayjs/plugin/duration";
 import "./promotripcode.css";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
-import NavbarAdmin from "../../../../adminpage/navbar";
 
 
 dayjs.extend(duration);
@@ -57,41 +56,41 @@ function PromotionTripPage() {
     return remainingDays <= 3; // กำหนดเกณฑ์ใกล้หมดอายุใน 3 วัน
   };
 
-    const calculateCountdown = () => {
-      const newCountdownMap: Record<string, string> = {};
-      originalPromotions.forEach((promo) => {
-        if (promo.end_date) {
-          const now = dayjs(); // วันที่ปัจจุบัน
-          const endDate = dayjs(promo.end_date); // วันหมดอายุ
-    
-          if (endDate.isAfter(now)) {
-            const years = endDate.diff(now, "year");
-            const months = endDate.diff(now.add(years, "year"), "month");
-            const days = endDate.diff(now.add(years, "year").add(months, "month"), "day");
-            const hours = endDate.diff(
-              now.add(years, "year").add(months, "month").add(days, "day"),
-              "hour"
-            );
-            const minutes = endDate.diff(
-              now.add(years, "year").add(months, "month").add(days, "day").add(hours, "hour"),
-              "minute"
-            );
-    
-            let countdownMessage = "";
-            if (years > 0) countdownMessage += `${years} ปี `;
-            if (months > 0 || years > 0) countdownMessage += `${months} เดือน `;
-            countdownMessage += `${days} วัน ${hours} ชั่วโมง ${minutes} นาที`;
-    
-            newCountdownMap[promo.code] = countdownMessage.trim();
-          } else {
-            newCountdownMap[promo.code] = "หมดอายุแล้ว";
-          }
+  const calculateCountdown = () => {
+    const newCountdownMap: Record<string, string> = {};
+    originalPromotions.forEach((promo) => {
+      if (promo.end_date) {
+        const now = dayjs(); // วันที่ปัจจุบัน
+        const endDate = dayjs(promo.end_date); // วันหมดอายุ
+
+        if (endDate.isAfter(now)) {
+          const years = endDate.diff(now, "year");
+          const months = endDate.diff(now.add(years, "year"), "month");
+          const days = endDate.diff(now.add(years, "year").add(months, "month"), "day");
+          const hours = endDate.diff(
+            now.add(years, "year").add(months, "month").add(days, "day"),
+            "hour"
+          );
+          const minutes = endDate.diff(
+            now.add(years, "year").add(months, "month").add(days, "day").add(hours, "hour"),
+            "minute"
+          );
+
+          let countdownMessage = "";
+          if (years > 0) countdownMessage += `${years} ปี `;
+          if (months > 0 || years > 0) countdownMessage += `${months} เดือน `;
+          countdownMessage += `${days} วัน ${hours} ชั่วโมง ${minutes} นาที`;
+
+          newCountdownMap[promo.code] = countdownMessage.trim();
         } else {
-          newCountdownMap[promo.code] = "ไม่มีข้อมูลวันหมดอายุ";
+          newCountdownMap[promo.code] = "หมดอายุแล้ว";
         }
-      });
-      setCountdownMap(newCountdownMap);
-    };
+      } else {
+        newCountdownMap[promo.code] = "ไม่มีข้อมูลวันหมดอายุ";
+      }
+    });
+    setCountdownMap(newCountdownMap);
+  };
 
   const getPromotionStatuses = async () => {
     const res = await GetPromotionStatus();
@@ -155,8 +154,8 @@ function PromotionTripPage() {
   }, [originalPromotions]);
 
   return (
-    <div style={{ width: "100%" }}>
-      <NavbarAdmin/>
+    <div className="promo-trip-code-page"
+      style={{ width: "100%" }}>
       <div className="promofoodcode-container">
         {/* กลับไปหน้าเมนูอาหาร */}
         <Link to={"/admin/promotion"}>

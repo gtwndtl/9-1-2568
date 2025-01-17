@@ -1,4 +1,9 @@
-/* From Uiverse.io by adamgiebl */ 
+
+/* Font All Page */ 
+.promotion-admin-create-page * {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 .type-button {
     height: 70px;
     background: #4a6b9a!important;
@@ -23,7 +28,3 @@
     transform: translate(0.05em, 0.05em)!important;
     box-shadow: 0.05em 0.05em!important;
   }
-
-
-  
-  

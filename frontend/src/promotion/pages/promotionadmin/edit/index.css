@@ -1,3 +1,8 @@
+/* Font All Page */ 
+.promotion-admin-edit-page * {
+    font-family: 'Roboto', sans-serif !important;
+  }
+  
 
 /* Container Styling */
 .edit-promotion-page {
@@ -52,6 +57,7 @@
 .ant-input-number,
 .ant-select-selector,
 .ant-picker {
+    text-align: left !important; /* บังคับให้ชิดซ้าย */
     height: 30px;
     border-radius: 8px;
     border: 1px solid #d2d2d7;

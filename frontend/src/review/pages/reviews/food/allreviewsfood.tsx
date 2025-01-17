@@ -21,6 +21,9 @@ const AllReviewsFood: React.FC = () => {
   const [dateFilter, setDateFilter] = useState<string | null>(null); // ฟิลเตอร์วันที่
   const [isModalVisible, setIsModalVisible] = useState(false); // สำหรับแสดง Modal
   const [currentImage, setCurrentImage] = useState<string | null>(null); // สำหรับเก็บรูปที่คลิก
+  const [currentPage, setCurrentPage] = useState(1); // หน้าเริ่มต้น
+  const reviewsPerPage = 10; // จำนวนรีวิวต่อหน้า
+
 
   const fetchData = async () => {
     try {
@@ -102,6 +105,7 @@ const AllReviewsFood: React.FC = () => {
     }
 
     setFilteredReviews(filtered);
+    setCurrentPage(1); // รีเซ็ตหน้าหลังกรอง
   };
 
 
@@ -109,6 +113,7 @@ const AllReviewsFood: React.FC = () => {
     setRatingFilter(null);
     setDateFilter(null);
     setFilteredReviews(reviewedFoodItems); // รีเซ็ตการกรอง
+    setCurrentPage(1); // รีเซ็ตหน้าหลังเคลียร์ฟิลเตอร์
   };
 
   const handleImageClick = (imageUrl: string) => {
@@ -121,9 +126,21 @@ const AllReviewsFood: React.FC = () => {
     setCurrentImage(null);
   };
 
+  // Pagination Logic
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  const currentReviews = filteredReviews.slice(indexOfFirstReview, indexOfLastReview);
+
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0); // เลื่อนหน้าไปด้านบนเมื่อเปลี่ยนหน้า
+  };
+
   return (
 
-    <div style={{ width: '100%', maxWidth:'1600px',minHeight: "100vh", padding: '40px 20px' }}>
+    <div className="food-review-page"style={{ width: '100%', maxWidth: '1600px', minHeight: "100vh", padding: '40px 20px' }}>
       {/* กลับไปหน้าเมนูอาหาร */}
       <Link to={"/food-service/login/menu/order"}>
         <IoChevronBackSharp size={30} className="back-to-menu" />
@@ -247,7 +264,6 @@ const AllReviewsFood: React.FC = () => {
                     backgroundColor: '#fff',
                     boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
                     fontSize: '14px',
-                    padding: '4px 12px',
                     cursor: 'pointer',
                     fontFamily: "'Roboto', sans-serif",
                   }}
@@ -279,12 +295,12 @@ const AllReviewsFood: React.FC = () => {
             </div>
 
 
-            {filteredReviews.map((review) => (
+            {currentReviews.map((review) => (
               <Card
                 key={review.ID}
                 type="inner"
                 title={
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%'}}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
                     <img
                       src={review.user.picture}
                       alt="User"
@@ -367,7 +383,7 @@ const AllReviewsFood: React.FC = () => {
                       fontFamily: "'Roboto', sans-serif",
                       color: '#333',
                     }}>
-                      {review.menuNames.join(', ')} (Order #{review.order_id})
+                      {review.menuNames.join(', ')}
                     </h2>
                     <h4 style={{
                       marginBottom: '24px',
@@ -477,6 +493,35 @@ const AllReviewsFood: React.FC = () => {
         </div>
       </div>
 
+      <div className="pagination-container">
+        {/* Previous Page */}
+        <button
+          className={`pagination-arrow ${currentPage === 1 ? 'disabled' : ''}`}
+          onClick={() => changePage(Math.max(currentPage - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          {"<"}
+        </button>
+        {/* Page Numbers */}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            className={`pagination-button ${currentPage === page ? 'active' : ''}`}
+            onClick={() => changePage(page)}
+          >
+            {page}
+          </button>
+        ))}
+
+        {/* Next Page */}
+        <button
+          className={`pagination-arrow ${currentPage === totalPages ? 'disabled' : ''}`}
+          onClick={() => changePage(Math.min(currentPage + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          {">"}
+        </button>
+      </div>
       {/* Modal สำหรับแสดงรูปขนาดใหญ่ */}
       <Modal
         visible={isModalVisible}
@@ -488,7 +533,7 @@ const AllReviewsFood: React.FC = () => {
         <img
           src={currentImage || ''}
           alt="Enlarged"
-          style={{ width: 'auto', height: 'auto', maxHeight: '600px' }}
+          style={{ width: '100%', maxHeight: '600px', objectFit: 'contain' }}
         />
       </Modal>
     </div>

@@ -1,8 +1,14 @@
+/* Font All Page */
+.promo-trip-code-page * {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+
+
 .promofoodcode-container {
     width: 100% !important;
     margin: 0 auto;
     padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Roboto, Arial, sans-serif;
 }
 
 .normal-title,
@@ -11,7 +17,8 @@
     font-weight: bold;
     display: flex;
     align-items: center;
-    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
+    text-transform: uppercase;
+    /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
     letter-spacing: 2px;
     /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
 }
@@ -105,6 +112,17 @@
     align-items: flex-start;
 }
 
+.promofoodcode-preview-expiring-soon h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.promofoodcode-preview-expiring-soon h6 {
+    font-size: 14px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
 
 .promofoodcode-preview h6 {
     font-size: 14px;
@@ -143,6 +161,7 @@
     font-size: 14px;
     color: #333;
 }
+
 .promofoodcode-ant-btn-primary {
     background-color: #3f51b5;
     border-color: #3f51b5;
@@ -154,7 +173,7 @@
     border-color: #2c387e;
 }
 
-.expiring-promofoodcode-ant-btn-primary{
+.expiring-promofoodcode-ant-btn-primary {
     background-color: #ff0000;
     border-color: #ff0000;
     margin-top: 16px;
@@ -215,13 +234,16 @@ button.expiring-promofoodcode-ant-btn-primary:hover {
     /* สีตัวอักษร */
 }
 
-.promofoodcode-title{
+.promofoodcode-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #333333; /* สีที่เน้นและหรูหรา */
+    color: #333333;
+    /* สีที่เน้นและหรูหรา */
     margin-bottom: 15px;
-    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
-    letter-spacing: 2px; /* ระยะห่างระหว่างตัวอักษร */
+    text-transform: uppercase;
+    /* ตัวพิมพ์ใหญ่ทั้งหมดเพื่อความหรูหรา */
+    letter-spacing: 2px;
+    /* ระยะห่างระหว่างตัวอักษร */
     margin-top: 30px;
     margin-bottom: 30px;
 }

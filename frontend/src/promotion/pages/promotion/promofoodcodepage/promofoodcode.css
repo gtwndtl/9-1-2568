@@ -1,8 +1,14 @@
+/* Font All Page */ 
+.promo-food-code-page * {
+    font-family: 'Roboto', sans-serif !important;
+  }
+  
+  
+
 .promofoodcode-container {
     width: 100% !important;
     margin: 0 auto;
     padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Roboto, Arial, sans-serif;
 }
 
 .normal-title,
@@ -107,6 +113,18 @@
 
 
 .promofoodcode-preview h6 {
+    font-size: 14px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
+
+.promofoodcode-preview-expiring-soon h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.promofoodcode-preview-expiring-soon h6 {
     font-size: 14px;
     text-transform: uppercase;
     opacity: 0.8;

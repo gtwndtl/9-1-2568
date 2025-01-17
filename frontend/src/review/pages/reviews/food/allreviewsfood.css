@@ -1,21 +1,96 @@
+/* Font All Page */
+.food-review-page * {
+  font-family: 'Roboto', sans-serif !important;
+}
+
 @keyframes typing {
-    0% {
-      width: 0;
-    }
-    50% {
-      width: 100%; /* Fully typed out */
-    }
-    100% {
-      width: 0; /* Reset to invisible for looping */
-    }
+  0% {
+    width: 0;
   }
-  
-  @keyframes blink {
-    from {
-      border-color: transparent;
-    }
-    to {
-      border-color: #007aff;
-    }
+
+  50% {
+    width: 100%;
+    /* Fully typed out */
   }
-  
+
+  100% {
+    width: 0;
+    /* Reset to invisible for looping */
+  }
+}
+
+@keyframes blink {
+  from {
+    border-color: transparent;
+  }
+
+  to {
+    border-color: #007aff;
+  }
+}
+
+/* Container */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+/* Buttons */
+.pagination-button,
+.pagination-arrow {
+  background: #ffffff;
+  /* Clean white background */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Subtle border for depth */
+  border-radius: 8px;
+  /* Rounded corners for modern look */
+  padding: 8px 16px;
+  /* Adequate padding for touch targets */
+  font-size: 16px;
+  font-weight: 500;
+  color: #007aff;
+  /* Apple's signature blue */
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for elevation */
+  transition: all 0.2s ease;
+  /* Smooth transitions */
+}
+
+/* Active State */
+.pagination-button.active {
+  background: #007aff;
+  color: #ffffff;
+  /* White text for contrast */
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+  /* Glow effect */
+}
+
+/* Disabled State */
+.pagination-arrow.disabled {
+  color: rgba(0, 0, 0, 0.3);
+  /* Light gray text */
+  background: #f5f5f5;
+  /* Light background for inactive buttons */
+  border: none;
+  cursor: not-allowed;
+}
+
+/* Hover Effects */
+.pagination-button:hover:not(.active):not(.disabled),
+.pagination-arrow:hover:not(.disabled) {
+  background: rgba(0, 122, 255, 0.1);
+  /* Light blue hover effect */
+  color: #007aff;
+  border: 1px solid #007aff;
+  /* Highlight border */
+}
+
+.pagination-arrow.disabled:hover {
+  background: #f5f5f5;
+  /* No hover effect for disabled buttons */
+}

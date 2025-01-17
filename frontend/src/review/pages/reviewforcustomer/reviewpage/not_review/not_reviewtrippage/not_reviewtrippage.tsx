@@ -9,6 +9,7 @@ import { GetBookingCabin } from "../../../../../../booking_cabin/service/https/B
 import { GetTripPayment } from "../../../../../../payment/service/https/TripPaymentAPI";
 import { GetAllCruiseTrip } from "../../../../../../booking_cabin/service/https/CruiseTripAPI";
 import { GetCabinTypes } from "../../../../../../booking_cabin/service/https/CabinTypeAPI";
+import "./not_reviewtrippage.css";
 const customerID = Number(localStorage.getItem('id'));
 export default function NotReviewedTripPage() {
     const [notReviewedTripItems, setNotReviewedTripItems] = useState<ReviewInterface[]>([]);
@@ -340,11 +341,11 @@ export default function NotReviewedTripPage() {
                                     </div>
                                 </div>
                             </div>
-                            <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toFixed(2)}</p>
-                            <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toFixed(2)}</p>
-                            <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toFixed(2)}</p>
+                            <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                            <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                            <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             <p><strong>Discount: -</strong> { }</p>
-                            <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toFixed(2)}</p>
+                            <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
                         </>
                     ) : (
@@ -391,7 +392,7 @@ export default function NotReviewedTripPage() {
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item name="reviewtype" label="Review Type">
+                            <Form.Item name="reviewtype" label={<span style={{ fontWeight: 'bold', color: '#555' }}>📖 Review Type</span>}>
                                 <Input
                                     value={currentReviewTrip && currentReviewTrip.review_type_id !== undefined ? reviewTypes[currentReviewTrip.review_type_id] : ''}
                                     readOnly
@@ -399,14 +400,14 @@ export default function NotReviewedTripPage() {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item name="cruisetrip" label="Cruise Trip">
+                            <Form.Item name="cruisetrip" label={<span style={{ fontWeight: 'bold', color: '#555' }}>📝 Cruise Trip Names</span>}>
                                 <Input readOnly />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item name="cabinType" label="Cabin Type">
+                            <Form.Item name="cabinType" label={<span style={{ fontWeight: 'bold', color: '#555' }}>🛏️ Cabin Type</span>}>
                                 <Input readOnly />
                             </Form.Item>
                         </Col>
@@ -415,7 +416,7 @@ export default function NotReviewedTripPage() {
                         <Col span={24}>
                             <Form.Item
                                 name="review_text"
-                                label="เขียนรีวิว"
+                                label={<span style={{ fontWeight: 'bold', color: '#555' }}>💬 Review Text</span>}
                                 rules={[{ required: true, message: 'Please enter a Review!' }]}
                             >
                                 <Input.TextArea rows={3} />
@@ -429,16 +430,7 @@ export default function NotReviewedTripPage() {
                                 label="⛴️ Service"
                                 rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
                             >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
-                            </Form.Item>
-                        </Col>
-                        <Col span={8}>
-                            <Form.Item
-                                name="value_for_money_rating"
-                                label="💵 Value for Money"
-                                rules={[{ required: true, message: 'Please provide a Price Rating!' }]}
-                            >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#4CAF50' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
@@ -447,7 +439,16 @@ export default function NotReviewedTripPage() {
                                 label="🛏️ Cabin"
                                 rules={[{ required: true, message: 'Please provide a Cabin Rating!' }]}
                             >
-                                <Rate allowHalf defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#FF5722' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                name="value_for_money_rating"
+                                label="💵 Value for Money"
+                                rules={[{ required: true, message: 'Please provide a Price Rating!' }]}
+                            >
+                                <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -455,7 +456,7 @@ export default function NotReviewedTripPage() {
                         <Col span={24}>
                             <Form.Item
                                 name="images"
-                                label="Upload Images"
+                                label="🖼️ Upload Images"
                                 valuePropName="fileList"
                                 getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
                             >

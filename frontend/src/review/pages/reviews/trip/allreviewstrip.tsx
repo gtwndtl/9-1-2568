@@ -41,7 +41,7 @@ const generateFakeReviews = (count: number) => {
 
 
 const AllReviewsTrip: React.FC = () => {
-  const [reviewedFoodItems, setReviewedFoodItems] = useState<ReviewInterface[]>([]);
+  const [reviewedTripItems, setReviewedTripItems] = useState<ReviewInterface[]>([]);
   const [filteredReviews, setFilteredReviews] = useState<ReviewInterface[]>([]);
   const [ratingFilter, setRatingFilter] = useState<number | null>(null); // ฟิลเตอร์จำนวนดาวที่เลือก
   const [dateFilter, setDateFilter] = useState<string | null>(null); // ฟิลเตอร์วันที่
@@ -105,7 +105,7 @@ const AllReviewsTrip: React.FC = () => {
       // เพิ่ม fake reviews
       const fakeReviews = generateFakeReviews(25); // สร้างรีวิวปลอม 25 รายการ
 
-      setReviewedFoodItems([...enrichedReviews, ...fakeReviews]); // รวมรีวิวจริงและปลอม
+      setReviewedTripItems([...enrichedReviews, ...fakeReviews]); // รวมรีวิวจริงและปลอม
       setFilteredReviews([...enrichedReviews, ...fakeReviews]);
     } catch (error) {
       console.error("Error fetching reviewed trips:", error);
@@ -121,10 +121,10 @@ const AllReviewsTrip: React.FC = () => {
   const handleFilterChange = (value: number | null) => {
     setRatingFilter(value);
     if (value === null) {
-      setFilteredReviews(reviewedFoodItems); // ถ้าไม่มีการเลือกฟิลเตอร์ให้แสดงทั้งหมด
+      setFilteredReviews(reviewedTripItems); // ถ้าไม่มีการเลือกฟิลเตอร์ให้แสดงทั้งหมด
     } else {
       setFilteredReviews(
-        reviewedFoodItems.filter((review) => review.overall_rating !== undefined && review.overall_rating >= value && review.overall_rating < value + 1)
+        reviewedTripItems.filter((review) => review.overall_rating !== undefined && review.overall_rating >= value && review.overall_rating < value + 1)
       );
     }
   };
@@ -134,7 +134,7 @@ const AllReviewsTrip: React.FC = () => {
     filterReviews(ratingFilter, value);
   };
   const filterReviews = (rating: number | null, date: string | null) => {
-    let filtered = [...reviewedFoodItems];
+    let filtered = [...reviewedTripItems];
 
     if (rating !== null) {
       filtered = filtered.filter(
@@ -156,7 +156,7 @@ const AllReviewsTrip: React.FC = () => {
   const clearFilters = () => {
     setRatingFilter(null);
     setDateFilter(null);
-    setFilteredReviews(reviewedFoodItems); // รีเซ็ตการกรอง
+    setFilteredReviews(reviewedTripItems); // รีเซ็ตการกรอง
     setCurrentPage(1); // รีเซ็ตหน้าหลังเคลียร์ฟิลเตอร์
   };
 
@@ -329,7 +329,6 @@ const AllReviewsTrip: React.FC = () => {
                       backgroundColor: '#fff',
                       boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
                       fontSize: '14px',
-                      padding: '4px 12px',
                       cursor: 'pointer',
                       fontFamily: "'Roboto', sans-serif",
                     }}
@@ -441,23 +440,37 @@ const AllReviewsTrip: React.FC = () => {
             </Card>
           </div>
         </div>
-        {/* Pagination Controls */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <div className="pagination-container">
+          {/* Previous Page */}
+          <button
+            className={`pagination-arrow ${currentPage === 1 ? 'disabled' : ''}`}
+            onClick={() => changePage(Math.max(currentPage - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            {"<"}
+          </button>
+
+          {/* Page Numbers */}
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Button
+            <button
               key={page}
+              className={`pagination-button ${currentPage === page ? 'active' : ''}`}
               onClick={() => changePage(page)}
-              style={{
-                margin: '0 5px',
-                backgroundColor: currentPage === page ? '#007AFF' : '#fff',
-                color: currentPage === page ? '#fff' : '#007AFF',
-                border: '1px solid #007AFF',
-              }}
             >
               {page}
-            </Button>
+            </button>
           ))}
+
+          {/* Next Page */}
+          <button
+            className={`pagination-arrow ${currentPage === totalPages ? 'disabled' : ''}`}
+            onClick={() => changePage(Math.min(currentPage + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            {">"}
+          </button>
         </div>
+
 
         <Modal
           visible={isModalVisible}
@@ -472,7 +485,6 @@ const AllReviewsTrip: React.FC = () => {
             style={{ width: '100%', maxHeight: '600px', objectFit: 'contain' }} // ปรับให้รูปพอดีกับ Modal
           />
         </Modal>
-
       </div>
     </div>
   );

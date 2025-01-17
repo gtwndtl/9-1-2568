@@ -155,7 +155,7 @@ function PromotionFoodPage() {
   }, [originalPromotions]);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div className="promo-food-code-page" style={{ width: "100%" }}>
       <div className="promofoodcode-container">
         {/* กลับไปหน้าเมนูอาหาร */}
         <Link to={"/food-service/login/menu/order"}>
@@ -172,12 +172,11 @@ function PromotionFoodPage() {
               .filter((item) => isExpiringSoon(item.end_date))
               .map((item) => (
                 <div
-                  className={`promofoodcode-card expiring-soon`}
-                  key={item.code}
+                  className={`promofoodcode-card expiring-soon`}key={item.code}
                 >
                   <div className="promofoodcode-preview-expiring-soon">
-                    <h6>{item.code}</h6>
-                    <h2>{item.name}</h2>
+                  <h6>{item.code}</h6>
+                  <h2>{item.name}</h2>
                     <p className="promofoodcode-preview-detail">{item.details}</p>
                   </div>
 

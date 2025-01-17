@@ -11,6 +11,7 @@ export default function NavBarReview() {
   >("FoodReviewed");
 
   return (
+    
     <section className="navbar-review" id="navbar-review">
       <div className="navbar-table">
         <div className="dropdown-container">
