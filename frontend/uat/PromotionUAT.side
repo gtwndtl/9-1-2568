@@ -1,0 +1,2335 @@
+{
+  "id": "83fa048a-586d-47d6-980d-d525b4268ffa",
+  "version": "2.0",
+  "name": "PromotionCreate",
+  "url": "http://localhost:5173/admin/promotion",
+  "tests": [{
+    "id": "2b55d546-1629-4167-883b-6a175e05899d",
+    "name": "CreateSuccess",
+    "commands": [{
+      "id": "a970e646-bb33-4c8f-9c36-3847d53ce806",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "637989c2-f0d4-4390-ab7d-5b4ed5066d34",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ee4b6f8-3c6f-4866-a1a6-5b6b1c4f4e90",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a48f4e0-e177-4bcb-818e-6a7da40dbb77",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bb1503e-63b7-4897-af9b-f3f464a9acf2",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "2e1c6244-4178-45db-ab3e-80e8515e09d7",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "c118e2db-1f70-47ec-a6d2-493c3b86fd12",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "320ac5c1-66b1-41ce-96cd-0a48eedd2fad",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "b7c04798-252b-4153-84b1-e97fd7e0070c",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "bc6470c4-d0e2-4790-b12b-c0b2166853aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "26c79a39-8e0c-4e75-9d90-3ce39d37ef80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe8ab2f2-7d76-407b-a0fd-63b1cab9904f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "ae442574-3ab0-46ab-ac18-e9096cdaadb4",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "cb1b23e3-0604-47fb-a48d-f51faa20de16",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "558c224f-5e03-4624-b068-87cda7b62c23",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "eb6a61db-51c6-4392-a2f8-f794f57f4813",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "02e386b4-0dfd-45cd-a4ee-e0a4ef4b46db",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.message-success",
+      "targets": [],
+      "value": "สร้างโปรโมชั่นสำเร็จ!"
+    }]
+  }, {
+    "id": "ff3733ca-7804-456d-b57a-324cfde1c2fd",
+    "name": "CreateCodeError",
+    "commands": [{
+      "id": "0cbef3ed-bf89-457d-a6da-3fbce7a66f6d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4493492a-e260-435b-ab67-c7f91655f2f4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "53406271-bf4c-4448-9bb4-a9b4b297d8eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d76b6187-6c9f-4fea-ab99-ddb7d79c0bcf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "640a24e6-9847-4fa7-b2c8-436afaa4908b",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "ed6e08cf-b0d8-4f37-82be-3ccf077d4a69",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "78106b5b-0481-4be3-bc73-1dbbc33b0200",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "6a2ecd17-f2b7-48ff-abcb-87dd5d6e0b1a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "edd25bf5-0f6e-4bb7-bf87-b8c5707f92e7",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "c9511611-68f5-4f64-a8b1-fa5cebdc8ce0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9f20f3d-5048-4d98-967f-7e228045e8fc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb23e3ad-d8ec-4bb2-a370-792953626faa",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "83edc5ed-7293-4bf8-9517-ad8e61fd9bba",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "a273f45b-f2a5-479a-9b9c-438e693b17d9",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "145e1393-8091-4189-817c-9967b3720370",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "b68a61d2-c665-4bd4-a502-8dd47f32c12f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5477b75a-6fe7-46fc-bcef-a430cf8fdf6b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกรหัสโปรโมชั่น!"
+    }]
+  }, {
+    "id": "3a2a4928-ec2c-4657-8fe5-6cd8fd8543d4",
+    "name": "CreateDetailsError",
+    "commands": [{
+      "id": "94916d1d-adf9-41d9-b07a-9137cd171cf5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "55657d2a-db5c-4425-beb8-a00a7569d4ba",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "108eb4e6-ce83-41a0-ba79-99070a713c0d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d7cc54a-49dd-4a11-a9b8-8e05f0b4522b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad8d7092-8405-41ee-a839-40a5bfa9120a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "10175df3-6978-4a80-8438-8ddb553b582a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "af634918-7867-4adc-95fd-4d8d864f3101",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c6e5758a-238b-45f3-9382-b89f750c7c83",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "4d6bdc90-e1fb-4a85-9758-99a4a17598a4",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "72e9e88b-b66a-43db-a04b-398ead96e077",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6227a03d-eff9-4adf-9521-024b0d6bdf42",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5bb8be67-aa33-4280-8f1a-58880cffbfc2",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "c92c40a2-ac0e-43be-990d-d71c910c2472",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "83fbeca3-d33f-4067-80a2-2a2fbbb7110f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "0e0d59be-bfb2-44fd-b077-0faf1f99e19f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "76bfb93a-5d45-4c8d-899b-14288e72f6aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b185f93-69ff-456c-a18c-5ee200d832c4",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกรายละเอียด!"
+    }]
+  }, {
+    "id": "fc6405d8-2570-41e9-9f97-5bc349996d6c",
+    "name": "CreateStartDateError",
+    "commands": [{
+      "id": "be9c1627-ccfb-4f57-98b7-08c81171ee01",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e556960-7692-45af-87fc-33fb78f93d4c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2dfb5ec7-e6a5-4741-8a25-cd240c9943b6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee77ef69-4774-4393-b374-76ae9797aafb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "64314032-d852-42df-bd9b-5cf16e6ff7b4",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "f5cf7c18-4b1e-42fd-9d11-6c31dec3166a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "d0fc5b00-9cb9-4757-b067-be1097f757a3",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "5b16eeb8-9a4f-4dc2-b4db-133ad78c7eb1",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9abe5586-9de6-4786-b600-a309bb766129",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "51141d0d-b743-45d2-bb27-dd5eca51b7d4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bffaf106-cf78-406a-9fdb-17b4dfa47967",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cb832d7-6059-42a3-8c14-495fc7f6662a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "2d2c62d2-b645-4035-a90e-b39b8fed7865",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "d5f6acde-0c44-4c81-a23d-085b031c8676",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "cfd75d81-d5ef-46c1-a206-711843ff68a5",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "3b7ada15-4295-4ce4-977d-78fb3892ee05",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7647f6c8-b156-49d7-8096-a4e77b7d8705",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณาเลือกวันที่เริ่มต้น!"
+    }]
+  }, {
+    "id": "667d341a-e501-4923-97dc-eefc8e51865e",
+    "name": "CreateEndDateError",
+    "commands": [{
+      "id": "9d13516a-569c-4cbf-9822-65af13953116",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "98cbce1f-6c1c-468d-8223-22c27e332c27",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "16f1c579-20ca-41ff-9eda-65a619eb9e43",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33c512db-9dde-46bf-adf9-4092d77c443a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "29a83e1b-46bc-4faa-b183-51181858881b",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "2c3fcc63-3b08-4eb4-a110-80197410ea6a",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "0c5e7c16-a67c-4bb1-8960-058b5183875f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "755af3ed-6d4a-4a2e-87da-0ec7b7efb352",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "de97e44d-688a-4ff5-96c8-26df804a3322",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "896582e0-9543-4731-a603-103a8f2c0444",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4080d7b-f600-4e38-9220-bdddb6396794",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5db85e69-239a-42aa-b636-2cc10d13126c",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "9f9d9fde-6425-4e91-be2b-e75dbb49f876",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "dff12869-0763-423d-8d0d-9654e0ed3377",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "fb6ed085-f1e6-4d0f-8f8f-86964c241ac7",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "f0bd0f57-c9a8-46bd-90e2-bea7266318d2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f276c7e-f1dc-401a-81e6-d78be09b930b",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณาเลือกวันที่สิ้นสุด!"
+    }]
+  }, {
+    "id": "94f25864-5482-46a6-a7e0-4da198007665",
+    "name": "CreateDiscountIDError",
+    "commands": [{
+      "id": "956aeddc-82ca-4d96-a4e8-ec2b0a61f7ae",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "23b2b55e-9024-4533-bbf9-44bb5919888a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "405be144-0689-4ba7-8891-fc64114ef97a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "867e47f1-3179-4991-8f45-bff3db7d56c0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee384f19-dd7a-4c59-8789-b890d5cb3c5d",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "9f77d998-2405-4bc6-a060-d1eaaecd7cef",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "00e3bb35-d2a9-41b8-af21-d296daa43144",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "d3c7be44-5218-458a-8a4c-a9d97c41883b",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "11df5546-d7b9-40c8-ac28-d41001ba5ca8",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "cf452ae0-73fc-4f9f-ae8b-468fd3377684",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bb85cc6-8a88-4562-8daf-6278990351da",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณาเลือกประเภทส่วนลด!"
+    }]
+  }, {
+    "id": "b2bc6a0f-9531-48f0-a7e1-c5d184a05340",
+    "name": "CreateDiscountError",
+    "commands": [{
+      "id": "2c86a87a-a61d-41c2-b4c9-99a54f61139c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "14f81fca-cf86-4cbc-bf26-9c955f2f4bb5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "776173f7-5ad8-4f3c-958c-a0b35909fff9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "994d09a6-0141-462e-bdd2-d73566c393f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74dbfb7b-05b0-4be5-aa1d-4a65d9f5f823",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "9ddf6019-e938-4a91-9a1c-e4229b5080fc",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "4cf408c2-123d-4101-96bd-f9ae7e7a9bec",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "8e6a739d-98b2-4ae1-8eeb-ca14fbdfff06",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "262b12e7-b1cc-44ba-a831-1c84f6e45083",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "8e09e436-b0a2-4b7e-926e-ea86ff0232b8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2f062b9-2e6e-44fd-978a-86a5dc1ce6ee",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b36ebbd-a2b8-4e22-b73c-808cc7974098",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "164e9100-6ce8-4f7c-b203-6a6144c505cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "eafcb944-7c29-4340-969a-2dfc28aa638b",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "517ba664-fcb0-491e-a995-d3928e81c61c",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "5a2d80fb-a700-4df7-8d9b-2081ebc38c8d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9abe59b-e20f-4d5e-a5c5-1fb65c8dd3b1",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกส่วนลด!"
+    }]
+  }, {
+    "id": "03befc57-f6ab-4e2a-a658-d5b88fb7905d",
+    "name": "CreateLimitDiscountError",
+    "commands": [{
+      "id": "d4063aa3-c887-4bf1-9681-1a42fb235bd5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ba51150e-a381-469a-98cd-2d8ca4b3c755",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "60649c31-f004-4c0e-8a8d-02edcbf8e37c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "038ff8af-354a-45a7-893b-83350011d2b5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "70af885a-7b3a-4f9a-966a-368a6c511aea",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "dcfcfdba-1d77-486b-8c23-4d89dc0663ce",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "4cf78d3c-7613-4ef7-88ca-eba5435a49b1",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "2e4296ee-f08f-427c-96c6-e09352325f22",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "5778b929-37e4-431e-a9f5-1ee92a7dcfaa",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "22041bfa-71ef-41f5-9770-9100da78a450",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3775837-ff1e-41a1-b9a4-64f3c661dd4b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74d7156b-f1b8-414b-ab78-b4d1fd814876",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "967f4ad3-fe63-49e0-ae0f-5a40aa06c1df",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "37eb0bce-0250-4de6-a138-a4d91e176b28",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "0af6faec-3dea-484a-95b5-27abd5ceb25f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "e63d0870-70a8-4af1-8899-2b22cf30774f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb8e5b31-52ba-4cac-8e96-30df69c2ac13",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกส่วนลดสูงสุด!"
+    }]
+  }, {
+    "id": "dba4228d-bef7-4c47-87a9-4293b007ed06",
+    "name": "CreateMinimumPriceError",
+    "commands": [{
+      "id": "a6511b42-74ba-40ee-a759-47c507baccdc",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2987aed2-372a-4761-9baf-f73ac439a206",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "797e41fb-c466-4aad-9b1b-ea24e0a58fa9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9bf6fbdc-9a25-43b6-af9b-e726c30ec12a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "58a25ca8-672b-4cc8-a66a-44e8a4898e07",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "5e84c369-145c-4806-ade5-0f75640b9ced",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "107c7518-5546-4ffe-b401-11f8096c6d31",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "ded81672-eec1-418b-bf5b-524605dbe2a1",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "bae6b427-487c-4678-a3c9-25ec45d8628f",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "d85adeae-0723-40b0-b646-13d685034e70",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2f8a5821-554c-4906-a23c-8f75648c579e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "24fc5cfa-0689-4293-84e3-68bb22da5fbe",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "5445fc95-a8f7-489c-a548-81cd565af3f5",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "b577a3e3-5167-42a2-bdfe-7849c21bd2d3",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f9c2ba9-82d1-475a-9ef0-515ee178bf9e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "94f0d064-36c5-408b-82f4-683e31b3cd04",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41cad2a8-f64f-477f-9200-34d1ad6aa6ca",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกราคาขั้นต่ำ!"
+    }]
+  }, {
+    "id": "6d4b4caf-3789-4f5c-943f-f935e05ec555",
+    "name": "CreateLimitError",
+    "commands": [{
+      "id": "2e18bb1d-14ca-4639-864d-8af43663ba0a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b39bfbd2-35e6-4a83-82ca-a3224383877a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1012",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "042b13df-cd79-400e-8aea-1a6c3792d46a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.promotion-create-button__icon",
+      "targets": [
+        ["css=.promotion-create-button__icon", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0aabb7e0-36b2-4c26-97e5-b747a9272a86",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-col:nth-child(1) span",
+      "targets": [
+        ["css=.ant-col:nth-child(1) span", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div/div[3]/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Trip and Cabin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f17ae894-8f47-4ca7-8e3e-a32a287294b7",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_name",
+      "targets": [
+        ["id=promotion_create_name", "id"],
+        ["css=#promotion_create_name", "css:finder"],
+        ["xpath=//input[@id='promotion_create_name']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Flash Sale - Today Only"
+    }, {
+      "id": "da1904f0-f5c5-48eb-9e45-b82780a61023",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_code",
+      "targets": [
+        ["id=promotion_create_code", "id"],
+        ["css=#promotion_create_code", "css:finder"],
+        ["xpath=//input[@id='promotion_create_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FLASH2025"
+    }, {
+      "id": "e668aec5-ff1d-4bee-bb2c-3008da4c9d02",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_details",
+      "targets": [
+        ["id=promotion_create_details", "id"],
+        ["css=#promotion_create_details", "css:finder"],
+        ["xpath=//textarea[@id='promotion_create_details']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[3]/div/div/div[2]/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "โปรโมชั่นพิเศษ ลดทันที 15% สูงสุด 3,000 บาท สำหรับทุกทริปที่จองในวันนี้เท่านั้น! รีบจองก่อนหมดเวลา!"
+    }, {
+      "id": "192118ec-24c7-40e2-bb5a-04cb5328f058",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_start_date",
+      "targets": [],
+      "value": "2025 January 23"
+    }, {
+      "id": "83d027cc-547e-4b5e-a03c-8557bcc5ca91",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_end_date",
+      "targets": [],
+      "value": "2025 January 25"
+    }, {
+      "id": "c0e49485-762f-487f-a17b-1239bf6c188d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-selection-item",
+      "targets": [
+        ["css=.ant-select-selection-item", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div/div[6]/div/div/div[2]/div/div/div/div/span/span[2]", "xpath:idRelative"],
+        ["xpath=//span/span[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd425e6c-54ae-4b8f-a20e-0c1ee29a1abd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-select-item-option-active > .ant-select-item-option-content",
+      "targets": [
+        ["css=.ant-select-item-option-active > .ant-select-item-option-content", "css:finder"],
+        ["xpath=//div/div/div[2]/div/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6173bcab-36de-49ca-ba07-81b68597c44e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_discount",
+      "targets": [
+        ["id=promotion_create_discount", "id"],
+        ["css=#promotion_create_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[7]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "378b6c2f-6415-45ba-b402-c5087f6b6b7d",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit_discount",
+      "targets": [
+        ["id=promotion_create_limit_discount", "id"],
+        ["css=#promotion_create_limit_discount", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit_discount']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[8]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[8]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "3000"
+    }, {
+      "id": "97b7d352-4bb5-43bb-94e2-72615bf0347e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_minimum_price",
+      "targets": [
+        ["id=promotion_create_minimum_price", "id"],
+        ["css=#promotion_create_minimum_price", "css:finder"],
+        ["xpath=//input[@id='promotion_create_minimum_price']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[9]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": "5000"
+    }, {
+      "id": "f95ccbfc-b5dd-47d1-8dbc-b789316168e8",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion_create_limit",
+      "targets": [
+        ["id=promotion_create_limit", "id"],
+        ["css=#promotion_create_limit", "css:finder"],
+        ["xpath=//input[@id='promotion_create_limit']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion_create']/div/div[10]/div/div/div[2]/div/div/span/span/input", "xpath:idRelative"],
+        ["xpath=//div[10]/div/div/div[2]/div/div/span/span/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4fdf388-e64f-4d77-9607-2c541368d1e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn > span:nth-child(2)",
+      "targets": [
+        ["css=.ant-btn > span:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='promotion_create']/div[2]/div/div[2]/button/span[2]", "xpath:idRelative"],
+        ["xpath=//button/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'เพิ่มโปรโมชั่น')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "57280382-776a-44bf-9597-917a4d28ec14",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกจำนวนสิทธิ์!"
+    }]
+  }, {
+    "id": "21b0b2e9-4e42-4952-81a8-f4e40cad85c7",
+    "name": "EditSuccess",
+    "commands": [{
+      "id": "55fd9125-0cb5-4d5c-9ccd-f90ab068b1be",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7b37ca41-8675-4716-90f8-db3a692c3b37",
+      "comment": "",
+      "command": "",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fb046cc8-c066-4092-843d-d9577c7f26b1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb017cc0-a96f-46e0-9983-3b24bc12072e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_code",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "FOOD10"
+    }, {
+      "id": "31cdcba5-af17-489d-bb2a-e49867006827",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "f903ad6d-156c-4e56-8692-6a0b5e715465",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.message-success",
+      "targets": [],
+      "value": "อัพเดทสำเร็จ!"
+    }]
+  }, {
+    "id": "601f6589-d843-4f70-87de-8ffabe124dad",
+    "name": "EditCodeError",
+    "commands": [{
+      "id": "052cb62f-cfd1-4c24-aa5b-1ed5facd769e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "233148c4-da70-4042-8b50-748dc04df664",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "40b56529-3d45-4aba-aa6f-c8aa4ada6df7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8492832-0362-43d1-ae07-d1031e223fbc",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_code",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c1e4166-884c-4811-93d9-f2a26f9d5a52",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "2be45830-8224-4d7d-8f3f-5a8504647f1c",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกรหัสโปรโมชั่น!"
+    }]
+  }, {
+    "id": "98ec7a31-8d59-4dd6-a6af-a575b7d334c6",
+    "name": "EditCodeWrongPattern",
+    "commands": [{
+      "id": "bdf914bd-1c23-4ca2-b3af-680b6739400e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "989d0f7b-67d4-4217-b6dc-acaf0b773c0b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9695b776-6ce4-4dbe-b1a4-c577ef0f2fb8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f390429-b06b-4136-8b48-d205d6ba6f30",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_code",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "ฟหกด่าสว"
+    }, {
+      "id": "4797b6b2-fd77-4cfe-948b-c6f61d1c9699",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "ede60668-e448-45cc-b5a9-772dab975343",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกเฉพาะตัวอักษรภาษาอังกฤษหรือตัวเลข ไม่เกิน 10 ตัว!"
+    }]
+  }, {
+    "id": "c883c4a7-57ef-4ed7-8e85-176476abb1f9",
+    "name": "EditDetailError",
+    "commands": [{
+      "id": "a9e4e128-94bf-47ec-b4a8-07f4416c253d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "09d64fee-c984-4b7c-bc26-9ee71527bf27",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "12ffa4ce-d3d0-4e20-9c36-dee6654c08c9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fa4bd251-af38-4629-8cf6-46f21da2314e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_details",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83b7778b-16bb-4521-a367-e697b6313367",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "c1625fe2-6bed-4734-8695-df90f13cfc8f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกรายละเอียด!"
+    }]
+  }, {
+    "id": "68a5dd5d-96de-4d21-8c6f-079c58c6a5ec",
+    "name": "EditDiscountError",
+    "commands": [{
+      "id": "8439b3fa-7c35-4bd7-b23d-24d62813ad36",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ccb5ff11-185a-4fe1-9b50-fbde4b6bee9e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9d842f4e-9fd7-4d02-86d9-a4daca7b1f29",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b129c6aa-1020-4b38-a6ca-e56e97f56d6e",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_discount",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f6613b1-96f5-4875-bbbf-5950a7993a68",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "b77df748-bcaf-43fa-835b-03d2c6e0be90",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกส่วนลด!"
+    }]
+  }, {
+    "id": "62b71977-40b7-482c-8f05-ef8211625f8c",
+    "name": "EditLimitDiscountError",
+    "commands": [{
+      "id": "1be24e5b-6e87-4edb-84f6-9254ea70aeea",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5c13783c-c9a2-4e50-abf2-3e8a4c76dee0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ce5b12d5-d684-44e6-a424-994fca53b1e2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1ed0519-943e-4389-b2f6-c4cb2f3fc585",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_limit_discount",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5714977b-6db7-464f-95ac-55ff3b9078f6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d71658f-8190-4143-969d-4a9b370376a7",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกส่วนลดสูงสุด!"
+    }]
+  }, {
+    "id": "c0b46d42-7924-499d-8e21-ba05004c6974",
+    "name": "EditLimitDiscountWrongPattern",
+    "commands": [{
+      "id": "6f6207f8-d0bc-4386-bab1-db9aaaff1bb1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "647242fd-b65f-4d34-9ea5-71b573f221b6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f1fae54a-ad17-4299-820d-d57ef2a0cbc3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a21da39-c42c-4924-88d6-55c5ebce4978",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_limit_discount",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "7894ccc8-9e8e-478b-ab8a-a62fd925e61b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "bbc2cc8c-6305-4c4a-a472-a44e8f0421c5",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกเฉพาะตัวเลขที่มากกว่าหรือเท่ากับ 1!"
+    }]
+  }, {
+    "id": "6e0f7441-9bf7-4e06-bb53-831b1295f3a1",
+    "name": "EditMinumumPriceError",
+    "commands": [{
+      "id": "ef68a033-c5b5-4691-8cd9-8944a1240b40",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "23d617e2-2b70-4001-a109-ad1716887abf",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7684bf7a-34c6-4b74-964f-c6afd62e2b1e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "79748fdc-a170-4c4f-a3f4-e323206ca242",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_minimum_price",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a920daf5-9472-495c-8077-7fe7674a2836",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "315fa708-ea51-4298-bc32-2f716997e996",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกราคาขั้นต่ำ!"
+    }]
+  }, {
+    "id": "b8c241db-b807-47de-9c3d-71bd3d610a7b",
+    "name": "EditLimitError",
+    "commands": [{
+      "id": "01943107-e09a-4edb-a085-c5caed1648d1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/admin/promotion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "285dcfb1-7cc8-4ac7-91da-b5c922c7e7da",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x1080",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9b41bca-8327-4e94-9f27-1b708e111534",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-table-cell-row-hover .Btn-edit",
+      "targets": [
+        ["css=.ant-table-cell-row-hover .Btn-edit", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr/td[14]/div/div/button", "xpath:idRelative"],
+        ["xpath=//td[14]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3de3cf7-b389-4ddf-aca2-0e92deda9959",
+      "comment": "",
+      "command": "type",
+      "target": "id=promotion-edit_limit",
+      "targets": [
+        ["id=promotion-edit_code", "id"],
+        ["css=#promotion-edit_code", "css:finder"],
+        ["xpath=//input[@id='promotion-edit_code']", "xpath:attributes"],
+        ["xpath=//form[@id='promotion-edit']/div/div[2]/div/div/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d33ab2e-1e12-409d-8827-fefb6392b762",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-plus > svg",
+      "targets": [
+        ["css=.anticon-plus > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "63783ebc-6b14-400f-bd82-c58753e73f3f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกจำนวนสิทธิ์!"
+    }]
+  }],
+  "suites": [{
+    "id": "5b8844e1-eedc-4785-8cde-120655b273b0",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["2b55d546-1629-4167-883b-6a175e05899d"]
+  }],
+  "urls": ["http://localhost:5173/admin/promotion"],
+  "plugins": []
+}

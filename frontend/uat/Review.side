@@ -1,0 +1,260 @@
+{
+  "id": "05c94ec7-31ad-4c30-9a96-58efab46ffdd",
+  "version": "2.0",
+  "name": "Review",
+  "url": "http://localhost:5173/customer/review",
+  "tests": [{
+    "id": "ba91b074-a238-4e21-bfb5-90e11149752e",
+    "name": "EditSuccess",
+    "commands": [{
+      "id": "15325e00-5146-44b4-b3e9-a61665657743",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/customer/review",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "376ab9f2-0ac3-4b59-b974-171015b4d6aa",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1affbf88-4914-45cf-b7e6-2daf5a448564",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c257313-e5b6-443d-a730-7e2bd813a4df",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "787a9f1f-f6ed-4e29-8d0a-49a7b8c5cd4d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "b12acd9b-a61f-4765-b6c7-4456e868dbc5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-dropdown-menu-item-active > .ant-dropdown-menu-title-content",
+      "targets": [
+        ["css=.ant-dropdown-menu-item-active > .ant-dropdown-menu-title-content", "css:finder"],
+        ["xpath=//li/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "875fab36-7684-4232-bab6-cf173d22f47a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-modal-wrap",
+      "targets": [
+        ["css=.ant-modal-wrap", "css:finder"],
+        ["xpath=//div[3]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0bc712b1-0f5a-4efe-a719-6320720f0833",
+      "comment": "",
+      "command": "type",
+      "target": "id=reviewText",
+      "targets": [
+        ["id=reviewText", "id"],
+        ["css=#reviewText", "css:finder"],
+        ["xpath=//textarea[@id='reviewText']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Hello"
+    }, {
+      "id": "639df6a7-cbcc-4022-b9a8-d45a4606a7f1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "25738130-2ac3-4244-bc5d-cf2426e4c537",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "da732e4b-48b8-441b-8de6-bf753588808f",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "51c972a9-6628-4c14-96b2-1da4ad5c6a4c",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.message-success",
+      "targets": [],
+      "value": "แก้ไขรีวิวสำเร็จ!"
+    }, {
+      "id": "d57f8bad-f181-4c01-984e-23ec9bd69227",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "082200b1-48d4-479b-9e75-3b384aff87ed",
+    "name": "EditErrorDetails",
+    "commands": [{
+      "id": "ed4572f0-9779-49fd-8d96-0e1036375a20",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:5173/customer/review",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b875a67a-4de9-4606-86d8-6db207cb8c5d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e53be940-f5a2-47dd-b508-8051d9160050",
+      "comment": "",
+      "command": "click",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c0fc025-6222-47cd-9a3e-00be4b4190da",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c0bb038-5a30-4199-a4bf-cb16b524c5bc",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.anticon-ellipsis path",
+      "targets": [
+        ["css=.anticon-ellipsis path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "448043fc-5321-43b5-b598-e167fa6a5b5b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-dropdown-menu-item-active > .ant-dropdown-menu-title-content",
+      "targets": [
+        ["css=.ant-dropdown-menu-item-active > .ant-dropdown-menu-title-content", "css:finder"],
+        ["xpath=//li/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Edit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cc34939-454f-4092-b5cb-384e9ad938bc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-modal-wrap",
+      "targets": [
+        ["css=.ant-modal-wrap", "css:finder"],
+        ["xpath=//div[3]/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae1e4ee6-ed16-471a-917c-9036f473dd3b",
+      "comment": "",
+      "command": "type",
+      "target": "id=reviewText",
+      "targets": [
+        ["id=reviewText", "id"],
+        ["css=#reviewText", "css:finder"],
+        ["xpath=//textarea[@id='reviewText']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd216938-6c2e-4cc5-8097-3d90a9340051",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0f16c069-7072-45df-bebb-84aeffe257b1",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "663de68f-da3e-4d2c-95d1-a446a5f7b592",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.ant-btn-primary > span",
+      "targets": [
+        ["css=.ant-btn-primary > span", "css:finder"],
+        ["xpath=//button[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Save Changes')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e33b4bb1-076f-4dca-b810-029a91dd4e1e",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.ant-form-item-explain-error",
+      "targets": [],
+      "value": "กรุณากรอกรีวิว!"
+    }]
+  }],
+  "suites": [{
+    "id": "48a4aa54-2114-41b2-90b9-5d095ea39c34",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["ba91b074-a238-4e21-bfb5-90e11149752e"]
+  }],
+  "urls": ["http://localhost:5173/customer/review", "http://localhost:5173/customer/review/1"],
+  "plugins": []
+}

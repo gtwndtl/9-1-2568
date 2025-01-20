@@ -381,11 +381,35 @@ export default function NotReviewedTripPage() {
                                         </div>
                                     </div>
                                     <p><strong>Subtotal:</strong> {(tripcabin.tripPrice + tripcabin.cabinTypePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p><strong>VAT (7%):</strong> {tripcabin.tripPaymentVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p><strong>Total:</strong> {(tripcabin.bookingCabinPrice + tripcabin.tripPaymentVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                    <p><strong>VAT (7%):</strong>{" "}
+                                        {((tripcabin.tripPrice + tripcabin.cabinTypePrice) * 0.07).toLocaleString(
+                                            undefined,
+                                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                    <p><strong>Total:</strong>{" "}
+                                        {((tripcabin.tripPrice + tripcabin.cabinTypePrice) * 1.07).toLocaleString(
+                                            undefined,
+                                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                                        )}
+                                    </p>
                                     <p><strong>Discount: -</strong> { }</p>
-                                    <p><strong>Grand Total:</strong> {tripcabin.tripPaymentTotalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <Button type="primary" onClick={() => handleAddReview(tripcabin)} style={{ float: 'right' }}>Add Review</Button>
+                                    <p><strong>Grand Total:</strong>{" "}
+                                        {((tripcabin.tripPrice + tripcabin.cabinTypePrice) * 1.07).toLocaleString(
+                                            undefined,
+                                            { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                    <Button type="primary" onClick={() => handleAddReview(tripcabin)}
+                                        style={{
+                                            float: 'right',
+                                            marginTop: '12px',
+                                            backgroundColor: '#133e87',
+                                            borderRadius: '10px',
+                                            borderColor: '#133e87',
+                                            color: '#fff',
+                                            fontWeight: 'bold',
+                                        }}>Add Review</Button>
                                 </>
                             ) : (
                                 <>
@@ -411,7 +435,15 @@ export default function NotReviewedTripPage() {
                                     <Button
                                         type="primary"
                                         onClick={() => handleAddReview(tripcabin)}
-                                        style={{ float: 'right', marginTop: '12px' }}
+                                        style={{
+                                            float: 'right',
+                                            marginTop: '12px',
+                                            backgroundColor: '#133e87',
+                                            borderRadius: '10px',
+                                            borderColor: '#133e87',
+                                            color: '#fff',
+                                            fontWeight: 'bold',
+                                        }}
                                     >
                                         Add Review
                                     </Button>
@@ -436,11 +468,41 @@ export default function NotReviewedTripPage() {
                 </Card>
             )}
             <Modal
-                title="Add Review"
+                title={
+                    <div style={{ textAlign: 'center', borderBottom: '1px solid #ccc', paddingBottom: '8px' }}>
+                        <span style={{ fontWeight: 'bold' }}>Add Review</span>
+                    </div>
+                }
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 onOk={() => form.submit()}
-                width={800} // ปรับความกว้าง
+                width={800} // ปรับความกว้างของ Modal
+                footer={[
+                    <Button
+                        key="cancel"
+                        onClick={() => setIsModalOpen(false)}
+                        style={{
+                            borderRadius: '10px',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Cancel
+                    </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => form.submit()}
+                        style={{
+                            backgroundColor: '#133e87',
+                            borderRadius: '10px',
+                            borderColor: '#133e87',
+                            color: '#fff',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Submit
+                    </Button>,
+                ]}
             >
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <Row gutter={16}>

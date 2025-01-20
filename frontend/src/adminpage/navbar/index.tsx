@@ -1,24 +1,43 @@
-import React, { useState } from "react";
-import { Layout, Tooltip } from "antd";
-import { Link } from "react-router-dom";
-import { SearchOutlined, UserOutlined } from "@ant-design/icons";
+import React from "react";
+import { Dropdown, Layout, Menu } from "antd";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {  UserOutlined } from "@ant-design/icons";
 import cruise_ship_logo from "../../assets/cruise_ship_logo.jpg";
 import "./index.css";
 
 const NavbarAdmin: React.FC = () => {
-  const [active, setActive] = useState("home");
-
-  const handleButtonClick = (section: string) => {
-    setActive(section);
+  const location = useLocation(); // ใช้สำหรับตรวจสอบ URL ปัจจุบัน
+  const navigate = useNavigate(); // ใช้สำหรับนำทาง
+  const handleMenuClick = ({ key }: { key: string }) => {
+    switch (key) {
+      case "profile":
+        console.log("Profile clicked");
+        break;
+      case "review":
+        navigate("/customer/review");
+        break;
+      case "logout":
+        navigate("/");
+        break;
+      default:
+        break;
+    }
   };
-
-  const handleSearchClick = () => {
-    console.log("Search icon clicked");
-  };
-
-  const handleProfileClick = () => {
-    console.log("Profile icon clicked");
-  };
+  // เมนู dropdown
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="profile" icon={<UserOutlined />}>
+        Profile
+      </Menu.Item>
+      <Menu.Item key="review" icon={<UserOutlined />}>
+        Review
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="logout" danger>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Layout.Header className="navbaradmin">
@@ -33,60 +52,33 @@ const NavbarAdmin: React.FC = () => {
         <nav className="navbaradmin-menu">
           <Link to="/admin/promotion">
             <button
-              className={`navbaradmin-button ${
-                active === "Promotion" ? "active" : ""
-              }`}
-              onClick={() => handleButtonClick("Promotion")}
+              className={`navbaradmin-button ${location.pathname.startsWith("/admin/promotion") ? "active" : ""
+                }`}
             >
               Promotion
             </button>
           </Link>
-          <Link to="/customer/review">
-            <button
-              className={`navbaradmin-button ${
-                active === "Review" ? "active" : ""
-              }`}
-              onClick={() => handleButtonClick("Review")}
-            >
-              Review
-            </button>
-          </Link>
           <Link to="/food-service/login/menu/order">
             <button
-              className={`navbaradmin-button ${
-                active === "Food-Service" ? "active" : ""
-              }`}
-              onClick={() => handleButtonClick("Food-Service")}
+              className={`navbaradmin-button ${location.pathname === "/food-service/login/menu/order"
+                ? "active"
+                : ""
+                }`}
             >
               Food-Service
-            </button>
-          </Link>
-          <Link to="/contact">
-            <button
-              className={`navbaradmin-button ${
-                active === "Contact" ? "active" : ""
-              }`}
-              onClick={() => handleButtonClick("Contact")}
-            >
-              Contact
             </button>
           </Link>
         </nav>
 
         {/* Action Icons Section */}
         <div className="navbaradmin-actions">
-          <Tooltip title="Search">
-            <SearchOutlined
-              className="navbaradmin-icon"
-              onClick={handleSearchClick}
-            />
-          </Tooltip>
-          <Tooltip title="Profile">
+          <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
             <UserOutlined
               className="navbaradmin-icon"
-              onClick={handleProfileClick}
+              onClick={(e) => e.preventDefault()} // Prevent default link behavior
+              style={{ fontSize: "20px", cursor: "pointer" }}
             />
-          </Tooltip>
+          </Dropdown>
         </div>
       </div>
     </Layout.Header>

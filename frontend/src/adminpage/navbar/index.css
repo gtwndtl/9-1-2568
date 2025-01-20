@@ -1,3 +1,7 @@
+
+.navbaradmin-container *{
+  font-family: 'Roboto', sans-serif !important;
+}
 /* Navbar Base Styles */
 .navbaradmin {
   background: #ffffff;
@@ -15,10 +19,9 @@
 /* Navbar Container */
 .navbaradmin-container {
   display: flex;
+  align-items: center; /* จัดให้ทุกส่วนอยู่กึ่งกลางในแนวแกน Y */
   justify-content: space-between;
-  align-items: center;
   width: 100%;
-  max-width: 1200px;
 }
 
 /* Logo Section */
@@ -44,6 +47,9 @@
 .navbaradmin-menu {
   display: flex;
   gap: 20px;
+  position: absolute; /* ทำให้เมนูสามารถอยู่กึ่งกลาง */
+  left: 50%; /* จัดกึ่งกลางในแนวนอน */
+  transform: translateX(-50%); /* เลื่อนกลับครึ่งหนึ่งเพื่อให้อยู่ตรงกลางพอดี */
 }
 
 .navbaradmin-button {
@@ -64,7 +70,7 @@
   font-weight: bold;
 }
 
-/* Action Icons */
+/* Action */
 .navbaradmin-actions {
   display: flex;
   align-items: center;

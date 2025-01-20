@@ -1,5 +1,5 @@
 import UserInfo from "../userinfo/userinfo";
-import Navbar from '../../../../adminpage/navbar';
+// import Navbar from '../../../../adminpage/navbar';
 import './reviewcustomerpage.css';
 import NavBarReview from "../navbarreview/navbarreview";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export default function ReviewForCustomerPage() {
 
   return (
     <section className="reviewforcustomercontent" id="reviewforcustomercontent">
-      <div><Navbar /></div>
+      {/* <div><Navbar /></div> */}
       {isLoading ? (
         <div className="spinner-review-container">
           <Loader />

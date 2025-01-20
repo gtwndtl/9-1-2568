@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Space, Button, Col, Row, Divider, Form, Input, Card, message, DatePicker, Select, InputNumber, Typography, } from "antd";
+import { Space, Button, Col, Row, Divider, Form, Input, Card, message, DatePicker, Select, Typography, } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { GetPromotionById, UpdatePromotionById, GetPromotionType, GetDiscountType, GetPromotionStatus } from "../../../service/htpps/PromotionAPI";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
 import Navbar from "../../../../adminpage/navbar";
 import "./index.css";
-import LoaderAdmin from "../../../../adminpage/loaderadmin";
+import Loader from "../../../../components/third-party/Loader";
 
 function PromotionEdit() {
   const navigate = useNavigate();
@@ -108,6 +108,7 @@ function PromotionEdit() {
     if (res.status === 200) {
       messageApi.open({
         type: "success",
+        className: "message-success",
         content: "อัพเดทสำเร็จ!",
       });
       setTimeout(() => {
@@ -133,7 +134,7 @@ function PromotionEdit() {
       {contextHolder}
       {loading ? (
         <div style={{ textAlign: "center", padding: "50px" }}>
-          <LoaderAdmin />
+          <Loader />
         </div>
       ) : (
         <div className="edit-promotion-page">
@@ -162,7 +163,7 @@ function PromotionEdit() {
                     label={<Text strong>รหัสโปรโมชั่น</Text>}
                     name="code"
                     rules={[
-                      { required: true, message: "กรุณากรอกรายละเอียด!" },
+                      { required: true, message: "กรุณากรอกรหัสโปรโมชั่น!" },
                       {
                         pattern: /^[A-Za-z0-9]{1,10}$/, // ตัวอักษรภาษาอังกฤษหรือตัวเลข ไม่เกิน 10 ตัว
                         message: "กรุณากรอกเฉพาะตัวอักษรภาษาอังกฤษหรือตัวเลข ไม่เกิน 10 ตัว!",
@@ -313,8 +314,23 @@ function PromotionEdit() {
                         message: "กรุณากรอกส่วนลดสูงสุด!",
                       },
                       {
-                        pattern: /^[0-9]*$/,
-                        message: "กรุณากรอกเฉพาะตัวเลข!",
+                        pattern: /^[1-9][0-9]*$/,
+                        message: "กรุณากรอกเฉพาะตัวเลขที่มากกว่าหรือเท่ากับ 1!",
+                      },
+                    ]}
+                  >
+                    <Input addonAfter="฿" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label={<Text strong>ราคาขั้นต่ำ</Text>}
+                    name="minimum_price"
+                    rules={[
+                      { required: true, message: "กรุณากรอกราคาขั้นต่ำ!" },
+                      {
+                        pattern: /^[1-9][0-9]*$/,
+                        message: "กรุณากรอกเฉพาะตัวเลขที่มากกว่าหรือเท่ากับ 1!",
                       },
                     ]}
                   >
@@ -344,21 +360,6 @@ function PromotionEdit() {
                     style={{ marginBottom: "16px" }}
                   >
                     <Input readOnly addonAfter="ครั้ง" />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label={<Text strong>ราคาขั้นต่ำ</Text>}
-                    name="minimum_price"
-                    rules={[
-                      { required: true, message: "กรุณากรอกราคาขั้นต่ำ!" },
-                      {
-                        pattern: /^[1-9][0-9]*$/,
-                        message: "กรุณากรอกเฉพาะตัวเลขที่มากกว่าหรือเท่ากับ 1!",
-                      },
-                    ]}
-                  >
-                    <Input addonAfter="฿" />
                   </Form.Item>
                 </Col>
                 <Col span={12}>

@@ -253,6 +253,7 @@ export default function TripReviewedPage() {
             if (res.status === 200) {
                 message.open({
                     type: "success",
+                    className:"message-success",
                     content: "แก้ไขรีวิวสำเร็จ!",
                 });
                 setTimeout(() => {
@@ -603,10 +604,10 @@ export default function TripReviewedPage() {
                 width={400}
             >
                 <p style={{ fontSize: '16px', marginBottom: '16px' }}>
-                    Are you sure you want to delete this review? This action cannot be undone.
+                    คุณต้องการลบรีวิวนี้หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้
                 </p>
                 <p style={{ fontSize: '14px', color: 'gray' }}>
-                    Please confirm your action below.
+                    กรุณายืนยันการกระทำของคุณด้านล่าง
                 </p>
             </Modal>
 
@@ -615,16 +616,38 @@ export default function TripReviewedPage() {
                 className="edit-trip-modal"
                 visible={isEditModalVisible}
                 title={
-                    <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: '#333' }}>
-                        Edit Review
+                    <div style={{ textAlign: 'center', borderBottom: '1px solid #ccc', paddingBottom: '8px' }}>
+                        <span style={{ fontWeight: 'bold' }}>Edit Review</span>
                     </div>
                 }
-                onCancel={handleCancelEdit}
-                onOk={handleSubmitEdit}
-                okText="Save Changes"
-                cancelText="Cancel"
                 centered
                 width={800}
+                footer={[
+                    <Button
+                        key="cancel"
+                        onClick={handleCancelEdit}
+                        style={{
+                            borderRadius: '10px',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Cancel
+                    </Button>,
+                    <Button
+                        key="save"
+                        type="primary"
+                        onClick={handleSubmitEdit}
+                        style={{
+                            borderRadius: '10px',
+                            backgroundColor: '#133e87',
+                            borderColor: '#133e87',
+                            color: '#fff',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Save Changes
+                    </Button>,
+                ]}
             >
                 <Form form={form} layout="vertical">
                     {/* Trip Names and Review Type in one row */}

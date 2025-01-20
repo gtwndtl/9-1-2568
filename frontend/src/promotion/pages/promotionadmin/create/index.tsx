@@ -9,7 +9,6 @@ import {
   Card,
   message,
   DatePicker,
-  InputNumber,
   Spin,
   Typography,
   Select,
@@ -213,7 +212,7 @@ function PromotionCreate() {
                       label={<Text strong>รหัสโปรโมชั่น</Text>}
                       name="code"
                       rules={[
-                        { required: true, message: "กรุณากรอกรายละเอียด!" },
+                        { required: true, message: "กรุณากรอกรหัสโปรโมชั่น!" },
                         {
                           pattern: /^[A-Za-z0-9]{1,10}$/, // ตัวอักษรภาษาอังกฤษหรือตัวเลข ไม่เกิน 10 ตัว
                           message: "กรุณากรอกเฉพาะตัวอักษรภาษาอังกฤษหรือตัวเลข ไม่เกิน 10 ตัว!",

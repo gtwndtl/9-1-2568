@@ -1,0 +1,149 @@
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* สีดำโปร่งแสง */
+  backdrop-filter: blur(4px); /* เอฟเฟกต์เบลอ */
+  z-index: 999; /* อยู่เหนือเนื้อหา */
+  display: flex; /* ใช้ Flexbox สำหรับจัดตำแหน่ง */
+  justify-content: center; /* จัดกึ่งกลางในแนวนอน */
+  align-items: center; /* จัดกึ่งกลางในแนวตั้ง */
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  width: 300px;
+  max-width: 100%;
+  background-color: #fff;
+  color: #212121;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  z-index: 1000; /* อยู่เหนือเนื้อหาปกติ */
+}
+
+
+
+.card:hover {
+  transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อ hover */
+}
+
+.card:focus {
+  outline: none; /* ลบขอบ focus */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* เพิ่มเส้นรอบปุ่มเมื่อ focus */
+}
+
+
+.image {
+  height: 8rem;
+  width: 100%;
+  object-fit: cover;
+  background-color: rgb(0, 89, 255);
+  background-image: linear-gradient(to right, rgb(0, 17, 255), rgb(132, 185, 255));
+}
+
+.content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.text-1 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.text-2 {
+  margin-top: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.text-2 span:first-child {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 900;
+}
+
+.text-2 span:last-child {
+  margin-top: 0.5rem;
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.action {
+  margin-top: 1rem;
+  display: inline-block;
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+}
+
+.action:hover {
+  background-color: #133e87; /* สีพื้นหลังเมื่อ hover */
+  transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อ hover */
+}
+
+.action:focus {
+  outline: none; /* ลบขอบ focus */
+  box-shadow: 0 0 0 3px #133e87; /* เพิ่มเส้นรอบปุ่มเมื่อ focus */
+}
+
+.date {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: rgba(156, 163, 175, 1);
+}
+
+.close-button {
+  position: absolute; /* กำหนดให้ปุ่มอยู่ในตำแหน่งสัมพัทธ์กับ parent */
+  top: 10px; /* ระยะห่างจากขอบบน */
+  right: 10px; /* ระยะห่างจากขอบขวา */
+  width: 30px; /* กำหนดความกว้างของปุ่ม */
+  height: 30px; /* กำหนดความสูงของปุ่ม */
+  background: #ff4d4f; /* สีพื้นหลังของปุ่ม */
+  border: none; /* ไม่มีขอบ */
+  border-radius: 50%; /* ทำให้ปุ่มเป็นวงกลม */
+  color: #fff; /* สีตัวอักษร */
+  font-size: 14px; /* ขนาดของตัวอักษร */
+  font-weight: bold; /* ความหนาของตัวอักษร */
+  cursor: pointer; /* เปลี่ยนเป็นลูกศรเมื่อ hover */
+  display: flex; /* จัดเนื้อหาในปุ่มให้อยู่กลาง */
+  align-items: center; /* จัดแนวตั้ง */
+  justify-content: center; /* จัดแนวนอน */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+  transition: transform 0.2s, background-color 0.3s; /* เพิ่มเอฟเฟกต์ */
+}
+
+.close-button:hover {
+  background: #d9363e; /* สีเมื่อ hover */
+  transform: scale(1.1); /* ขยายขนาดเมื่อ hover */
+}
+
+.close-button:focus {
+  outline: none; /* ลบขอบเมื่อโฟกัส */
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.5); /* เพิ่มขอบไฮไลต์เมื่อโฟกัส */
+}

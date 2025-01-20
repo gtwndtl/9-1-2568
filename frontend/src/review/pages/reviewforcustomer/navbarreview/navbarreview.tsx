@@ -29,7 +29,7 @@ export default function NavBarReview() {
                   <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
                 </svg>
               </span>
-              <span className="text">Review</span>
+              <span className="text">Reviewed</span>
             </button>
           </div>
 
@@ -48,7 +48,7 @@ export default function NavBarReview() {
                   <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
                 </svg>
               </span>
-              <span className="text">Not Review</span>
+              <span className="text">Unreviewed</span>
             </button>
           </div>
         </div>

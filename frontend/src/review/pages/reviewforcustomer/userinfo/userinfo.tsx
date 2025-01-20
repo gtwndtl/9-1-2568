@@ -67,7 +67,7 @@ export default function UserInfo() {
               <div className="card__subtitle-review-info">{userInfo.role_id}</div>
               <div className="card__subtitle-review-info">{userInfo.email}</div>
               <div className="card__wrapper-review-info">
-                <button className="card__btn-review-info">Review</button>
+                <button className="card__btn-review-info">Reviewed</button>
                 <button className="card__btn-review-info card__btn-solid-review-info">{reviewCount}</button>
               </div>
             </div>

@@ -250,7 +250,11 @@ export default function NotReviewedTripPage() {
         setDateFilter(null);
         setFilteredReviews(notReviewedFoodItems);
     };
-
+    const [serviceRating, setServiceRating] = useState<number | undefined>(undefined);
+    const [tasteRating, setTasteRating] = useState<number | undefined>(undefined);
+    const [valueForMoneyRating, setValueForMoneyRating] = useState<number | undefined>(undefined);
+    
+    
     return (
         <section className="not-reviewed-food-page" id="reviewed-food-page">
             {isLoading ? (
@@ -263,78 +267,121 @@ export default function NotReviewedTripPage() {
                     }}
                 >
                     {/* Filter Controls */}
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "16px 20px",
-                        backgroundColor: "#f9f9f9",
-                        borderRadius: "12px",
-                        marginBottom: "24px",
-                    }}
-                >
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
-                        <Select
-                            value={dateFilter}
-                            onChange={setDateFilter}
-                            style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
-                            placeholder="All"
-                        >
-                            <Select.Option value="asc">Oldest First</Select.Option>
-                            <Select.Option value="desc">Newest First</Select.Option>
-                        </Select>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            padding: "16px 20px",
+                            backgroundColor: "#f9f9f9",
+                            borderRadius: "12px",
+                            marginBottom: "24px",
+                        }}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <span style={{ fontSize: "16px", fontWeight: "500", color: "#333" }}>📅 Date:</span>
+                            <Select
+                                value={dateFilter}
+                                onChange={setDateFilter}
+                                style={{ width: 160, fontSize: "14px", borderRadius: "8px" }}
+                                placeholder="All"
+                            >
+                                <Select.Option value="asc">Oldest First</Select.Option>
+                                <Select.Option value="desc">Newest First</Select.Option>
+                            </Select>
+                        </div>
+                        <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
+                            Clear Filters
+                        </Button>
                     </div>
-                    <Button onClick={clearFilters} type="link" style={{ fontSize: "14px", color: "#007AFF" }}>
-                        Clear Filters
-                    </Button>
-                </div>
 
-                {filteredReviews.length > 0 ? (
-                    filteredReviews.map((order) => (
-                        <Card
-                            key={order.id}
-                            type="inner"
-                            title={
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
-                                    <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
-                                    <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
-                                        {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric',
-                                        })}`}
-                                    </span>
-                                    <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                                        <Button
-                                            onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
-                                            icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
-                                            style={{
-                                                borderRadius: '8px',
-                                                width: '120px', // กำหนดความกว้างเฉพาะ
-                                                height: '40px', // กำหนดความสูงของปุ่ม
-                                                padding: '0 16px', // ปรับ padding ภายในปุ่ม
-                                                fontSize: '14px', // ปรับขนาดข้อความ
-                                            }}
-                                        >
-                                            {expandedOrder === order.id ? 'Show Less' : 'Show More'}
-                                        </Button>
+                    {filteredReviews.length > 0 ? (
+                        filteredReviews.map((order) => (
+                            <Card
+                                key={order.id}
+                                type="inner"
+                                title={
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+                                        <span style={{ flex: 1, textAlign: 'left' }}>{`Order #${order.id}`}</span>
+                                        <span style={{ flex: 1, textAlign: 'center', fontSize: '14px', color: '#888' }}>
+                                            {`รหัสการชำระเงิน : ${order.paymentID}, ${new Date(order.paymentDate ?? '').toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}`}
+                                        </span>
+                                        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                                            <Button
+                                                onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
+                                                icon={expandedOrder === order.id ? <UpOutlined /> : <DownOutlined />}
+                                                style={{
+                                                    borderRadius: '10px',
+                                                    width: '120px',
+                                                    height: '40px',
+                                                    padding: '0 16px',
+                                                    fontSize: '14px',
+                                                }}
+                                            >
+                                                {expandedOrder === order.id ? 'Show Less' : 'Show More'}
+                                            </Button>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-                            style={{
-                                marginBottom: '20px',
-                                borderRadius: '10px',
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                                padding: '20px',
-                            }}
-                        >
-                            {expandedOrder === order.id ? (
-                                <>
-                                    <div>
-                                        {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                                }
+                                style={{
+                                    marginBottom: '20px',
+                                    borderRadius: '10px',
+                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                    padding: '20px',
+                                }}
+                            >
+                                {expandedOrder === order.id ? (
+                                    <>
+                                        <div>
+                                            {(order.menuDetails ?? []).map((detail: { quantity: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuImage: string | undefined; menuName: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; menuPrice: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; amount: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined) => (
+                                                <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+                                                    <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
+                                                    <img
+                                                        src={detail.menuImage}
+                                                        alt={`Menu Image ${Number(index) + 1}`}
+                                                        style={{
+                                                            width: '60px',
+                                                            height: '60px',
+                                                            objectFit: 'cover',
+                                                            borderRadius: '8px',
+                                                            marginRight: '12px',
+                                                        }}
+                                                    />
+                                                    <div>
+                                                        <p><strong>Menu Name:</strong> {detail.menuName}</p>
+                                                        <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
+                                                        <p><strong>Amount:</strong> {detail.amount}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                        <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                        <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                        <p><strong>Discount:</strong> {
+                                            ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) === '0.00'
+                                                ? '-'
+                                                : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                        }</p>
+                                        <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                        <Button type="primary" onClick={() => handleAddReview(order)}
+                                            style={{
+                                                float: 'right',
+                                                marginTop: '12px',
+                                                backgroundColor: '#133e87',
+                                                borderRadius: '10px',
+                                                borderColor: '#133e87',
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                            }}>Add Review</Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
                                             <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                                <span style={{ marginRight: '8px' }}>{detail.quantity}x</span>
                                                 <img
                                                     src={detail.menuImage}
                                                     alt={`Menu Image ${Number(index) + 1}`}
@@ -349,64 +396,38 @@ export default function NotReviewedTripPage() {
                                                 <div>
                                                     <p><strong>Menu Name:</strong> {detail.menuName}</p>
                                                     <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                                    <p><strong>Amount:</strong> {detail.amount}</p>
                                                 </div>
                                             </div>
                                         ))}
-                                    </div>
-                                    <p><strong>Subtotal:</strong> {(order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p><strong>VAT (7%):</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 0.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p><strong>Total:</strong> {((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <p><strong>Discount:</strong> {
-                                        ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) === '0.00'
-                                            ? '-'
-                                            : ((order.menuDetails ?? []).reduce((acc: number, detail: any) => acc + detail.amount, 0) * 1.07 - (order.totalPrice ?? 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                    }</p>
-                                    <p><strong>Grand Total:</strong> {(order.totalPrice ?? 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                                    <Button type="primary" onClick={() => handleAddReview(order)} style={{ float: 'right' }}>Add Review</Button>
-                                </>
-                            ) : (
-                                <>
-                                    {(order.menuDetails ?? []).map((detail: { menuImage: string; menuName: string; menuPrice: number }, index: React.Key | null | undefined) => (
-                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
-                                            <img
-                                                src={detail.menuImage}
-                                                alt={`Menu Image ${Number(index) + 1}`}
-                                                style={{
-                                                    width: '60px',
-                                                    height: '60px',
-                                                    objectFit: 'cover',
-                                                    borderRadius: '8px',
-                                                    marginRight: '12px',
-                                                }}
-                                            />
-                                            <div>
-                                                <p><strong>Menu Name:</strong> {detail.menuName}</p>
-                                                <p><strong>Price per unit:</strong> {detail.menuPrice}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <Button
-                                        type="primary"
-                                        onClick={() => handleAddReview(order)}
-                                        style={{ float: 'right', marginTop: '12px' }}
-                                    >
-                                        Add Review
-                                    </Button>
-                                </>
-                            )}
-                        </Card>
-                    ))
-                ) : (
-                    <div style={{ textAlign: 'center', padding: '20px', color: '#555', fontSize: '16px' }}>
-                        <p style={{ marginBottom: '16px' }}>You don't have any orders right now. Start ordering your favorite meals!</p>
-                        <button
-                            className="button_booking_trip"
-                            onClick={() => window.location.href = '/food-service/login/menu/order'} // Update with the actual trip planning page URL
-                        >
-                            <span className="button_booking_trip_lg">
-                                <span className="button_booking_trip_sl"></span>
-                                <span className="button_booking_trip_text">Order Now</span>
+                                        <Button
+                                            type="primary"
+                                            onClick={() => handleAddReview(order)}
+                                            style={{
+                                                float: 'right',
+                                                marginTop: '12px',
+                                                backgroundColor: '#133e87',
+                                                borderRadius: '10px',
+                                                borderColor: '#133e87',
+                                                color: '#fff',
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            Add Review
+                                        </Button>
+                                    </>
+                                )}
+                            </Card>
+                        ))
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '20px', color: '#555', fontSize: '16px' }}>
+                            <p style={{ marginBottom: '16px' }}>You don't have any orders right now. Start ordering your favorite meals!</p>
+                            <button
+                                className="button_booking_trip"
+                                onClick={() => window.location.href = '/food-service/login/menu/order'} // Update with the actual trip planning page URL
+                            >
+                                <span className="button_booking_trip_lg">
+                                    <span className="button_booking_trip_sl"></span>
+                                    <span className="button_booking_trip_text">Order Now</span>
                                 </span>
                             </button>
                         </div>
@@ -414,11 +435,41 @@ export default function NotReviewedTripPage() {
                 </Card>
             )}
             <Modal
-                title="Add Review"
+                title={
+                    <div style={{ textAlign: 'center', borderBottom: '1px solid #ccc', paddingBottom: '8px' }}>
+                        <span style={{ fontWeight: 'bold' }}>Add Review</span>
+                    </div>
+                }
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 onOk={() => form.submit()}
                 width={800} // ปรับความกว้างของ Modal
+                footer={[
+                    <Button
+                        key="cancel"
+                        onClick={() => setIsModalOpen(false)}
+                        style={{
+                            borderRadius: '10px',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Cancel
+                    </Button>,
+                    <Button
+                        key="submit"
+                        type="primary"
+                        onClick={() => form.submit()}
+                        style={{
+                            backgroundColor: '#133e87',
+                            borderRadius: '10px',
+                            borderColor: '#133e87',
+                            color: '#fff',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Submit
+                    </Button>,
+                ]}
             >
                 <Form form={form} onFinish={onFinish} layout="vertical">
                     <Row gutter={16}> {/* ใช้ Grid layout */}
@@ -458,7 +509,12 @@ export default function NotReviewedTripPage() {
                                 label="💼 Service"
                                 rules={[{ required: true, message: 'Please provide a Service Rating!' }]}
                             >
-                                <Rate allowHalf style={{ fontSize: '18px', color: '#4CAF50' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate
+                                    allowHalf
+                                    style={{ fontSize: '18px', color: '#4CAF50' }}
+                                    value={serviceRating} // ค่าที่ควบคุมได้
+                                    onChange={(value) => setServiceRating(value)} // อัปเดตค่าเมื่อมีการเปลี่ยนแปลง
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
@@ -467,7 +523,12 @@ export default function NotReviewedTripPage() {
                                 label="🍴 Taste"
                                 rules={[{ required: true, message: 'Please provide a Taste Rating!' }]}
                             >
-                                <Rate allowHalf style={{ fontSize: '18px', color: '#FF5722' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate
+                                    allowHalf
+                                    style={{ fontSize: '18px', color: '#FF5722' }}
+                                    value={tasteRating}
+                                    onChange={(value) => setTasteRating(value)}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
@@ -476,10 +537,16 @@ export default function NotReviewedTripPage() {
                                 label="💵 Value for Money"
                                 rules={[{ required: true, message: 'Please provide a Value for Money Rating!' }]}
                             >
-                                <Rate allowHalf style={{ fontSize: '18px', color: '#FFC107' }} defaultValue={0} tooltips={['Very Bad', 'Bad', 'Average', 'Good', 'Excellent']} />
+                                <Rate
+                                    allowHalf
+                                    style={{ fontSize: '18px', color: '#FFC107' }}
+                                    value={valueForMoneyRating}
+                                    onChange={(value) => setValueForMoneyRating(value)}
+                                />
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row gutter={16}>
                         <Col span={24}>
                             <Form.Item

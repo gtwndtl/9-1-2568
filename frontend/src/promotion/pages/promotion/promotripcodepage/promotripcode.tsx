@@ -12,6 +12,7 @@ import duration from "dayjs/plugin/duration";
 import "./promotripcode.css";
 import { Link } from "react-router-dom";
 import { IoChevronBackSharp } from "react-icons/io5";
+import NavbarLandingPage from "../../../../landingpage/navbar/NavbarLandingPage";
 
 
 dayjs.extend(duration);
@@ -156,9 +157,9 @@ function PromotionTripPage() {
   return (
     <div className="promo-trip-code-page"
       style={{ width: "100%" }}>
+        <NavbarLandingPage/>
       <div className="promofoodcode-container">
-        {/* กลับไปหน้าเมนูอาหาร */}
-        <Link to={"/admin/promotion"}>
+        <Link to={"/home"}>
           <IoChevronBackSharp size={30} className="back-to-menu" />
         </Link>
         {contextHolder}
@@ -182,9 +183,17 @@ function PromotionTripPage() {
                   </div>
 
                   <div className="promofoodcode-details">
-                    <p><b>ใช้ได้ถึง:</b> {item.end_date ? `${dayjs(item.end_date).format("DD MMMM YYYY")}` : "-"}</p>
-                    <p><b>ประเภทส่วนลด:</b> {promotionDiscounts[item.discount_id] || "-"}</p>
-                    <p><b>สถานะ:</b> {promotionStatuses[item.status_id] || "-"}</p>
+                  <p><b>ใช้ได้ถึง:</b> {item.end_date ? `${dayjs(item.end_date).format("DD MMMM YYYY")}` : "-"}</p>
+                    {item.discount_id === 1 && (
+                      <>
+                        <p><b>ส่วนลด:</b> {item.discount}%</p>
+                        <p><b>ส่วนลดสูงสุด:</b> {item.limit_discount?.toLocaleString() || "-"} บาท</p>
+                      </>
+                    )}
+                    {item.discount_id === 2 && (
+                      <p><b>ส่วนลด:</b> {item.discount?.toLocaleString() || "-"} บาท</p>
+                    )}
+                    <p><b>ราคาขั้นต่ำ:</b> {item.minimum_price?.toLocaleString() || "-"} บาท</p>
                     <p><b>เวลาที่เหลือ:</b> {countdownMap[item.code] || "-"}</p>
                     <div className="progress-bar-container">
                       <div
@@ -232,8 +241,16 @@ function PromotionTripPage() {
 
                   <div className="promofoodcode-details">
                     <p><b>ใช้ได้ถึง:</b> {item.end_date ? `${dayjs(item.end_date).format("DD MMMM YYYY")}` : "-"}</p>
-                    <p><b>ประเภทส่วนลด:</b> {promotionDiscounts[item.discount_id] || "-"}</p>
-                    <p><b>สถานะ:</b> {promotionStatuses[item.status_id] || "-"}</p>
+                    {item.discount_id === 1 && (
+                      <>
+                        <p><b>ส่วนลด:</b> {item.discount}%</p>
+                        <p><b>ส่วนลดสูงสุด:</b> {item.limit_discount?.toLocaleString() || "-"} บาท</p>
+                      </>
+                    )}
+                    {item.discount_id === 2 && (
+                      <p><b>ส่วนลด:</b> {item.discount?.toLocaleString() || "-"} บาท</p>
+                    )}
+                    <p><b>ราคาขั้นต่ำ:</b> {item.minimum_price?.toLocaleString() || "-"} บาท</p>
                     <p><b>เวลาที่เหลือ:</b> {countdownMap[item.code] || "-"}</p>
                     <div className="progress-bar-container">
                       <div

@@ -1,0 +1,245 @@
+.home * {
+	font-family: 'Roboto', sans-serif !important;
+}
+.promotion-pop-up {
+  position: fixed; /* ทำให้ element ลอยอยู่เหนือเนื้อหาอื่น */
+  z-index: 1000;
+}
+
+/* Video Header Section */
+.home-header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-header video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.home-header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.home-header-content {
+  display: flex; /* ใช้ Flexbox เพื่อจัดตำแหน่ง */
+  flex-direction: column; /* จัดเรียงในแนวตั้ง */
+  align-items: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+  justify-content: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+.home-header-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.home-header-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.why-card-container {
+  width: 500px;
+  height: 300px;
+  position: relative;
+  border-radius: 10px;
+}
+
+.why-card-container::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(-45deg, #133e87 0%, #4a6b9a 100%);
+  transform: translate3d(0, 0, 0) scale(0.95);
+  filter: blur(20px);
+}
+
+.why-card {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.why-card .why-img-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(-45deg, #133e87 0%, #4a6b9a 100%);
+  transition: scale 0.6s, rotate 0.6s, filter 1s;
+  overflow: hidden;
+  /* ป้องกันรูปออกนอกขอบ */
+}
+
+.why-card .why-img-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* ทำให้รูปครอบคลุมพื้นที่โดยไม่ผิดสัดส่วน */
+}
+
+
+.why-card .why-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  color: #ffffff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* เงารอบตัวอักษร */
+  padding: 20px;
+  line-height: 1.5;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(50px);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  backdrop-filter: blur(10px); /* เพิ่มการเบลอพื้นหลัง */
+}
+
+.why-card .why-content .why-heading {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.why-card:hover .why-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.why-card:hover .why-img-content {
+  scale: 2.5;
+  rotate: 30deg;
+  filter: blur(7px);
+}
+
+.why-card-view {
+  display: flex;
+  /* ใช้ Flexbox */
+  justify-content: center;
+  /* จัดให้อยู่ตรงกลางในแนวนอน */
+  align-items: center;
+  /* จัดให้อยู่ตรงกลางในแนวตั้ง (ถ้าจำเป็น) */
+  gap: 40px;
+  /* ระยะห่างระหว่างไอเท็ม */
+  padding: 20px;
+  /* เพิ่มช่องว่างรอบ ๆ */
+}
+
+.why-highlights h3 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.why-img-content .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff; /* สีตัวอักษร */
+  background: rgba(0, 0, 0, 0.5); /* พื้นหลังโปร่งแสง */
+  border-radius: 5px; /* เพิ่มมุมมนให้ตรงกับรูป */
+}
+
+.why-img-content .overlay h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8); /* เพิ่มเงาให้ตัวอักษร */
+}
+
+.why-highlights{
+  padding: 80px;
+}
+
+.home-quote {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff; /* สีที่สอดคล้องกับปุ่ม */
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.btn-booking {
+  width: 180px;
+  height: 50px;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  background: #133e87;
+  color: #f5f5f5;
+}
+
+.btn-booking:hover {
+  box-shadow: 0 0 20px 0px #2e2e2e3a;
+}
+
+.btn-booking .icon-booking {
+  position: absolute;
+  height: 40px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+.btn-booking .text-booking {
+  transform: translateX(55px);
+}
+
+.btn-booking:hover .icon-booking {
+  width: 175px;
+}
+
+.btn-booking:hover .text-booking {
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.btn-booking:focus {
+  outline: none;
+}
+
+.btn-booking:active .icon-booking {
+  transform: scale(0.85);
+}

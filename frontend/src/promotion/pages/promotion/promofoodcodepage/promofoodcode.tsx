@@ -62,7 +62,7 @@ function PromotionFoodPage() {
       if (promo.end_date) {
         const now = dayjs(); // วันที่ปัจจุบัน
         const endDate = dayjs(promo.end_date); // วันหมดอายุ
-  
+
         if (endDate.isAfter(now)) {
           const years = endDate.diff(now, "year");
           const months = endDate.diff(now.add(years, "year"), "month");
@@ -75,12 +75,12 @@ function PromotionFoodPage() {
             now.add(years, "year").add(months, "month").add(days, "day").add(hours, "hour"),
             "minute"
           );
-  
+
           let countdownMessage = "";
           if (years > 0) countdownMessage += `${years} ปี `;
           if (months > 0 || years > 0) countdownMessage += `${months} เดือน `;
           countdownMessage += `${days} วัน ${hours} ชั่วโมง ${minutes} นาที`;
-  
+
           newCountdownMap[promo.code] = countdownMessage.trim();
         } else {
           newCountdownMap[promo.code] = "หมดอายุแล้ว";
@@ -91,7 +91,7 @@ function PromotionFoodPage() {
     });
     setCountdownMap(newCountdownMap);
   };
-  
+
 
   const getPromotionStatuses = async () => {
     const res = await GetPromotionStatus();
@@ -172,18 +172,26 @@ function PromotionFoodPage() {
               .filter((item) => isExpiringSoon(item.end_date))
               .map((item) => (
                 <div
-                  className={`promofoodcode-card expiring-soon`}key={item.code}
+                  className={`promofoodcode-card expiring-soon`} key={item.code}
                 >
                   <div className="promofoodcode-preview-expiring-soon">
-                  <h6>{item.code}</h6>
-                  <h2>{item.name}</h2>
+                    <h6>{item.code}</h6>
+                    <h2>{item.name}</h2>
                     <p className="promofoodcode-preview-detail">{item.details}</p>
                   </div>
 
                   <div className="promofoodcode-details">
                     <p><b>ใช้ได้ถึง:</b> {item.end_date ? `${dayjs(item.end_date).format("DD MMMM YYYY")}` : "-"}</p>
-                    <p><b>ประเภทส่วนลด:</b> {promotionDiscounts[item.discount_id] || "-"}</p>
-                    <p><b>สถานะ:</b> {promotionStatuses[item.status_id] || "-"}</p>
+                    {item.discount_id === 1 && (
+                      <>
+                        <p><b>ส่วนลด:</b> {item.discount}%</p>
+                        <p><b>ส่วนลดสูงสุด:</b> {item.limit_discount?.toLocaleString() || "-"} บาท</p>
+                      </>
+                    )}
+                    {item.discount_id === 2 && (
+                      <p><b>ส่วนลด:</b> {item.discount?.toLocaleString() || "-"} บาท</p>
+                    )}
+                    <p><b>ราคาขั้นต่ำ:</b> {item.minimum_price?.toLocaleString() || "-"} บาท</p>
                     <p><b>เวลาที่เหลือ:</b> {countdownMap[item.code] || "-"}</p>
                     <div className="progress-bar-container">
                       <div
@@ -196,6 +204,7 @@ function PromotionFoodPage() {
                         {item.count_limit} / {item.limit}
                       </span>
                     </div>
+
                     <Button
                       className="expiring-promofoodcode-ant-btn-primary"
                       icon={<CopyOutlined />}
@@ -231,8 +240,16 @@ function PromotionFoodPage() {
 
                   <div className="promofoodcode-details">
                     <p><b>ใช้ได้ถึง:</b> {item.end_date ? `${dayjs(item.end_date).format("DD MMMM YYYY")}` : "-"}</p>
-                    <p><b>ประเภทส่วนลด:</b> {promotionDiscounts[item.discount_id] || "-"}</p>
-                    <p><b>สถานะ:</b> {promotionStatuses[item.status_id] || "-"}</p>
+                    {item.discount_id === 1 && (
+                      <>
+                        <p><b>ส่วนลด:</b> {item.discount}%</p>
+                        <p><b>ส่วนลดสูงสุด:</b> {item.limit_discount?.toLocaleString() || "-"} บาท</p>
+                      </>
+                    )}
+                    {item.discount_id === 2 && (
+                      <p><b>ส่วนลด:</b> {item.discount?.toLocaleString() || "-"} บาท</p>
+                    )}
+                    <p><b>ราคาขั้นต่ำ:</b> {item.minimum_price?.toLocaleString() || "-"} บาท</p>
                     <p><b>เวลาที่เหลือ:</b> {countdownMap[item.code] || "-"}</p>
                     <div className="progress-bar-container">
                       <div

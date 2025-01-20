@@ -94,7 +94,7 @@ export default function ReviewTripShow() {
           grabCursor={true}
           loop={true}
           autoplay={{
-            delay: 3000, // เลื่อนอัตโนมัติทุก 3 วินาที
+            delay: 1000, // เลื่อนอัตโนมัติทุก 1 วินาที
             disableOnInteraction: false,
           }}
           speed={2000} // ความเร็วในการเลื่อน

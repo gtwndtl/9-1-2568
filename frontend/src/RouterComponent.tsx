@@ -18,6 +18,7 @@ import PromotionCreate from "./promotion/pages/promotionadmin/create";
 import PromotionEdit from "./promotion/pages/promotionadmin/edit";
 import NavbarAdmin from "./adminpage/navbar";
 import AllReviewsTrip from "./review/pages/reviews/trip/allreviewstrip";
+import LandingPage from "./landingpage/LandingPage";
 
 // import TripCompletePage from "./payment/page/trip_stripe/TripCompletePage";
 // import TripSummary from "./payment/page/trip_summary/TripSummary";
@@ -44,16 +45,21 @@ const RouterComponent: React.FC = () => {
     {
       path: "/",
       element: (
-        <>
+        <><Link to={"/home"}>Home Landing Page</Link><br />
           <Link to={"/food-service/login"}>to food service</Link><br />
           <Link to={"/trip-summary"}>trip</Link><br />
           <Link to={"/admin"}>Admin</Link><br />
+          <Link to={"/customer/review"}>Review Customer</Link><br />
           <Link to={"/promotion/trip"}>Promotion Trip</Link><br />
           <Link to={"/promotion/food"}>Promotion Food</Link><br />
           <Link to={"/reviews/trip"}>All Trip Review</Link><br />
           <Link to={"/reviews/food-service"}>All Food Review</Link><br />
         </>
       ),
+    },
+    {
+      path: "/home",
+      element: <LandingPage />,
     },
     {
       path: "/food-service/login",
